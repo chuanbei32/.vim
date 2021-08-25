@@ -112,12 +112,6 @@
 [submodule "pack/vendor/start/vimspector"]
 	path = pack/vendor/start/vimspector
 	url = https://github.com/puremourning/vimspector.git
-[submodule "pack/vendor/start/tmuxline"]
-	path = pack/vendor/start/tmuxline
-	url = https://github.com/edkolev/tmuxline.vim.git
-[submodule "pack/vendor/start/promptline"]
-	path = pack/vendor/start/promptline
-	url = https://github.com/edkolev/promptline.vim.git
 [submodule "pack/vendor/start/vim-devicons"]
 	path = pack/vendor/start/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
