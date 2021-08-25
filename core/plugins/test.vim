@@ -1,23 +1,23 @@
 "{
 
-"{{ variables
-	
+	"{{ variables
+		
 
-"}}
+	"}}
 
-"{{ options 
-
-
-"}}
-
-"{{ mappings 
+	"{{ options 
 
 
-"}}
+	"}}
 
-"{{ autocommands 
+	"{{ mappings 
 
-"}}
+
+	"}}
+
+	"{{ autocommands 
+
+	"}}
 
 "}
 
