@@ -18,16 +18,42 @@
 
 	nmap <Leader>Q :qa!<CR> " 不做任何保存，直接退出 vim
 
-	nnoremap nw <C-W><C-W> " 依次遍历子窗口
-
-	nnoremap <Leader>lw <C-W>l " 跳转至右方的窗口
-
-	nnoremap <Leader>hw <C-W>h " 跳转至左方的窗口
-
-	nnoremap <Leader>kw <C-W>k " 跳转至上方的子窗口
-
-	nnoremap <Leader>jw <C-W>j " 跳转至下方的子窗口
-
 	nmap <Leader>M % " 定义快捷键在结对符之间跳转
+
+	"{{
+
+		nnoremap nw <C-W><C-W> " 依次遍历子窗口
+
+		nnoremap <Leader>lw <C-W>l " 跳转至右方的窗口
+
+		nnoremap <Leader>hw <C-W>h " 跳转至左方的窗口
+
+		nnoremap <Leader>kw <C-W>k " 跳转至上方的子窗口
+
+		nnoremap <Leader>jw <C-W>j " 跳转至下方的子窗口
+
+	"}}
+
+	"{{
+		nnoremap <Leader>lb <S-:> " 跳转至右方的缓冲区
+
+		nnoremap <Leader>hb <C-W>h " 跳转至左方的缓冲区
+
+		nnoremap <Leader>kb <C-W>k " 跳转至上方的缓冲区
+
+		nnoremap <Leader>jb <C-W>j " 跳转至下方的缓冲区
+	"}}
+
+	"{{	
+		nnoremap <Leader>lb <C-W>l " 跳转至右方的缓冲区
+
+		nnoremap <Leader>hb <C-W>h " 跳转至左方的缓冲区
+
+		nnoremap <Leader>kb <C-W>k " 跳转至上方的缓冲区
+
+		nnoremap <Leader>jb <C-W>j " 跳转至下方的缓冲区
+	"}}
+
+
 
 "{
