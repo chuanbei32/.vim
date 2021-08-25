@@ -64,3 +64,54 @@
 [submodule "pack/vendor/start/gruvbox"]
 	path = pack/vendor/start/gruvbox
 	url = https://github.com/morhetz/gruvbox.git
+[submodule "pack/vendor/start/ctags"]
+	path = pack/vendor/start/ctags
+	url = https://github.com/vim-scripts/ctags.vim.git
+[submodule "pack/vendor/start/tagbar"]
+	path = pack/vendor/start/tagbar
+	url = https://github.com/preservim/tagbar.git
+[submodule "pack/vendor/start/vim-indent-guides"]
+	path = pack/vendor/start/vim-indent-guides
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "pack/vendor/start/vim-easymotion"]
+	path = pack/vendor/start/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion.git
+[submodule "pack/vendor/start/incsearch"]
+	path = pack/vendor/start/incsearch
+	url = https://github.com/haya14busa/incsearch.vim.git
+[submodule "pack/vendor/start/gundo"]
+	path = pack/vendor/start/gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "pack/vendor/start/syntastic"]
+	path = pack/vendor/start/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "pack/vendor/start/startify"]
+	path = pack/vendor/start/startify
+	url = https://github.com/mhinz/vim-startify.git
+[submodule "pack/vendor/start/taglist"]
+	path = pack/vendor/start/taglist
+	url = https://github.com/yegappan/taglist.git
+[submodule "pack/vendor/start/LeaderF"]
+	path = pack/vendor/start/LeaderF
+	url = https://github.com/Yggdroot/LeaderF.git
+[submodule "pack/vendor/start/tabular"]
+	path = pack/vendor/start/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule "pack/vendor/start/ultisnips"]
+	path = pack/vendor/start/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "pack/vendor/start/vim-markdown"]
+	path = pack/vendor/start/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown.git
+[submodule "pack/vendor/start/vim-translator"]
+	path = pack/vendor/start/vim-translator
+	url = https://github.com/voldikss/vim-translator.git
+[submodule "pack/vendor/start/vim-snippets"]
+	path = pack/vendor/start/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
+[submodule "pack/vendor/start/vim-visual-multi"]
+	path = pack/vendor/start/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
+[submodule "pack/vendor/start/vimspector"]
+	path = pack/vendor/start/vimspector
+	url = https://github.com/puremourning/vimspector.git

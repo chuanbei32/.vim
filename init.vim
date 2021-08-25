@@ -8,6 +8,9 @@ autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE " transparent bg
 " 配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
+" 开启鼠标模式
+set mouse=a
+
 set t_Co=256
 
 " 关闭兼容模式
@@ -54,6 +57,7 @@ set softtabstop=4
 
 " 定义快捷键的前缀，即<Leader>
 let mapleader=";"
+nmap <space> <leader>
 
 " 开启文件类型侦测
 filetype on
@@ -122,7 +126,7 @@ nmap <Leader>M %
 
 "" 插件配置
 
-autocmd vimenter * NERDTree
+" autocmd vimenter * NERDTree
 
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
@@ -130,11 +134,11 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
 
-let NERDTreeMinimalUI = 1
-let NERDTreeShowHidden = 1
-
-let g:nerdtree_tabs_open_on_console_startup = 1
-let g:nerdtree_tabs_focus_on_files = 1
+" let NERDTreeMinimalUI = 1
+" let NERDTreeShowHidden = 1
+" let g:NERDTreeWinSize=30
+" let g:nerdtree_tabs_open_on_console_startup = 1
+" let g:nerdtree_tabs_focus_on_files = 1
 
 let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -185,7 +189,7 @@ if !exists('g:airline_symbols')
 endif
 
 " vim-airline-themes
-let g:airline_theme='luna'
+let g:airline_theme='Coalt 2'
 
 " rainbow
 let g:rainbow_active = 1
@@ -272,3 +276,61 @@ augroup VimCSS3Syntax
 
   autocmd FileType css setlocal iskeyword+=-
 augroup END
+
+
+nmap tb :TagbarToggle<CR>
+
+" 启动时自动focus
+let g:tagbar_autofocus = 1
+let g:tagbar_width = 30
+
+" gotags 配置
+let g:tagbar_type_go = {
+    \ 'ctagstype': 'go',
+    \ 'kinds' : [
+        \'p:package',
+        \'f:function',
+        \'v:variables',
+        \'t:type',
+        \'c:const'
+    \]
+\}
+
+let g:indent_guides_enable_on_vim_startup = 1
+
+
+let g:incsearch#auto_nohlsearch = 1
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+
+nnoremap <leader>u :GundoToggle<CR>
+
+let g:syntastic_error_symbol='>>'
+let g:syntastic_warning_symbol='>'
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
+let g:syntastic_enable_highlighting=1
+let g:syntastic_python_checkers=['pyflakes'] " 使用pyflakes,速度比pylint快
+let g:syntastic_javascript_checkers = ['jsl', 'jshint']
+let g:syntastic_html_checkers=['tidy', 'jshint']
+" 修改高亮的背景色, 适应主题
+highlight SyntasticErrorSign guifg=white guibg=black
+
+" to see error location list
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_loc_list_height = 5
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        Errors
+    endif
+endfunction
+nnoremap <Leader>s :call ToggleErrors()<cr>
+" nnoremap <Leader>sn :lnext<cr>
+" nnoremap <Leader>sp :lprevious<cr>
