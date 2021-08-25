@@ -43,9 +43,6 @@
 [submodule "pack/vendor/start/mru"]
 	path = pack/vendor/start/mru
 	url = https://github.com/vim-scripts/mru.vim.git
-[submodule "pack/vendor/start/ctrlp"]
-	path = pack/vendor/start/ctrlp
-	url = https://github.com/kien/ctrlp.vim.git
 [submodule "pack/vendor/start/fugitive"]
 	path = pack/vendor/start/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
@@ -115,3 +112,12 @@
 [submodule "pack/vendor/start/vimspector"]
 	path = pack/vendor/start/vimspector
 	url = https://github.com/puremourning/vimspector.git
+[submodule "pack/vendor/start/tmuxline"]
+	path = pack/vendor/start/tmuxline
+	url = https://github.com/edkolev/tmuxline.vim.git
+[submodule "pack/vendor/start/promptline"]
+	path = pack/vendor/start/promptline
+	url = https://github.com/edkolev/promptline.vim.git
+[submodule "pack/vendor/start/vim-devicons"]
+	path = pack/vendor/start/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
