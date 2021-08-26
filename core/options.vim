@@ -106,7 +106,7 @@
 
 	set report=0 " 通过使用:commands命令，告诉我们文件的哪一行被改变过
 
-	set gcr=a:block-blinkon0 " 禁止光标闪烁
+	" set gcr=a:block-blinkon0 " 禁止光标闪烁
 
 	"{{ 禁止显示滚动条
 		set guioptions-=l
