@@ -6,6 +6,8 @@
     \ 'rainbow.vim',
     \ 'vim-airline.vim',
     \ 'vim-airline-themes.vim',
+    \ 'ale.vim',
+    \ 'delimitMate.vim',
     \ 'test.vim',
     \ ]
 
