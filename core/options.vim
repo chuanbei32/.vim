@@ -64,7 +64,7 @@
 
 	let mapleader=" " " <Leader>
 
-	set mouse=a " 开启鼠标模式
+	" set mouse=a " 开启鼠标模式
 
 	set nowritebackup
 
