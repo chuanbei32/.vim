@@ -16,12 +16,6 @@
 [submodule "pack/vendor/start/vim-gitgutter"]
 	path = pack/vendor/start/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "pack/vendor/start/ack"]
-	path = pack/vendor/start/ack
-	url = https://github.com/mileszs/ack.vim.git
-[submodule "pack/vendor/start/fzf"]
-	path = pack/vendor/start/fzf
-	url = https://github.com/junegunn/fzf.vim.git
 [submodule "pack/vendor/start/auto-pairs"]
 	path = pack/vendor/start/auto-pairs
 	url = git://github.com/jiangmiao/auto-pairs.git
@@ -37,9 +31,6 @@
 [submodule "pack/vendor/start/ale"]
 	path = pack/vendor/start/ale
 	url = https://github.com/dense-analysis/ale.git
-[submodule "pack/vendor/start/ag"]
-	path = pack/vendor/start/ag
-	url = https://github.com/rking/ag.vim.git
 [submodule "pack/vendor/start/mru"]
 	path = pack/vendor/start/mru
 	url = https://github.com/vim-scripts/mru.vim.git
@@ -118,3 +109,6 @@
 [submodule "pack/vendor/start/vim-signature"]
 	path = pack/vendor/start/vim-signature
 	url = https://github.com/kshenoy/vim-signature.git
+[submodule "pack/vendor/start/YouCompleteMe"]
+	path = pack/vendor/start/YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe.git

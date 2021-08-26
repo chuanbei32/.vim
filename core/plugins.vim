@@ -2,6 +2,10 @@
 
   let g:config_file_list = ['NERDTree.vim',
     \ 'NERDTree-git-plugin.vim',
+    \ 'LeaderF.vim',
+    \ 'rainbow.vim',
+    \ 'vim-airline.vim',
+    \ 'vim-airline-themes.vim',
     \ 'test.vim',
     \ ]
 
