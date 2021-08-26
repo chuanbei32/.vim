@@ -37,15 +37,9 @@
 [submodule "pack/vendor/start/emmet"]
 	path = pack/vendor/start/emmet
 	url = https://github.com/mattn/emmet-vim.git
-[submodule "pack/vendor/start/html5"]
-	path = pack/vendor/start/html5
-	url = https://github.com/othree/html5.vim.git
 [submodule "pack/vendor/start/css-color"]
 	path = pack/vendor/start/css-color
 	url = https://github.com/ap/vim-css-color.git
-[submodule "pack/vendor/start/css3"]
-	path = pack/vendor/start/css3
-	url = https://github.com/hail2u/vim-css3-syntax.git
 [submodule "pack/vendor/start/gruvbox"]
 	path = pack/vendor/start/gruvbox
 	url = https://github.com/morhetz/gruvbox.git
