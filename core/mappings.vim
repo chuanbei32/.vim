@@ -2,6 +2,8 @@
 
 	nmap <space> <leader>
 
+	map <C-Space> <C-x><C-o>
+
 	"{{ Window
 
 		nnoremap <Leader>wl <C-W>l " 跳转至右方的窗口

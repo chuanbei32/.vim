@@ -55,9 +55,6 @@
 [submodule "pack/vendor/start/gundo"]
 	path = pack/vendor/start/gundo
 	url = https://github.com/sjl/gundo.vim.git
-[submodule "pack/vendor/start/syntastic"]
-	path = pack/vendor/start/syntastic
-	url = https://github.com/vim-syntastic/syntastic.git
 [submodule "pack/vendor/start/taglist"]
 	path = pack/vendor/start/taglist
 	url = https://github.com/yegappan/taglist.git
@@ -94,3 +91,18 @@
 [submodule "pack/vendor/start/vim-signature"]
 	path = pack/vendor/start/vim-signature
 	url = https://github.com/kshenoy/vim-signature.git
+[submodule "pack/vendor/start/YouCompleteMe"]
+	path = pack/vendor/start/YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe.git
+[submodule "pack/vendor/start/phpactor"]
+	path = pack/vendor/start/phpactor
+	url = https://github.com/phpactor/phpactor.git
+[submodule "pack/vendor/start/vim-repeat"]
+	path = pack/vendor/start/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "pack/vendor/start/vim-surround"]
+	path = pack/vendor/start/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "pack/vendor/fzf"]
+	path = pack/vendor/fzf
+	url = https://github.com/junegunn/fzf.vim.git

@@ -21,10 +21,7 @@
 
 "}
 
-
-
-
-
+let g:Powerline_symbols = 'fancy'
 
 
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'

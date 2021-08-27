@@ -1,6 +1,7 @@
 "{ 
 
-  let g:config_file_list = ['NERDTree.vim',
+  let g:config_file_list = [
+    \ 'NERDTree.vim',
     \ 'NERDTree-git-plugin.vim',
     \ 'LeaderF.vim',
     \ 'rainbow.vim',
@@ -8,6 +9,9 @@
     \ 'vim-airline-themes.vim',
     \ 'ale.vim',
     \ 'delimitMate.vim',
+    \ 'YouCompleteMe.vim',
+    \ 'phpactor.vim',
+    \ 'fzf.vim',
     \ 'test.vim',
     \ ]
 
