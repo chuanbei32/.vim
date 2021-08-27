@@ -7,6 +7,10 @@
 
 	"{{ options 
 
+		" let g:Lf_WorkingDirectoryMode = 'Ac'
+		" let g:Lf_WorkingDirectory = finddir('.git')
+
+
 		let g:Lf_PreviewInPopup = 1
 		let g:Lf_ShowHidden = 1
 		let g:Lf_ReverseOrder = 1

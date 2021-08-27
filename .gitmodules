@@ -97,9 +97,6 @@
 [submodule "pack/vendor/start/vim-surround"]
 	path = pack/vendor/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "pack/vendor/start/fzf"]
-	path = pack/vendor/start/fzf
-	url = https://github.com/junegunn/fzf.vim.git
 [submodule "pack/vendor/opt/phpactor"]
 	path = pack/vendor/opt/phpactor
 	url = https://github.com/phpactor/phpactor.git
@@ -107,3 +104,6 @@
 	path = pack/vendor/start/coc
 	url = https://github.com/neoclide/coc.nvim.git
 	branch = release
+[submodule "pack/vendor/start/ack"]
+	path = pack/vendor/start/ack
+	url = https://github.com/mileszs/ack.vim.git

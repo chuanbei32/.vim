@@ -57,6 +57,8 @@
 		
 	" }}
 
+	set colorcolumn=80,120
+
 	set completeopt=menu,menuone
 
 	set nocompatible " 关闭兼容模式
