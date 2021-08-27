@@ -103,6 +103,6 @@
 [submodule "pack/vendor/start/vim-surround"]
 	path = pack/vendor/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "pack/vendor/fzf"]
-	path = pack/vendor/fzf
+[submodule "pack/vendor/start/fzf"]
+	path = pack/vendor/start/fzf
 	url = https://github.com/junegunn/fzf.vim.git
