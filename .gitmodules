@@ -91,12 +91,6 @@
 [submodule "pack/vendor/start/vim-signature"]
 	path = pack/vendor/start/vim-signature
 	url = https://github.com/kshenoy/vim-signature.git
-[submodule "pack/vendor/start/YouCompleteMe"]
-	path = pack/vendor/start/YouCompleteMe
-	url = https://github.com/ycm-core/YouCompleteMe.git
-[submodule "pack/vendor/start/phpactor"]
-	path = pack/vendor/start/phpactor
-	url = https://github.com/phpactor/phpactor.git
 [submodule "pack/vendor/start/vim-repeat"]
 	path = pack/vendor/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
@@ -106,3 +100,6 @@
 [submodule "pack/vendor/start/fzf"]
 	path = pack/vendor/start/fzf
 	url = https://github.com/junegunn/fzf.vim.git
+[submodule "pack/vendor/opt/phpactor"]
+	path = pack/vendor/opt/phpactor
+	url = https://github.com/phpactor/phpactor.git

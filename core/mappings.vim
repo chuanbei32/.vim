@@ -2,7 +2,7 @@
 
 	nmap <space> <leader>
 
-	map <C-Space> <C-x><C-o>
+	inoremap <C-z> <C-x><C-o>
 
 	"{{ Window
 

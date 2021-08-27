@@ -56,7 +56,8 @@
 		set nofoldenable " 启动 vim 时关闭折叠代码
 		
 	" }}
-
+	
+	set completeopt=menu,menuone
 
 	set nocompatible " 关闭兼容模式
 

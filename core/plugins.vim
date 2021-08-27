@@ -10,7 +10,6 @@
     \ 'ale.vim',
     \ 'delimitMate.vim',
     \ 'YouCompleteMe.vim',
-    \ 'phpactor.vim',
     \ 'fzf.vim',
     \ 'test.vim',
     \ ]
