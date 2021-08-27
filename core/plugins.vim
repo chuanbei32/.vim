@@ -9,7 +9,7 @@
     \ 'vim-airline-themes.vim',
     \ 'ale.vim',
     \ 'delimitMate.vim',
-    \ 'YouCompleteMe.vim',
+    \ 'coc.vim',
     \ 'fzf.vim',
     \ 'test.vim',
     \ ]

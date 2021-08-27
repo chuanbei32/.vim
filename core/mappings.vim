@@ -6,6 +6,8 @@
 
 	"{{ Window
 
+		nnoremap <Leader>wc <C-W>c " 
+
 		nnoremap <Leader>wl <C-W>l " 跳转至右方的窗口
 
 		nnoremap <Leader>wh <C-W>h " 跳转至左方的窗口
