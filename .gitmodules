@@ -97,9 +97,6 @@
 [submodule "pack/vendor/start/vim-surround"]
 	path = pack/vendor/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "pack/vendor/opt/phpactor"]
-	path = pack/vendor/opt/phpactor
-	url = https://github.com/phpactor/phpactor.git
 [submodule "pack/vendor/start/coc"]
 	path = pack/vendor/start/coc
 	url = https://github.com/neoclide/coc.nvim.git
