@@ -19,6 +19,7 @@
 
 	"{{ mappings 
 
+		nmap <Leader>g :Leaderf rg<CR>
 
 	"}}
 

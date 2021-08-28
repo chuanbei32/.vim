@@ -25,9 +25,6 @@
 [submodule "pack/vendor/start/ale"]
 	path = pack/vendor/start/ale
 	url = https://github.com/dense-analysis/ale.git
-[submodule "pack/vendor/start/mru"]
-	path = pack/vendor/start/mru
-	url = https://github.com/vim-scripts/mru.vim.git
 [submodule "pack/vendor/start/fugitive"]
 	path = pack/vendor/start/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
@@ -55,9 +52,6 @@
 [submodule "pack/vendor/start/gundo"]
 	path = pack/vendor/start/gundo
 	url = https://github.com/sjl/gundo.vim.git
-[submodule "pack/vendor/start/taglist"]
-	path = pack/vendor/start/taglist
-	url = https://github.com/yegappan/taglist.git
 [submodule "pack/vendor/start/LeaderF"]
 	path = pack/vendor/start/LeaderF
 	url = https://github.com/Yggdroot/LeaderF.git
@@ -101,15 +95,9 @@
 	path = pack/vendor/start/coc
 	url = https://github.com/neoclide/coc.nvim.git
 	branch = release
-[submodule "pack/vendor/start/ack"]
-	path = pack/vendor/start/ack
-	url = https://github.com/mileszs/ack.vim.git
-[submodule "pack/vendor/start/fzf"]
-	path = pack/vendor/start/fzf
-	url = https://github.com/junegunn/fzf.vim.git
-[submodule "pack/vendor/start/fzfs"]
-	path = pack/vendor/start/fzfs
-	url = https://github.com/junegunn/fzf.git
 [submodule "pack/vendor/start/vim-jsonc"]
 	path = pack/vendor/start/vim-jsonc
 	url = https://github.com/kevinoid/vim-jsonc.git
+[submodule "pack/vendor/start/gtags"]
+	path = pack/vendor/start/gtags
+	url = https://github.com/vim-scripts/gtags.vim.git

@@ -16,7 +16,7 @@
 
 	"{{ mappings 
 
-		nnoremap <leader>n :NERDTreeFocus<CR>
+		nnoremap <leader>nt :NERDTreeFocus<CR>
 
 	"}}
 

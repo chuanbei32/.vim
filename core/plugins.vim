@@ -12,6 +12,7 @@
     \ 'coc.vim',
     \ 'fzf.vim',
     \ 'vimspector.vim',
+    \ 'gundo.vim',
     \ 'test.vim',
     \ ]
 

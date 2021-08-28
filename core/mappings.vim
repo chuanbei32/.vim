@@ -58,6 +58,14 @@
 
 	"}}
 
+	"{{	Shell
+
+		nnoremap <Leader>sh :shell<CR>
+
+		nnoremap <Leader>term :terminal<CR>
+
+	"}}
+
 	nmap LB 0 " 定义快捷键到行首
 
 	nmap LE $ " 定义快捷键到行尾
