@@ -57,7 +57,7 @@
 		
 	" }}
 
-	set colorcolumn=120,180
+	set colorcolumn=80,120,180
 
 	set completeopt=menu,menuone
 

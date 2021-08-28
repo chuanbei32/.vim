@@ -7,7 +7,7 @@
 
 	"{{ options 
 
-		" let g:Lf_WorkingDirectoryMode = 'Ac'
+		let g:Lf_WorkingDirectoryMode = 'a'
 		" let g:Lf_WorkingDirectory = finddir('.git')
 
 

@@ -11,6 +11,7 @@
     \ 'delimitMate.vim',
     \ 'coc.vim',
     \ 'fzf.vim',
+    \ 'vimspector.vim',
     \ 'test.vim',
     \ ]
 
