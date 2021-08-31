@@ -122,3 +122,12 @@
 [submodule "pack/vendor/start/vim-bookmarks"]
 	path = pack/vendor/start/vim-bookmarks
 	url = https://github.com/MattesGroeger/vim-bookmarks.git
+[submodule "pack/vendor/start/vim-expand-region"]
+	path = pack/vendor/start/vim-expand-region
+	url = https://github.com/terryma/vim-expand-region.git
+[submodule "pack/vendor/start/vim-devicons"]
+	path = pack/vendor/start/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule "pack/vendor/start/blamer"]
+	path = pack/vendor/start/blamer
+	url = https://github.com/APZelos/blamer.nvim.git

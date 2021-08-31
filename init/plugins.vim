@@ -15,6 +15,8 @@
     \ 'vim-airline-themes.vim',
     \ 'tagbar.vim',
     \ 'Ultisnips.vim',
+    \ 'vim-devicons.vim',
+    \ 'blamer.vim',
     \ ]
 
   let g:vim_plugins_config_root = expand('<sfile>:p:h')

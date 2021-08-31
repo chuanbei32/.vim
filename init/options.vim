@@ -52,8 +52,10 @@
 	" {{
 
 		set foldmethod=indent " 基于缩进或语法进行代码折叠
-		
-		set nofoldenable " 启动 vim 时关闭折叠代码
+		set foldnestmax=2
+		set foldlevelstart=1
+
+		" set nofoldenable " 启动 vim 时关闭折叠代码
 		
 	" }}
 
