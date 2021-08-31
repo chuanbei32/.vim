@@ -9,12 +9,16 @@
 		nnoremap <Leader>wc <C-W>c " 
 
 		nnoremap <Leader>wl <C-W>l " 跳转至右方的窗口
+		nnoremap <S-Right> <C-W>l
 
 		nnoremap <Leader>wh <C-W>h " 跳转至左方的窗口
+		nnoremap <S-Left> <C-W>h 
 
 		nnoremap <Leader>wk <C-W>k " 跳转至上方的窗口
+		nnoremap <S-Up> <C-W>k
 
 		nnoremap <Leader>wj <C-W>j " 跳转至下方的窗口
+		nnoremap <S-Down> <C-W>j
 
 	"}}
 
@@ -45,12 +49,18 @@
 		nnoremap <buffer> <Leader>tab :tabs<CR>
 
 		nnoremap <buffer> <Leader>tn :tabnew<Space>
+		nmap <C-t> :tabnew<CR>
 
 		nnoremap <buffer> <Leader>tc :tabclose<CR>
+		nnoremap <silent> <C-w> :tabclose<CR> 
 
-		nnoremap <buffer> <Leader>tn :tabn<CR>
+		" nnoremap <buffer> <Leader>tn :tabn<CR>
+		nnoremap <buffer> <Leader>tn gt
+		nnoremap <C-Down> :tabprevious<CR>
 
-		nnoremap <buffer> <Leader>tp :tabp<CR>
+		" nnoremap <buffer> <Leader>tp :tabp<CR>
+		nnoremap <buffer> <Leader>tp gT
+		nnoremap <C-Up> :tabnext<CR>
 
 		nnoremap <buffer> <Leader>tf :tabfirst<CR>
 

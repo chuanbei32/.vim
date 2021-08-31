@@ -1,12 +1,34 @@
-  {    
-      "languageserver": {    
-         "intelephense": {    
-                 "command": "intelephense",    
-                 "args": ["--stdio"],    
-                 "filetypes": ["php"],    
-                 "initializationOptions": {    
-                        "storagePath": "/iwork/project/php"
-                 }    
-                 }
+{    
+    "languageserver": {    
+        "php": {
+            "command": "php8.0",
+            "args": [
+                "/iwork/project/.vim/pack/vendor/start/phpactor/bin/phpactor", 
+                "language-server"
+            ],
+            "trace.server": "verbose",
+            "filetypes": ["php"]
+        },
+        "python": {
+            "command": "python3",
+            "args": [
+                "-mpyls",
+                "-vv",
+                "--log-file",
+                "/tmp/lsp_python.log"
+            ],
+            "trace.server": "verbose",
+            "filetypes": ["python"]
+        },
+        "go": {
+            "command": "/root/go/bin/go-langserver",
+            "filetypes": ["go"],
+            "initializationOptions": {
+              "gocodeCompletionEnabled": true,
+              "diagnosticsEnabled": true,
+              "lintTool": "golint"
+            }
         }
-  }
+    },
+    "diagnostic.displayByAle": true
+}

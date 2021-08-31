@@ -18,6 +18,8 @@
 
 	"{{ autocommands 
 
+		autocmd FileType php set iskeyword+=$
+		
 		autocmd FileType php setlocal omnifunc=phpactor#Complete
 		
 	"}}

@@ -12,7 +12,7 @@
 
     set background=dark
 
-    colorscheme gruvbox
+    colorscheme gruvbox8_soft
 
 
     highlight CursorLine   cterm=NONE ctermbg=241 ctermfg=green guibg=NONE guifg=NONE

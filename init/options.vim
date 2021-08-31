@@ -81,13 +81,15 @@
 
 	set ruler " 显示光标当前位置
 
-	set nowrap " 禁止折行
+	" set nowrap " 禁止折行
+	set wrap " 开启折行
 
 	set encoding=utf-8 " 设置编码
 
 	set showcmd " 显示还没有输入完整的命令
 
-	set showmode " 左下角显示当前模式
+	" set showmode " 左下角显示当前模式
+	set noshowmode " 左下角隐藏当前模式
 
 	set cursorline " 高亮显示当前行
 
@@ -123,4 +125,10 @@
 		set guioptions-=T
 	" }}
 
+	set laststatus=2
+
+	set omnifunc=ale#completion#OmniFunc
+
+
+	set autoindent " 自动缩进
 "}

@@ -6,7 +6,7 @@
 	"}}
 
 	"{{ options 
-
+		let NERDTreeShowBookmarks=1
 		let NERDTreeShowHidden = 1
 		let g:NERDTreeWinSize=30
 		let g:nerdtree_tabs_open_on_console_startup = 1
@@ -21,6 +21,8 @@
 	"}}
 
 	"{{ autocommands 
+
+		" autocmd vimenter * NERDTree
 
 		" autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 

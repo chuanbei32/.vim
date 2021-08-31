@@ -3,10 +3,10 @@
 	url = https://github.com/preservim/nerdtree.git
 [submodule "pack/vendor/start/vim-airline"]
 	path = pack/vendor/start/vim-airline
-	url = https://github.com/vim-airline/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
 [submodule "pack/vendor/start/vim-airline-themes"]
 	path = pack/vendor/start/vim-airline-themes
-	url = https://github.com/vim-airline/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
 [submodule "pack/vendor/start/rainbow"]
 	path = pack/vendor/start/rainbow
 	url = https://github.com/luochen1990/rainbow.git
@@ -101,3 +101,24 @@
 [submodule "pack/vendor/start/gtags"]
 	path = pack/vendor/start/gtags
 	url = https://github.com/vim-scripts/gtags.vim.git
+[submodule "pack/vendor/start/colorizer"]
+	path = pack/vendor/start/colorizer
+	url = https://github.com/lilydjwg/colorizer.git
+[submodule "pack/vendor/opt/vim-gruvbox8"]
+	path = pack/vendor/opt/vim-gruvbox8
+	url = https://github.com/lifepillar/vim-gruvbox8.git
+[submodule "pack/vendor/start/phpactor"]
+	path = pack/vendor/start/phpactor
+	url = https://github.com/phpactor/phpactor.git
+[submodule "pack/vendor/start/vim-gutentags"]
+	path = pack/vendor/start/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule "pack/vendor/start/vim-anyfold"]
+	path = pack/vendor/start/vim-anyfold
+	url = https://github.com/pseewald/vim-anyfold.git
+[submodule "pack/vendor/start/neoformat"]
+	path = pack/vendor/start/neoformat
+	url = https://github.com/sbdchd/neoformat.git
+[submodule "pack/vendor/start/vim-bookmarks"]
+	path = pack/vendor/start/vim-bookmarks
+	url = https://github.com/MattesGroeger/vim-bookmarks.git
