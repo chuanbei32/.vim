@@ -9,11 +9,11 @@
 
 		let g:blamer_enabled = 1
 
+		highlight Blamer guifg=lightgrey
 	"}}
 
 	"{{ mappings 
 
-		nmap <Leader>gu :GundoToggle<CR>
 
 	"}}
 

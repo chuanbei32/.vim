@@ -12,11 +12,19 @@
 
     set background=dark
 
-    colorscheme gruvbox8_soft
+    colorscheme seoul256
 
 
     highlight CursorLine   cterm=NONE ctermbg=241 ctermfg=green guibg=NONE guifg=NONE
 
     " highlight CursorColumn cterm=NONE ctermbg=241 ctermfg=green guibg=NONE guifg=NONE
+
+
+    "{{seoul256
+
+        let g:seoul256_background = 233
+        let g:seoul256_light_background = 256
+
+    "}}
 
 "}

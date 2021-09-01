@@ -146,3 +146,27 @@
 [submodule "pack/vendor/start/nerdtree-syntax-highlight"]
 	path = pack/vendor/start/nerdtree-syntax-highlight
 	url = https://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git
+[submodule "pack/vendor/start/dsf"]
+	path = pack/vendor/start/dsf
+	url = https://github.com/AndrewRadev/dsf.vim.git
+[submodule "pack/vendor/opt/seoul256"]
+	path = pack/vendor/opt/seoul256
+	url = https://github.com/junegunn/seoul256.vim.git
+[submodule "pack/vendor/opt/pencil"]
+	path = pack/vendor/opt/pencil
+	url = https://github.com/preservim/vim-colors-pencil.git
+[submodule "pack/vendor/start/MatchTagAlways"]
+	path = pack/vendor/start/MatchTagAlways
+	url = https://github.com/Valloric/MatchTagAlways.git
+[submodule "pack/vendor/start/vim-peekaboo"]
+	path = pack/vendor/start/vim-peekaboo
+	url = https://github.com/junegunn/vim-peekaboo.git
+[submodule "pack/vendor/start/tagalong"]
+	path = pack/vendor/start/tagalong
+	url = https://github.com/AndrewRadev/tagalong.vim.git
+[submodule "pack/vendor/start/undoquit"]
+	path = pack/vendor/start/undoquit
+	url = https://github.com/AndrewRadev/undoquit.vim.git
+[submodule "pack/vendor/start/gv"]
+	path = pack/vendor/start/gv
+	url = https://github.com/junegunn/gv.vim.git
