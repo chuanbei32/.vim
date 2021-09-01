@@ -137,3 +137,9 @@
 [submodule "pack/vendor/start/vim-quickhl"]
 	path = pack/vendor/start/vim-quickhl
 	url = https://github.com/t9md/vim-quickhl.git
+[submodule "pack/vendor/start/clever-f"]
+	path = pack/vendor/start/clever-f
+	url = https://github.com/rhysd/clever-f.vim.git
+[submodule "pack/vendor/start/ctrlsf"]
+	path = pack/vendor/start/ctrlsf
+	url = https://github.com/dyng/ctrlsf.vim.git
