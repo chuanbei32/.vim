@@ -143,3 +143,6 @@
 [submodule "pack/vendor/start/ctrlsf"]
 	path = pack/vendor/start/ctrlsf
 	url = https://github.com/dyng/ctrlsf.vim.git
+[submodule "pack/vendor/start/nerdtree-syntax-highlight"]
+	path = pack/vendor/start/nerdtree-syntax-highlight
+	url = https://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git

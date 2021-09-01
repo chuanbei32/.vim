@@ -20,6 +20,10 @@
 		    \ "Unknown"   : "?"
 		    \ }
 
+	    let g:NERDTreeGitStatusConcealBrackets = 1
+	    " let g:NERDTreeGitStatusShowClean = 1
+	    let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
+
 	"}}
 
 	"{{ mappings 
@@ -28,7 +32,7 @@
 	"}}
 
 	"{{ autocommands 
-
+		
 	"}}
 
 "}
