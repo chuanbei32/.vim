@@ -128,9 +128,6 @@
 [submodule "pack/vendor/start/vim-devicons"]
 	path = pack/vendor/start/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
-[submodule "pack/vendor/start/blamer"]
-	path = pack/vendor/start/blamer
-	url = https://github.com/APZelos/blamer.nvim.git
 [submodule "pack/vendor/start/vim-nerdtree-syntax-highlight"]
 	path = pack/vendor/start/vim-nerdtree-syntax-highlight
 	url = https://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git
@@ -176,3 +173,6 @@
 [submodule "pack/vendor/start/vim-rooter"]
 	path = pack/vendor/start/vim-rooter
 	url = https://github.com/airblade/vim-rooter.git
+[submodule "pack/vendor/start/git-messenger"]
+	path = pack/vendor/start/git-messenger
+	url = https://github.com/rhysd/git-messenger.vim.git
