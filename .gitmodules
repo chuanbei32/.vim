@@ -131,3 +131,9 @@
 [submodule "pack/vendor/start/blamer"]
 	path = pack/vendor/start/blamer
 	url = https://github.com/APZelos/blamer.nvim.git
+[submodule "pack/vendor/start/vim-nerdtree-syntax-highlight"]
+	path = pack/vendor/start/vim-nerdtree-syntax-highlight
+	url = https://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git
+[submodule "pack/vendor/start/vim-quickhl"]
+	path = pack/vendor/start/vim-quickhl
+	url = https://github.com/t9md/vim-quickhl.git
