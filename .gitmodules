@@ -170,3 +170,9 @@
 [submodule "pack/vendor/start/gv"]
 	path = pack/vendor/start/gv
 	url = https://github.com/junegunn/gv.vim.git
+[submodule "pack/vendor/start/vim-unimpaired"]
+	path = pack/vendor/start/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "pack/vendor/start/vim-rooter"]
+	path = pack/vendor/start/vim-rooter
+	url = https://github.com/airblade/vim-rooter.git
