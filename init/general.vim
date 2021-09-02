@@ -191,8 +191,6 @@
 
 	set termencoding=utf-8
 
-	set fileencoding=utf-8 " 编码方式为 utf-8
-
 	set fileformat=unix " 保存文件的格式为 unix
 	
 	set fileformats=unix,dos
@@ -248,4 +246,12 @@
 	set synmaxcol=300
 
 	set notimeout
+
+	set wildchar=<TAB>
+
+	set copyindent
+
+	set wmw=0
+
+	set wmh=0
 "}

@@ -182,3 +182,30 @@
 [submodule "pack/vendor/start/vim-test"]
 	path = pack/vendor/start/vim-test
 	url = https://github.com/vim-test/vim-test.git
+[submodule "pack/vendor/start/vimnx"]
+	path = pack/vendor/start/vimnx
+	url = https://github.com/preservim/vimux.git
+[submodule "pack/vendor/opt/nord"]
+	path = pack/vendor/opt/nord
+	url = https://github.com/arcticicestudio/nord-vim.git
+[submodule "pack/vendor/start/SimpylFold"]
+	path = pack/vendor/start/SimpylFold
+	url = https://github.com/tmhedberg/SimpylFold.git
+[submodule "pack/vendor/start/vim-argwrap"]
+	path = pack/vendor/start/vim-argwrap
+	url = https://github.com/FooSoft/vim-argwrap.git
+[submodule "pack/vendor/start/splitjoin"]
+	path = pack/vendor/start/splitjoin
+	url = https://github.com/AndrewRadev/splitjoin.vim.git
+[submodule "pack/vendor/start/vim-mkdir-on-write"]
+	path = pack/vendor/start/vim-mkdir-on-write
+	url = https://github.com/scy/vim-mkdir-on-write.git
+[submodule "pack/vendor/start/vim-eunuch"]
+	path = pack/vendor/start/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch.git
+[submodule "pack/vendor/start/vim-sleuth"]
+	path = pack/vendor/start/vim-sleuth
+	url = https://github.com/tpope/vim-sleuth.git
+[submodule "pack/vendor/start/vim-easy-align"]
+	path = pack/vendor/start/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align.git
