@@ -27,10 +27,6 @@
 
 		set ruler " 显示光标当前位置
 
-		set number " 显示行号
-
-		set relativenumber " 显示相对行号
-
 		set expandtab " 将制表符扩展为空格
 
 		set tabstop=4 " 设置编辑时制表符占用空格数
@@ -40,14 +36,7 @@
 		set softtabstop=4 " 让 vim 把连续数量的空格视为一个制表符
 
 		set mouse+=a " 开启鼠标模式
-
-		set laststatus=2 " 状态行样式
-
-		set showcmd " 显示还没有输入完整的命令
-
-		" set showmode " 左下角显示当前模式
-		set noshowmode " 左下角隐藏当前模式
-
+		
 		set cursorline " 高亮显示当前行
 
 		" set cursorcolumn " 高亮显示当前列
@@ -59,10 +48,6 @@
 		set confirm " 在处理未保存或只读文件的时候，弹出确认
 
 		set autoread " 文件在 Vim 之外修改过，自动重新读入
-
-		set splitbelow " 设置新的垂直分割窗口在下侧
-
-		set splitright " 设置新的垂直分割窗口在右侧
 
 		set history=10000 " 历史命令最大记录数
 
@@ -259,8 +244,6 @@
 	set noerrorbells
 
 	set tm=500
-
-	set list
 
 	set linebreak
 
