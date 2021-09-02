@@ -1,6 +1,6 @@
-"{
-
-	nmap <space> <leader>
+" {
+	
+	nmap <space> <leader> 
 
 	inoremap <C-z> <C-x><C-o>
 
@@ -96,4 +96,4 @@
 	nnoremap j gj
 	nnoremap gj j
 
-"{
+" {

@@ -1,4 +1,9 @@
 " {
+	
+	autocmd BufReadPost *
+		\ if line("'\"") > 1 && line("'\"") <= line("$") |
+		\	 exe "normal! g`\"" |
+		\ endif
 
 	autocmd BufEnter * silent! :lcd%:p:h
 	
@@ -68,5 +73,38 @@
 	augroup END
 
 	autocmd FileType gitcommit setlocal spell
+
+
+	augroup InitFileTypesGroup
+
+		" 清除同组的历史 autocommand
+		autocmd!
+
+		" C/C++ 文件使用 // 作为注释
+		autocmd FileType c,cpp setlocal commentstring=//\ %s
+
+		" markdown 允许自动换行
+		autocmd FileType markdown setlocal wrap
+
+		" lisp 进行微调
+		autocmd FileType lisp setlocal ts=8 sts=2 sw=2 et
+
+		" scala 微调
+		autocmd FileType scala setlocal sts=4 sw=4 noet
+
+		" haskell 进行微调
+		autocmd FileType haskell setlocal et
+
+		" quickfix 隐藏行号
+		autocmd FileType qf setlocal nonumber
+
+		" 强制对某些扩展名的 filetype 进行纠正
+		autocmd BufNewFile,BufRead *.as setlocal filetype=actionscript
+		autocmd BufNewFile,BufRead *.pro setlocal filetype=prolog
+		autocmd BufNewFile,BufRead *.es setlocal filetype=erlang
+		autocmd BufNewFile,BufRead *.asc setlocal filetype=asciidoc
+		autocmd BufNewFile,BufRead *.vl setlocal filetype=verilog
+
+	augroup END
 
 " }

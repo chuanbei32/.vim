@@ -215,9 +215,6 @@
 [submodule "pack/vendor/start/goyo"]
 	path = pack/vendor/start/goyo
 	url = https://github.com/junegunn/goyo.vim.git
-[submodule "pack/vendor/start/vim-colorschemes"]
-	path = pack/vendor/start/vim-colorschemes
-	url = https://github.com/flazz/vim-colorschemes.git
 [submodule "pack/vendor/opt/jellybeans"]
 	path = pack/vendor/opt/jellybeans
 	url = https://github.com/nanotech/jellybeans.vim.git
