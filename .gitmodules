@@ -209,3 +209,21 @@
 [submodule "pack/vendor/start/vim-easy-align"]
 	path = pack/vendor/start/vim-easy-align
 	url = https://github.com/junegunn/vim-easy-align.git
+[submodule "pack/vendor/opt/one"]
+	path = pack/vendor/opt/one
+	url = https://github.com/rakr/vim-one.git
+[submodule "pack/vendor/start/goyo"]
+	path = pack/vendor/start/goyo
+	url = https://github.com/junegunn/goyo.vim.git
+[submodule "pack/vendor/start/vim-colorschemes"]
+	path = pack/vendor/start/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "pack/vendor/opt/jellybeans"]
+	path = pack/vendor/opt/jellybeans
+	url = https://github.com/nanotech/jellybeans.vim.git
+[submodule "pack/vendor/opt/gruvbox"]
+	path = pack/vendor/opt/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
+[submodule "pack/vendor/opt/onedark"]
+	path = pack/vendor/opt/onedark
+	url = https://github.com/joshdick/onedark.vim.git
