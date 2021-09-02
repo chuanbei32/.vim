@@ -29,9 +29,11 @@
 
 	"{{ mappings 
 
-		nmap <Leader>g :Leaderf rg<CR>
-		nmap <Leader>m :Leaderf mru<CR>
-		nmap <Leader>t :Leaderf tag<CR>
+		nmap <Leader>ff :Leaderf file<CR>
+		nmap <Leader>fb :Leaderf buffer<CR>
+		nmap <Leader>fg :Leaderf rg<CR>
+		nmap <Leader>fm :Leaderf mru<CR>
+		nmap <Leader>ft :Leaderf tag<CR>
 
 	"}}
 

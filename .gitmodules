@@ -49,9 +49,6 @@
 [submodule "pack/vendor/start/incsearch"]
 	path = pack/vendor/start/incsearch
 	url = https://github.com/haya14busa/incsearch.vim.git
-[submodule "pack/vendor/start/gundo"]
-	path = pack/vendor/start/gundo
-	url = https://github.com/sjl/gundo.vim.git
 [submodule "pack/vendor/start/LeaderF"]
 	path = pack/vendor/start/LeaderF
 	url = https://github.com/Yggdroot/LeaderF.git
@@ -176,3 +173,12 @@
 [submodule "pack/vendor/start/git-messenger"]
 	path = pack/vendor/start/git-messenger
 	url = https://github.com/rhysd/git-messenger.vim.git
+[submodule "pack/vendor/start/mundo"]
+	path = pack/vendor/start/mundo
+	url = https://github.com/simnalamburt/vim-mundo.git
+[submodule "pack/vendor/vim-colorschemes"]
+	path = pack/vendor/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "pack/vendor/start/vim-test"]
+	path = pack/vendor/start/vim-test
+	url = https://github.com/vim-test/vim-test.git

@@ -2,8 +2,12 @@
 
     set t_Co=256
 
-    " https://github.com/termstandard/colors
-    " set termguicolors
+    if has("termguicolors")
+        " https://github.com/termstandard/colors
+        " set t_8f=^[[38;2;%lu;%lu;%lum
+        " set t_8b=^[[48;2;%lu;%lu;%lum
+        " set termguicolors
+    endif
 
     " let g:gruvbox_italics=1
     " let g:gruvbox_italicize_strings=1

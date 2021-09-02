@@ -84,4 +84,16 @@
 
 	nmap <Leader>M % " 定义快捷键在结对符之间跳转
 
+
+	" map <Left> <Nop>
+	" map <Right> <Nop>
+	" map <Up> <Nop>
+	" map <Down> <Nop>
+
+
+	nnoremap k gk
+	nnoremap gk k
+	nnoremap j gj
+	nnoremap gj j
+
 "{
