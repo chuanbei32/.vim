@@ -230,3 +230,6 @@
 [submodule "pack/vendor/start/nvim-ts-rainbow"]
 	path = pack/vendor/start/nvim-ts-rainbow
 	url = https://github.com/p00f/nvim-ts-rainbow.git
+[submodule "pack/vendor/start/rainbow_levels"]
+	path = pack/vendor/start/rainbow_levels
+	url = https://github.com/thiagoalessio/rainbow_levels.vim.git
