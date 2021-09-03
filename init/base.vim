@@ -162,12 +162,13 @@
 
 		silent! call mkdir(expand('~/.vim/_backupfiles'), "p", 0755) " 创建目录，并且忽略可能出现的警告
 
-		set noswapfile " 禁用 swap 文件
+		" set swapfile
+		" set noswapfile " 禁用 swap 文件
 
 		set directory=~/.vim/_swapfiles
 
-		" set undofile
-		set noundofile " 禁用 undo 文件
+		set undofile
+		" set noundofile " 禁用 undo 文件
 
 		set undodir=~/.vim/_undofiles
 

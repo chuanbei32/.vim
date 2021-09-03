@@ -7,8 +7,8 @@
 
 	"{{ options 
 
-		let g:Lf_WorkingDirectoryMode = 'Ac'
-		let g:Lf_WorkingDirectory = finddir('.git', '.root')
+		" let g:Lf_WorkingDirectoryMode = 'Ac'
+		" let g:Lf_WorkingDirectory = finddir('.root')
 
 
 		let g:Lf_PreviewInPopup = 1
@@ -20,7 +20,7 @@
 		let g:Lf_CursorBlink=1
 
 		let g:Lf_WildIgnore = {
-			\ 'dir': ['.git'],
+			\ 'dir': ['.git', 'node_modules'],
 		\ }
 
 		let g:Lf_HighlightIndividual = 0

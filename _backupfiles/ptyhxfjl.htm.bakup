@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>推商机网－－用户消费记录管理</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!-- easydialog -->
+    <link href="__ADMIN__/style/easydialog_old.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- 头部 -->
+    {include file="common/top"}
+    <!-- /头部 -->
+
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="common/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{:url('index/index')}">系统</a>
+                        </li>
+                        <li class="active">用户消费记录管理</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+
+                    <h5 class="row-title before-blue" style="width:100%;">
+                        {$szh}的消费记录：总额：{$total}元，已消费：{$consume}元，余额：{$yue}元。
+                    </h5>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+
+                            <div class="widget" style="margin:10px 0 15px 0">
+                                <form class="form-inline" role="form" method="post" name="form1">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="用户名" name="name" value=""
+                                            class="input-sm form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" name="is_show" title="显示状态" style="height:30px;">
+                                            <option value="0">未显示</option>
+                                            <option value="1">显示</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group input-group-btn">
+                                        <button type="submit" class="btn btn-sm btn-success search-btn"> 搜索</button>
+                                    </div>
+                                </form>
+                                {if condition="($group == 5)"}
+                                <!--a href='http://121.42.247.148:8068/keywords/kongdizhi2.php' class="btn btn-azure" style = "margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;" > 修正空白地区</a>
+			<a href="http://121.42.247.148:8068/keywords/updateToufang2.php" class="btn btn-azure" style = "margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;">修正投放省份</a>
+			<a href="http://121.42.247.148:8068/keywords/updateIp2.php" class="btn btn-azure" style = "margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;">修正重复ip</a//-->
+                                <div style="float:right;margin:1%;">
+                                    <a href="http://a.jnzhongfan.com/keywords/updateDq2.php" class="btn btn-azure"
+                                        style="margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;">修正重复地区</a>
+                                    <a href="http://a.jnzhongfan.com/keywords/updateTitle.php" class="btn btn-azure"
+                                        style="margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;">替换重复关键词</a>
+                                </div>
+                                <!--a href="http://121.42.247.148:8068/keywords/updateTime2.php" class="btn btn-azure" style = "margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;">修正重复时间</a>
+			<a href="http://121.42.247.148:8068/keywords/updateTime3.php" class="btn btn-azure" style = "margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;">修正超时时间</a>
+
+			<a href="http://121.42.247.148:8068/keywords/updateTitle.php" class="btn btn-azure" style = "margin:10px 0 0 10px;height:10px;line-height:10px;font-size:12px;padding-bottom:18px;">替换重复关键词</a//-->
+                                {/if}
+                            </div>
+
+                            <div class="widget">
+                                <div class="widget-body">
+                                    <div class="flip-scroll">
+                                        <form class="form-horizontal" role="form" method="post" id="listform">
+                                            <table class="table table-bordered table-hover">
+                                                <thead class="">
+                                                    <tr>
+                                                        {if condition="($group == 5)"}
+                                                        <th style="width:20px">
+                                                            <label>
+                                                                <input type="checkbox" class="colored-blue" id="all">
+                                                                <span class="text"> </span>
+                                                            </label>
+                                                        </th>
+                                                        {/if}
+                                                        <th class="text-center" style="width:5%">ID</th>
+                                                        <th class="text-center" style="width:20%">消费用户</th>
+                                                        <th class="text-center" style="width:5%">消费</th>
+                                                        <th class="text-center" style="width:5%">IP</th>
+                                                        <th class="text-center" style="width:5%">地区</th>
+                                                        <th class="text-center" style="width:5%">城市</th>
+                                                        <!--<th class="text-center" style="width:8%">运营商</th>-->
+                                                        <th class="text-center" style="width:13%">关键词</th>
+                                                        <th class="text-center" style="width:8%">商品 ID</th>
+                                                        <th class="text-center" style="width:8%">来源页面</th>
+                                                        <th class="text-center" style="width:8%">浏览页面</th>
+                                                        <th class="text-center" style="width:15%">时间</th>
+                                                        {if condition="$group == 5"}
+                                                        <th class="text-center">显示</th>
+                                                        <th class="text-center">管理</th>
+                                                        {/if}
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="checklist">
+                                                    {volist name="list" id="vo"}
+                                                    <tr>
+                                                        {if condition="($group == 5)"}
+                                                        <td align="center">
+                                                            <label>
+                                                                <input type="checkbox" class="colored-blue" name="pid[]"
+                                                                    value="{$vo.id}">
+                                                                <span class="text"> </span>
+                                                            </label>
+                                                        </td>
+                                                        {/if}
+                                                        <td align="center">{$vo.id}</td>
+                                                        <td align="center">{$vo.name}</td>
+                                                        <td class="text-center">
+                                                            {if condition="$group == 5"}
+                                                            <a
+                                                                onclick="dopen('修改价格','/admin/recharge/editPrice.html?id={$vo.id}','600');">{$vo.price2}</a>
+                                                            {else /}
+                                                            {$vo.price2}
+                                                            {/if}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {if condition="$group == 5"}
+                                                            {if condition="$page == 1"}
+                                                            {if condition="$vo.ip == ''"}
+                                                            <a
+                                                                onclick="dopen('修改ip','/admin/recharge/editIp3.html?id={$vo.id}','600');">修改ip</a>
+                                                            {else /}
+                                                            <a
+                                                                onclick="dopen('修改ip','/admin/recharge/editIp3.html?id={$vo.id}','600');">{$vo.ip}</a>
+                                                            {/if}
+
+                                                            {else /}
+                                                            {if condition="$vo.ip == ''"}
+                                                            <a
+                                                                onclick="dopen('修改ip','/admin/recharge/editIp3.html?id={$vo.id}','600');">修改ip</a>
+                                                            {else /}
+                                                            <a
+                                                                onclick="dopen('修改ip','/admin/recharge/editIp3.html?id={$vo.id}','600');">{$vo.ip}</a>
+                                                            {/if}
+                                                            {/if}
+                                                            {else /}
+                                                            {$vo.ip}
+                                                            {/if}
+                                                        </td>
+                                                        <td class="text-center">{$vo.province}</td>
+                                                        <td class="text-center">{$vo.city}</td>
+                                                        <!--<td class="text-center">{$vo.carrier}</td>-->
+                                                        <td class="text-center">{$vo.title}</td>
+                                                        <td class="text-center">{$vo.goodsId}</td>
+                                                        <td class="text-center"><a target="_blank"
+                                                                href="https://b2b.baidu.com/s?q={$vo.title}">查看</a></td>
+                                                        <td class="text-center"><a target="_blank"
+                                                                href="__WANGZHI__/gs{$vo.uid}/goods_{$vo.goodsId}.html">查看</a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <?php echo date('Y-m-d H:i:s',$vo['addtime'])?>
+                                                        </td>
+                                                        {if condition="$group == 5"}
+                                                        <td align="center">
+                                                            <a id="{$vo.id}" {if condition="$vo['is_show'] == 1" }
+                                                                class="btn btn-palegreen shiny yjdl" {else/}
+                                                                class="btn btn-warning shiny yjdl" {/if}>{if
+                                                                condition="$vo['is_show'] == 1"}已显示{else/}未显示{/if}</a>
+                                                        </td>
+                                                        <td><a href="#"
+                                                                onClick="warning('确实要删除吗','{:url('del',array('id'=>$vo['id']))}')"
+                                                                class="btn btn-default shiny"
+                                                                style="width:60px;height:35px;line-height:21px;">删除</a>
+                                                        </td>
+                                                        {/if}
+                                                    </tr>
+                                                    {/volist}
+                                                </tbody>
+                                            </table>
+                                            {if condition="($group == 5)"}
+                                            <div style="margin-top:15px;">
+                                                <input type="hidden" name="htype" id="htype" value="0">
+                                                <button type="submit" class="btn btn-blue"
+                                                    onClick="tick(1);">批量显示</button>
+                                                <!--                         <button type="submit" class="btn btn-blue" onClick="tick(2);">批量删除</button>-->
+                                            </div>
+                                            {/if}
+                                        </form>
+                                    </div>
+
+                                    <div>
+                                        <div style="margin-top:10px;"></div>
+                                    </div>
+                                    <div>{$list->render()}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style//jquery_002.js"></script>
+    <script src="__ADMIN__/style//bootstrap.js"></script>
+    <script src="__ADMIN__/style//jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style//beyond.js"></script>
+
+    <!-- easydialog -->
+    <script src="__ADMIN__/style/easydialog.min.js"></script>
+    <script>
+
+        function dopen(title, src, height) {
+
+            if (height == undefined) { height = 500; }
+
+            easyDialog.open({
+
+                container: {
+
+                    header: title,
+
+                    content: '<iframe src="' + src + '" width="100%" height=' + height + 'px  frameborder="no" scrolling="no"></iframe>'
+
+                },
+
+                overlay: false
+
+            });
+
+        }
+    </script>
+    <script>
+        function tick(v) {
+
+            if (confirm("确认进行批量操作吗?")) {
+                $("#htype").val(v);
+                $("#listform").submit();
+            }
+        }
+    </script>
+    <script>
+        $(function () {
+            /*全选按钮状态显示判断*/
+            $("#checklist").find("input[type='checkbox']").click(function () {
+                /*初始化选择为TURE*/
+                $("#all")[0].checked = true;
+                /*获取未选中的*/
+                var nocheckedList = new Array();
+                $("#checklist").find('input:not(:checked)').each(function () {
+                    nocheckedList.push($(this).val());
+                });
+
+                /*状态显示*/
+                if (nocheckedList.length == $("#checklist").find('input').length) {
+                    $("#all")[0].checked = false;
+                } else if (nocheckedList.length == 0) {
+                    $("#all")[0].checked = true;
+                } else if (nocheckedList.length) {
+                    $("#all")[0].checked = false;
+                }
+            });
+            // 全选/取消
+            $("#all").click(function () {
+                // alert(this.checked);
+                if ($(this).is(':checked')) {
+                    $("#checklist").find('input').each(function () {
+                        $(this).prop("checked", true);
+                    });
+
+                } else {
+                    $("#checklist").find('input').each(function () {
+                        $(this).removeAttr("checked", false);
+                        // 根据官方的建议：具有 true 和 false 两个属性的属性，
+                        // 如 checked, selected 或者 disabled 使用prop()，其他的使用 attr()
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

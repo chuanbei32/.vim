@@ -227,3 +227,6 @@
 [submodule "pack/vendor/start/vim-choosewin"]
 	path = pack/vendor/start/vim-choosewin
 	url = https://github.com/t9md/vim-choosewin.git
+[submodule "pack/vendor/start/nvim-ts-rainbow"]
+	path = pack/vendor/start/nvim-ts-rainbow
+	url = https://github.com/p00f/nvim-ts-rainbow.git
