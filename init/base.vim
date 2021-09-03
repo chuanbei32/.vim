@@ -14,6 +14,8 @@
 
 		set autoindent " 自动缩进
 
+		set smartindent 
+
 		set cindent " 打开 C/C++ 语言缩进优化
 
 		set winaltkeys=no " Windows 禁用 ALT 操作菜单（使得 ALT 可以用到 Vim里）
@@ -36,7 +38,7 @@
 		set softtabstop=4 " 让 vim 把连续数量的空格视为一个制表符
 
 		set mouse+=a " 开启鼠标模式
-		
+
 		set cursorline " 高亮显示当前行
 
 		" set cursorcolumn " 高亮显示当前列
@@ -61,9 +63,11 @@
 
 		set lazyredraw " 延迟绘制（提升性能）
 
+		set autowrite " 自动保存
+
 		set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
 
-		set listchars=tab:\|\ ,trail:.,extends:>,precedes:< " 设置分隔符可视
+		set listchars=tab:\|\ ,trail:.,extends:>,precedes:< " 设置分隔符可见
 
 		set tags=./.tags;,.tags,tags " 设置 tags：当前文件所在目录往上向根目录搜索直到碰到 .tags 文件或者 Vim 当前目录包含 .tags 文件
 
@@ -251,7 +255,7 @@
 
 	set sidescroll=1
 
-	set shortmess+=A
+	set shortmess+=c
 
 	set ttyfast
 
@@ -266,4 +270,16 @@
 	set wmw=0
 
 	set wmh=0
+
+	set path+=**
+
+	set clipboard=unnamed
+
+	set cmdheight=1
+
+	set textwidth=85
+
+	set whichwrap+=<,>,h,l
+
+	set diffopt+=vertical
 "}

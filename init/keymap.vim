@@ -58,7 +58,7 @@
 
 		nnoremap <buffer> <Leader>tn :tabnew<Space>
 
-		nnoremap <buffer> <Leader>tc :tabclose<CR>
+		" nnoremap <buffer> <Leader>tc :tabclose<CR>
 
 		nnoremap <buffer> <Leader>tn :tabn<CR>
 
@@ -101,7 +101,7 @@
 		inoremap <silent><m-9> <ESC>:tabn 9<cr>
 		inoremap <silent><m-0> <ESC>:tabn 10<cr>
 
-		noremap <silent> <leader>tc :tabnew<cr>
+		" noremap <silent> <leader>tc :tabnew<cr>
 		noremap <silent> <leader>tq :tabclose<cr>
 		noremap <silent> <leader>tn :tabnext<cr>
 		noremap <silent> <leader>tp :tabprev<cr>
@@ -130,13 +130,12 @@
 
 	"}}
 
-	"{{	Shell
 
-		nnoremap <Leader>sh :shell<CR>
+	nnoremap <Leader>sh :shell<CR>
 
-		nnoremap <Leader>term :terminal<CR>
+	nnoremap <Leader>term :terminal<CR>
 
-	"}}
+	map <silent> <leader><cr> :noh<cr>
 
 	nmap <space> <leader> 
 

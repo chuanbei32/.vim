@@ -8,7 +8,7 @@
 	"{{ options 
 
 		let g:Lf_WorkingDirectoryMode = 'Ac'
-		let g:Lf_WorkingDirectory = finddir('.git')
+		let g:Lf_WorkingDirectory = finddir('.git', '.root')
 
 
 		let g:Lf_PreviewInPopup = 1

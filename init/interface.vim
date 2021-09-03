@@ -2,6 +2,8 @@
 
     set t_Co=256
 
+    set title
+
     set laststatus=2 " 总是显示状态栏
 
     " set statusline=  " 状态栏设置
