@@ -41,6 +41,8 @@
 
         " highlight CursorColumn cterm=NONE ctermbg=241 ctermfg=green guibg=NONE guifg=NONE
 
+        highlight MatchParen ctermbg=Yellow guibg=lightblue
+
     " }}
 
     "seoul256 {{{
