@@ -14,7 +14,7 @@
 
 		set autoindent " 自动缩进
 
-		set smartindent 
+		set smartindent " 智能自动缩进
 
 		set cindent " 打开 C/C++ 语言缩进优化
 
@@ -220,7 +220,7 @@
 
 	set t_ut=
 
-	set t_ti= t_te=
+	" set t_ti= t_te=
 
 	set t_vb=
 

@@ -7,9 +7,6 @@
 [submodule "pack/vendor/start/vim-airline-themes"]
 	path = pack/vendor/start/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes.git
-[submodule "pack/vendor/start/rainbow"]
-	path = pack/vendor/start/rainbow
-	url = https://github.com/Soares/rainbow.vim.git
 [submodule "pack/vendor/start/nerdcommenter"]
 	path = pack/vendor/start/nerdcommenter
 	url = https://github.com/preservim/nerdcommenter.git
