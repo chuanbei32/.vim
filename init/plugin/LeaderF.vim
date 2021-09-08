@@ -25,6 +25,9 @@
 
 		let g:Lf_HighlightIndividual = 0
 
+		let g:Lf_UseCache = 0
+		let g:Lf_UseMemoryCache = 0
+
 	"}}
 
 	"{{ mappings 

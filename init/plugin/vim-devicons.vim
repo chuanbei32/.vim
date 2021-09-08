@@ -11,6 +11,8 @@
 
 	    let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
+	    let g:WebDevIconsNerdTreeGitPluginForceVAlign = 0
+
 	    let g:WebDevIconsUnicodeGlyphDoubleWidth  = 1
 
 	    let g:WebDevIconsUnicodeDecorateFileNodes = 1

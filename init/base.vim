@@ -156,7 +156,7 @@
 		" set writebackup " 保存时备份
 		set nowritebackup " 
 
-		set backupext=.bakup " 备份文件扩展名
+		set backupext=.bak " 备份文件扩展名
 
 		set backupdir=~/.vim/_backupfiles
 
@@ -278,7 +278,7 @@
 
 	set cmdheight=1
 
-	set textwidth=85
+	" set textwidth=85
 
 	set whichwrap+=<,>,h,l
 
