@@ -32,11 +32,11 @@
 
 	"{{ mappings 
 
-		nmap <Leader>ff :Leaderf file<CR>
-		nmap <Leader>fb :Leaderf buffer<CR>
-		nmap <Leader>fg :Leaderf rg<CR>
-		nmap <Leader>fm :Leaderf mru<CR>
-		nmap <Leader>ft :Leaderf tag<CR>
+		nmap <Leader>\ff :Leaderf file<CR>
+		nmap <Leader>\fb :Leaderf buffer<CR>
+		nmap <Leader>\fg :Leaderf rg<CR>
+		nmap <Leader>\fm :Leaderf mru<CR>
+		nmap <Leader>\ft :Leaderf tag<CR>
 
 	"}}
 

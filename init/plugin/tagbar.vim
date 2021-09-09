@@ -13,13 +13,13 @@
 
 	"{{ mappings 
 	
-		nmap tb :TagbarToggle<CR>
+		nmap <leader>\tb :TagbarToggle<CR>
 
 	"}}
 
 	"{{ autocommands 
 
-		" autocmd VimEnter * nested :TagbarOpen
+		autocmd VimEnter * nested :TagbarOpen
 
 	"}}
 

@@ -18,13 +18,13 @@
 
 	"{{ mappings 
 
-		nnoremap <leader>nt :NERDTreeFocus<CR>
+		nnoremap <leader>\nt :NERDTreeFocus<CR>
 
 	"}}
 
 	"{{ autocommands 
 
-		" autocmd vimenter * NERDTree
+		autocmd vimenter * NERDTree
 
 		" autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
