@@ -32,6 +32,9 @@
 
 	"{{ mappings 
 
+		nmap <Leader>f <Nop>
+		nmap <Leader>b <Nop>
+		
 		nmap <Leader>\ff :Leaderf file<CR>
 		nmap <Leader>\fb :Leaderf buffer<CR>
 		nmap <Leader>\fg :Leaderf rg<CR>

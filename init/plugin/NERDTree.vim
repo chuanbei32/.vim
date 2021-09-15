@@ -11,8 +11,11 @@
 		let NERDTreeShowHidden = 1
 		let g:NERDTreeWinSize=30
 
-		let NERDTreeDirArrowExpandable = "▶"
-		let NERDTreeDirArrowCollapsible = "▼"
+		" let NERDTreeDirArrowExpandable = "▶"
+		" let NERDTreeDirArrowCollapsible = "▼"
+
+		let g:NERDTreeDirArrowExpandable = '+'
+		let g:NERDTreeDirArrowCollapsible = '-'
 
 	"}}
 
@@ -24,7 +27,7 @@
 
 	"{{ autocommands 
 
-		autocmd vimenter * NERDTree
+		" autocmd vimenter * NERDTree
 
 		" autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 

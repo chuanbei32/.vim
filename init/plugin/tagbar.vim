@@ -19,7 +19,7 @@
 
 	"{{ autocommands 
 
-		autocmd VimEnter * nested :TagbarOpen
+		" autocmd VimEnter * :TagbarToggle
 
 	"}}
 

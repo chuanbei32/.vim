@@ -37,7 +37,8 @@
 
 		set softtabstop=4 " 让 vim 把连续数量的空格视为一个制表符
 
-		set mouse+=a " 开启鼠标模式
+		" set mouse+=a " 开启鼠标模式
+		" set mousehide " 编辑模式隐藏鼠标
 
 		set cursorline " 高亮显示当前行
 
@@ -103,9 +104,9 @@
 
 		set modelines=5 " 模式行查找行数
 
-		set scrolloff=5
+		set scrolloff=1
 
-		set scrolljump=10
+		set scrolljump=1
 
 	" }}
 
@@ -237,8 +238,6 @@
 	set switchbuf+=usetab,newtab
 
 	set smarttab
-
-	set mousehide
 
 	set selection=inclusive
 
