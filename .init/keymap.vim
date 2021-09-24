@@ -128,6 +128,11 @@
 		noremap <silent><m-left> :call Tab_MoveLeft()<cr>
 		noremap <silent><m-right> :call Tab_MoveRight()<cr>
 
+		nmap <tab> V>
+		nmap <s-tab> V<
+		vmap <tab> >gv
+		vmap <s-tab> <gv
+
 	"}}
 
 
