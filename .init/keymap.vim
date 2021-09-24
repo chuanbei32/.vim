@@ -1,6 +1,6 @@
 " {
 	
-	"{{ Window
+	" Window {{ 
 
 		nnoremap <Leader>wc <C-W>c " 
 
@@ -30,7 +30,7 @@
 
 	"}}
 
-	"{{ Buffer
+	" Buffer {{ 
 
 		nnoremap <buffer> <Leader>buf :buffers<CR>
 
@@ -52,7 +52,7 @@
 
 	"}}
 
-	"{{	Tab
+	" Tab {{	
 
 		nnoremap <buffer> <Leader>tab :tabs<CR>
 

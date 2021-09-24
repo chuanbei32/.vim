@@ -1,14 +1,11 @@
-" { 
+" init { 
 
     let g:config_file_list = [
-        \ 'variable.vim',
-        \ 'function.vim',
         \ 'base.vim',
         \ 'command.vim',
         \ 'autocommand.vim',
         \ 'keymap.vim',
-        \ 'path.vim',
-        \ '.plugin.vim',
+        \ 'plugin.vim',
         \ 'interface.vim',
         \ ]
 
