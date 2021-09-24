@@ -233,3 +233,6 @@
 [submodule "pack/vendor/start/close-buffers"]
 	path = pack/vendor/start/close-buffers
 	url = https://github.com/Asheq/close-buffers.vim.git
+[submodule "pack/vendor/start/vim-floaterm"]
+	path = pack/vendor/start/vim-floaterm
+	url = https://github.com/voldikss/vim-floaterm.git
