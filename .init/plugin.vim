@@ -1,3 +1,36 @@
+" coc {
+
+    inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+    
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+    " phpactor {{
+
+        let g:phpactorPhpBin = "/usr/local/iwork/php/8.0/bin/php"
+
+        autocmd FileType php set iskeyword+=$
+        
+        autocmd FileType php setlocal omnifunc=phpactor#Complete
+            
+    " }}
+
+" }
+
+" ultisnips {{
+
+    let g:UltiSnipsExpandTrigger="<Leader>us"
+    let g:UltiSnipsSnippetDirectories=["__ultisnips"]
+
+" }}
+
 " ale {
 
     let g:ale_disable_lsp = 1
@@ -15,23 +48,6 @@
 
     " let g:ale_sign_error = '✗'
     " let g:ale_sign_warning = '⚡'
-
-" }
-
-
-" coc {
-
-    inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-    
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " }
 
@@ -119,23 +135,6 @@
 
 " }
 
-
-" delimitMate { 
-
-    let g:delimitMate_expand_cr = 1
-
-" }
-
-" git-messenger {
-    
-    let g:git_messenger_close_on_cursor_moved=0
-
-    nmap <Leader>gmo :GitMessenger<CR>
-    nmap <Leader>gmc :GitMessengerClose<CR>
-
-" }
-
-
 " leaderF {
 
     " let g:Lf_WorkingDirectoryMode = 'Ac'
@@ -176,26 +175,13 @@
     nmap <Leader>mun :MundoToggle<CR>
 " }
 
-" NERDTree-git-plugin {
+" tagbar {
 
-    " let g:NERDTreeGitStatusIndicatorMapCustom = {
-        " \ "Modified"  : "✹",
-        " \ "Staged"    : "✚",
-        " \ "Untracked" : "✭",
-        " \ "Renamed"   : "➜",
-        " \ "Unmerged"  : "═",
-        " \ "Deleted"   : "✖",
-        " \ "Dirty"     : "✗",
-        " \ "Clean"     : "✔︎",
-        " \ 'Ignored'   : '☒',
-        " \ "Unknown"   : "?"
-        " \ }
+    let g:tagbar_width = 30
 
-    let g:NERDTreeGitStatusUseNerdFonts = 1
-    let g:NERDTreeGitStatusShowIgnored = 1
-    let g:NERDTreeGitStatusConcealBrackets = 1
-    let g:NERDTreeGitStatusShowClean = 1
-    let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
+    nmap <leader>tb :TagbarToggle<CR>
+
+    " autocmd VimEnter * :TagbarToggle
 
 " }
 
@@ -222,31 +208,28 @@
 
 " }
 
-" phpactor {
+" NERDTree-git-plugin {
 
-    let g:phpactorPhpBin = "/usr/local/iwork/php/8.0/bin/php"
+    " let g:NERDTreeGitStatusIndicatorMapCustom = {
+        " \ "Modified"  : "✹",
+        " \ "Staged"    : "✚",
+        " \ "Untracked" : "✭",
+        " \ "Renamed"   : "➜",
+        " \ "Unmerged"  : "═",
+        " \ "Deleted"   : "✖",
+        " \ "Dirty"     : "✗",
+        " \ "Clean"     : "✔︎",
+        " \ 'Ignored'   : '☒',
+        " \ "Unknown"   : "?"
+        " \ }
 
-    autocmd FileType php set iskeyword+=$
-    
-    autocmd FileType php setlocal omnifunc=phpactor#Complete
-        
-"}
-
-" tagbar {
-
-    let g:tagbar_width = 30
-
-    nmap <leader>tb :TagbarToggle<CR>
-
-    " autocmd VimEnter * :TagbarToggle
+    let g:NERDTreeGitStatusUseNerdFonts = 1
+    let g:NERDTreeGitStatusShowIgnored = 1
+    let g:NERDTreeGitStatusConcealBrackets = 1
+    let g:NERDTreeGitStatusShowClean = 1
+    let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
 
 " }
-
-" UltiSnips {
-
-    let g:UltiSnipsExpandTrigger = "<nop>"
-
-"}
 
 " vim-airline-themes {
 
@@ -284,4 +267,19 @@
     let g:WebDevIconsUnicodeDecorateFileNodes = 1
 
 "}
+
+" delimitMate { 
+
+    let g:delimitMate_expand_cr = 1
+
+" }
+
+" git-messenger {
+    
+    let g:git_messenger_close_on_cursor_moved=0
+
+    nmap <Leader>gmo :GitMessenger<CR>
+    nmap <Leader>gmc :GitMessengerClose<CR>
+
+" }
 

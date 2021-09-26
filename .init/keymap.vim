@@ -1,27 +1,27 @@
 " {
+
+	nmap <space> <leader> 
 	
 	" Window {{ 
 
 		nnoremap <Leader>wc <C-W>c " 
-
 		nnoremap <Leader>wl <C-W>l " 跳转至右方的窗口
-
 		nnoremap <Leader>wh <C-W>h " 跳转至左方的窗口
-
 		nnoremap <Leader>wk <C-W>k " 跳转至上方的窗口
-
 		nnoremap <Leader>wj <C-W>j " 跳转至下方的窗口
 
 		noremap <m-H> <c-w>h
 		noremap <m-L> <c-w>l
 		noremap <m-J> <c-w>j
 		noremap <m-K> <c-w>k
+
 		inoremap <m-H> <esc><c-w>h
 		inoremap <m-L> <esc><c-w>l
 		inoremap <m-J> <esc><c-w>j
 		inoremap <m-K> <esc><c-w>k
 
 		set termwinkey=<c-_>
+
 		tnoremap <m-H> <c-_>h
 		tnoremap <m-L> <c-_>l
 		tnoremap <m-J> <c-_>j
@@ -33,21 +33,13 @@
 	" Buffer {{ 
 
 		nnoremap <buffer> <Leader>buf :buffers<CR>
-
 		nnoremap <buffer> <Leader>bb :buffer<Space>
-
 		nnoremap <buffer> <Leader>ba :badd<Space>
-
 		nnoremap <buffer> <Leader>bd :bdelete<Space>
-
 		nnoremap <buffer> <Leader>bun :bunload!<CR>
-
 		nnoremap <buffer> <Leader>bn :bnext<CR>
-
 		nnoremap <buffer> <Leader>bp :bprevious<CR>
-
 		nnoremap <buffer> <Leader>bl :blast<CR>
-
 		nnoremap <buffer> <Leader>bf :bfirst<CR>
 
 	"}}
@@ -55,17 +47,11 @@
 	" Tab {{	
 
 		nnoremap <buffer> <Leader>tab :tabs<CR>
-
 		nnoremap <buffer> <Leader>tn :tabnew<Space>
-
 		" nnoremap <buffer> <Leader>tc :tabclose<CR>
-
 		nnoremap <buffer> <Leader>tn :tabn<CR>
-
 		nnoremap <buffer> <Leader>tp :tabp<CR>
-
 		nnoremap <buffer> <Leader>tf :tabfirst<CR>
-
 		nnoremap <buffer> <Leader>tl :tablast<CR>
 
 		noremap <silent><leader>1 1gt<cr>
@@ -140,9 +126,7 @@
 
 	nnoremap <Leader>term :terminal<CR>
 
-	map <silent> <leader><cr> :noh<cr>
-
-	nmap <space> <leader> 
+	map <silent> <leader>noh :noh<cr>
 
 	inoremap <C-z> <C-x><C-o>
 
@@ -221,84 +205,5 @@
 
 	" 任务结束时候响铃提醒
 	let g:asyncrun_bell = 1
-
-	" 设置 F10 打开/关闭 Quickfix 窗口
-	nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
-
-	" F9 编译 C/C++ 文件
-	nnoremap <silent> <F9> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-
-	" F5 运行文件
-	nnoremap <silent> <F5> :call ExecuteFile()<cr>
-
-	" F7 编译项目
-	nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <cr>
-
-	" F8 运行项目
-	nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
-
-	" F6 测试项目
-	nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
-
-	" 更新 cmake
-	nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
-
-	function! ExecuteFile()
-		let cmd = ''
-		if index(['c', 'cpp', 'rs', 'go'], &ft) >= 0
-			" native 语言，把当前文件名去掉扩展名后作为可执行运行
-			" 写全路径名是因为后面 -cwd=? 会改变运行时的当前路径，所以写全路径
-			" 加双引号是为了避免路径中包含空格
-			let cmd = '"$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-		elseif &ft == 'python'
-			let $PYTHONUNBUFFERED=1 " 关闭 python 缓存，实时看到输出
-			let cmd = 'python "$(VIM_FILEPATH)"'
-		elseif &ft == 'javascript'
-			let cmd = 'node "$(VIM_FILEPATH)"'
-		elseif &ft == 'perl'
-			let cmd = 'perl "$(VIM_FILEPATH)"'
-		elseif &ft == 'ruby'
-			let cmd = 'ruby "$(VIM_FILEPATH)"'
-		elseif &ft == 'php'
-			let cmd = 'php "$(VIM_FILEPATH)"'
-		elseif &ft == 'lua'
-			let cmd = 'lua "$(VIM_FILEPATH)"'
-		elseif &ft == 'zsh'
-			let cmd = 'zsh "$(VIM_FILEPATH)"'
-		elseif &ft == 'ps1'
-			let cmd = 'powershell -file "$(VIM_FILEPATH)"'
-		elseif &ft == 'vbs'
-			let cmd = 'cscript -nologo "$(VIM_FILEPATH)"'
-		elseif &ft == 'sh'
-			let cmd = 'bash "$(VIM_FILEPATH)"'
-		else
-			return
-		endif
-		" Windows 下打开新的窗口 (-mode=4) 运行程序，其他系统在 quickfix 运行
-		" -raw: 输出内容直接显示到 quickfix window 不匹配 errorformat
-		" -save=2: 保存所有改动过的文件
-		" -cwd=$(VIM_FILEDIR): 运行初始化目录为文件所在目录
-		if has('win32') || has('win64')
-			exec 'AsyncRun -cwd=$(VIM_FILEDIR) -raw -save=2 -mode=4 '. cmd
-		else
-			exec 'AsyncRun -cwd=$(VIM_FILEDIR) -raw -save=2 -mode=0 '. cmd
-		endif
-	endfunc
-
-	if executable('rg')
-		noremap <silent><F2> :AsyncRun! -cwd=<root> rg -n --no-heading 
-					\ --color never -g *.h -g *.c* -g *.py -g *.js -g *.vim 
-					\ <C-R><C-W> "<root>" <cr>
-	elseif has('win32') || has('win64')
-		noremap <silent><F2> :AsyncRun! -cwd=<root> findstr /n /s /C:"<C-R><C-W>" 
-					\ "\%CD\%\*.h" "\%CD\%\*.c*" "\%CD\%\*.py" "\%CD\%\*.js"
-					\ "\%CD\%\*.vim"
-					\ <cr>
-	else
-		noremap <silent><F2> :AsyncRun! -cwd=<root> grep -n -s -R <C-R><C-W> 
-					\ --include='*.h' --include='*.c*' --include='*.py' 
-					\ --include='*.js' --include='*.vim'
-					\ '<root>' <cr>
-	endif
 
 " {

@@ -20,6 +20,8 @@
 " {
 
 	"" 基础设置 {{
+	
+		set runtimepath+=~/.vim/__ultisnips
 
 		let mapleader=" " " <Leader>
 
