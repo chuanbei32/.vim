@@ -24,12 +24,19 @@
 
 " }
 
-" ultisnips {{
+
+" asyncrun {
+    
+
+" }
+
+
+" ultisnips {
 
     let g:UltiSnipsExpandTrigger="<Leader>us"
     let g:UltiSnipsSnippetDirectories=["__ultisnips"]
 
-" }}
+" }
 
 " ale {
 
