@@ -23,8 +23,6 @@
 	
 		set runtimepath+=~/.vim/__ultisnips
 
-		let mapleader=" " " <Leader>
-
 		set nocompatible " 禁用 vi 兼容模式
 
 		set viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo " 设置 viminfo, 必须放在 nocompatible 之后

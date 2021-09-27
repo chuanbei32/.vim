@@ -1,7 +1,9 @@
 " {
+	
+	let mapleader=" " " <Leader>
 
 	nmap <space> <leader> 
-	
+
 	" Window {{ 
 
 		nnoremap <Leader>wc <C-W>c " 
@@ -121,6 +123,9 @@
 
 	"}}
 
+	" session {{
+
+	" }}
 
 	nnoremap <Leader>sh :shell<CR>
 
@@ -200,10 +205,16 @@
 
 	nmap <Leader>M % " 定义快捷键在结对符之间跳转
 
-	" 自动打开 quickfix window ，高度为 6
-	let g:asyncrun_open = 6
+	nmap <Leader><Leader> V
+	xmap <Leader><Leader> <Esc>
 
-	" 任务结束时候响铃提醒
-	let g:asyncrun_bell = 1
+	nnoremap <CR> za
+
+	xnoremap j gj
+	xnoremap k gk
+
+	nnoremap gh g^
+	nnoremap gl g$
+
 
 " {

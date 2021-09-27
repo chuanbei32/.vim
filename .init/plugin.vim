@@ -1,4 +1,9 @@
 " coc {
+    
+    let g:coc_global_extensions = [ 
+        \ 'coc-json', 'coc-xml', 'coc-yaml', 'coc-vetur', 'coc-toml', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-svg', 'coc-sql', 
+        \ 'coc-sh', 'coc-highlight', 'coc-cssmodules', 'coc-discord-rpc', 'coc-emmet', 'coc-graphql', 'coc-html-css-support',
+        \ '@yaegassy/coc-nginx', 'coc-perl']
 
     inoremap <silent><expr> <TAB>
         \ pumvisible() ? "\<C-n>" :
@@ -6,8 +11,8 @@
         \ coc#refresh()
 
     function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
     
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
@@ -15,9 +20,7 @@
     " phpactor {{
 
         let g:phpactorPhpBin = "/usr/local/iwork/php/8.0/bin/php"
-
         autocmd FileType php set iskeyword+=$
-        
         autocmd FileType php setlocal omnifunc=phpactor#Complete
             
     " }}
