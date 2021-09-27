@@ -1,0 +1,204 @@
+<?php
+
+namespace app\index\controller;
+
+use think\Env;
+use think\Controller;
+use app\admin\model\Admin;
+
+class Common extends Controller
+{
+    public function notFound()
+    {
+        header('HTTP/1.0 404 Not Found');
+        header('Status: 404 Not Found');
+        exit();
+    }
+
+    public function _initialize()
+    {
+        header('Content-type:text/html;charset=utf-8');
+        $admin_id = input('adminId');
+        if (1 != Admin::where('id', $admin_id)->value('status')) {
+            $this->notFound();
+        }
+        $bases = model('base')->where('admin_id', $admin_id)->find();
+        if (!$bases) {
+            $this->error('会员未开通或未完善会员基本资料,请联系管理员！', url('admin/login/index'));
+        }
+        $this->swCompany($bases);
+        $bases['desc'] = mb_substr(cutstr_html($bases['intro']), 0, 100, 'utf-8');
+        $hy = db('hengye')->field('catname')->where('catid', $bases['hengyeone'])->find();
+        $bases['hengyeone'] = $hy['catname'];
+        // $bases['intro'] = preg_replace('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', '<img src="$1" border="0" width="820" ></img>', $bases['intro']);
+        $bases['intro2'] = preg_replace('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', '<img src="$1" border="0" width="320" ></img>', $bases['intro']);
+        if (strpos($bases['sjurl'], 'ttp://')) {
+            $bases['sjurl'] = str_replace('http://', '', $bases['sjurl']);
+        }
+        $caters = db('Category')->order('id desc')->select();
+        $id = input('id');
+        $this->right($admin_id);
+
+        $banner_num = db('banner')->where('admin_id', $admin_id)->order('sort desc')->count();
+        if ($banner_num == 1) {
+            $banner = db('banner')->field('title,img_src,link_url')->where('admin_id', $admin_id)->order('sort desc')->find();
+        } else {
+            $banner = db('banner')->field('title,img_src,link_url')->where('admin_id', $admin_id)->order('sort desc')->select();
+        }
+
+        $wurl = explode('/', $_SERVER['PHP_SELF']);
+        switch ($wurl[3] ?? 'index') {
+            case 'index':
+                $biaoshi = '1';
+                break;
+            case 'about':
+                $biaoshi = '2';
+                break;
+            case 'goods':
+                $biaoshi = '3';
+                break;
+            case 'article':
+                $biaoshi = '4';
+                break;
+            case 'honor':
+                $biaoshi = '5';
+                break;
+            case 'contact':
+                $biaoshi = '6';
+                break;
+        }
+
+        $oemxx = db('admin')->field('oid')->where('id', $admin_id)->find();
+        $oemInfo = db('oem')->where('id', $oemxx['oid'])->find();
+
+        $this->redis = new \Redis();
+        $this->redis->connect(Env::get('REDIS_HOST'), Env::get('REDIS_PORT'));
+        $this->redis->auth(Env::get('REDIS_PASSWD'));
+        $this->redis->select(0);
+        $template = $this->redis->hGetAll('system:template');
+        $template['zhaochanpin_type'] ?? false || $template['zhaochanpin_type'] = 'tel';
+        $template['zhaochanpin_text'] ?? false || $template['zhaochanpin_text'] = '查看电话';
+        $template['sdrc_type'] ?? false || $template['sdrc_type'] = 'tel';
+        $template['sdrc_text'] ?? false || $template['sdrc_text'] = '查看电话';
+        $template['lxsjzyh_type'] ?? false || $template['lxsjzyh_type'] = 'tel';
+        $template['lxsjzyh_text'] ?? false || $template['lxsjzyh_text'] = '查看电话';
+        switch ($_SERVER['HTTP_HOST']) {
+            case 'caigou.lxsjzyh.com':
+                $baseUrlLogo = '/static/cai.png';
+                $webName = '爱购网';
+                $showTel = 'tel' == $template['lxsjzyh_type'] ? true : false;
+                $showStar = 'star' == $template['lxsjzyh_type'] ? true : false;
+                $textTel = $template['lxsjzyh_text'];
+                break;
+            case 'zf.sdrc.vip':
+            case 'gw.dnsresolve.cn:800':
+                $baseUrlLogo = '/static/run.png';
+                $webName = '润优釆网';
+                $showTel = 'tel' == $template['sdrc_type'] ? true : false;
+                $showStar = 'star' == $template['sdrc_type'] ? true : false;
+                $textTel = $template['sdrc_text'];
+                break;
+            case 'b2b.zhaochanpin.com':
+            default:
+                $baseUrlLogo = '/static/head-logo.jpg';
+                $webName = '找产品网';
+                $showTel = 'tel' == $template['zhaochanpin_type'] ? true : false;
+                $showStar = 'star' == $template['zhaochanpin_type'] ? true : false;
+                $textTel = $template['zhaochanpin_text'];
+                break;
+        }
+        $isCon = false;
+        $this->assign('isCon', $isCon);
+        $this->assign('showStar', $showStar);
+        $this->assign('logos', $baseUrlLogo);
+        $this->assign('webName', $webName);
+        $this->assign('showTel', $showTel);
+        $this->assign('textTel', $textTel);
+        $this->assign('admin_id', $admin_id);
+        $this->assign([
+            'base' => $bases,
+            'caters' => $caters,
+            'banner' => $banner,
+            'banner_num' => $banner_num,
+            'weburl' => SITE_URL,
+            'biaoshi' => $biaoshi,
+            'oemInfo' => $oemInfo
+        ]);
+
+        $isMobile = is_mobile_request() ? 'web' : 'pc';
+        request()->get(['type' => $isMobile]);
+    }
+
+    public function right($admin_id)
+    {
+        $clickers = db('goods')->where(['admin_id' => $admin_id])->order('click desc')->limit(3)->select();
+        $this->assign(['clickers' => $clickers]);
+    }
+
+    public function swHost(string $host, string $color)
+    {
+        switch ($host) {
+            case 'zf.sdrc.vip':
+            case 'gw.dnsresolve.cn:800':
+                $views = 'sdrcblue';
+                break;
+            // case 'zf.sdrc.vip':
+            // case 'gw.dnsresolve.cn:800':
+            //     $views = 'sdrc';
+            //     break;
+            case 'caigou.lxsjzyh.com':
+                $views = 'cai';
+                break;
+            case 'b2b.zhaochanpin.com':
+            default:
+                $views = $color;
+                break;
+        }
+        return $views;
+    }
+
+    public function swCompany(&$bases): void
+    {
+        switch ($_SERVER['HTTP_HOST']) {
+            default:
+                break;
+        }
+    }
+
+    // 调用模板
+    public function selectTemplate($admin_id)
+    {
+        $baseInfo = model('base')->field('templateid')->where('admin_id', $admin_id)->find();
+        $skin = '';
+        switch ($baseInfo['templateid']) {
+            case '1':
+                // $skin = 'blue';
+                $skin = $this->swHost($_SERVER['HTTP_HOST'], 'blue');
+                break;
+            case '2':
+                // $skin = 'red';
+                $skin = $this->swHost($_SERVER['HTTP_HOST'], 'blue');
+                // $skin = $this->swHost($_SERVER['HTTP_HOST'], 'red');
+                break;
+            case '3':
+                // $skin = 'green';
+                // $skin = $this->swHost($_SERVER['HTTP_HOST'], 'green');
+                $skin = $this->swHost($_SERVER['HTTP_HOST'], 'blue');
+                break;
+            case '4':
+                // $skin = 'orange';
+                // $skin = $this->swHost($_SERVER['HTTP_HOST'], 'orange');
+                $skin = $this->swHost($_SERVER['HTTP_HOST'], 'blue');
+                break;
+            case '5':
+                // $skin = 'gray';
+                // $skin = $this->swHost($_SERVER['HTTP_HOST'], 'gray');
+                $skin = $this->swHost($_SERVER['HTTP_HOST'], 'blue');
+                break;
+            default:
+                $skin = $this->swHost($_SERVER['HTTP_HOST'], 'blue');
+                break;
+        }
+        return $skin;
+    }
+}

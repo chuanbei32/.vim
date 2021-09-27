@@ -1,0 +1,54 @@
+<div id="destoon_qrcode" style="display:none;"></div>
+<div class="topbg">
+    <div style="width: 1200px;margin: auto;">
+        <img id="" src="{$logos}" alt="" />
+        <span style="float: right;">平台故障投诉电话：4001681911</span>
+        <hr />
+    </div>
+    <div class="m">
+        <div class="head">
+            <div class="logo">{if condition="$base.logo"}
+                <img src="__UPLOADS__/logos/{$base.logo}" align="right"
+                    style="margin: 0px 16px 10px 0px;padding:4px;height:110px;">
+                &nbsp;{/if}
+            </div>
+            <div class="comname">
+                <h2><a>{$base.company}</a>
+                    <div>
+                        <font>VIP会员</font><em class="year">第<b>1</b>年</em>
+                    </div>
+                </h2>
+                <h3 class="text-overflow">{$base.industry}...</h3>
+            </div>
+            <div class="telphone">
+                <span>全国服务咨询热线:</span>
+                <br>
+                <b onclick="jumpContact('')">
+                    {if false == $isCon}
+                        {if (true == $showTel)}
+                            {$base.tel}
+                        {elseif true == $showStar}
+                            {:substr_replace($base.tel, '****', 3, 4)}
+                        {else/}
+                            {$textTel}
+                        {/if}
+                    {else/}
+                        {$base.tel}
+                    {/if}
+                </b>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="headBox2">
+    <div class="wrap">
+        <dl class="menuDl fl">
+            <dd class=""><span><a href="/gs{$base.admin_id}/">网站首页</a></span></dd>
+            <dd class=""><span><a href="/gs{$base.admin_id}/about.html">公司介绍</a></span></dd>
+            <dd class=""><span><a href="/gs{$base.admin_id}/goods.html">供应产品</a></span></dd>
+            <dd class=""><span><a href="/gs{$base.admin_id}/article.html">新闻中心</a></span></dd>
+            <dd class=""><span><a href="/gs{$base.admin_id}/honor.html">荣誉资质</a></span></dd>
+            <dd class=""><span><a href="/gs{$base.admin_id}/contact.html">联系方式</a></span></dd>
+        </dl>
+    </div>
+</div>

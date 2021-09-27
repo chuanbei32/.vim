@@ -1,0 +1,36 @@
+极客豆兑换
+
+# 请为您的变更输入提交说明。以 '#' 开始的行将被忽略，而一个空的提交
+# 说明将会终止提交。
+#
+# 交互式变基操作正在进行中；至 96543bc5
+# 最后一条命令已完成（1 条命令被执行）：
+#    pick a583579c 极客豆兑换
+# 接下来要执行的命令（剩余 2 条命令）：
+#    pick cc5f9619 极客豆兑换
+#    pick ba737955 极客豆兑换订单价格显示
+# 您在执行将分支 'ft/beans' 变基到 '96543bc5' 的操作。
+#
+# 要提交的变更：
+#	修改：     .gitignore
+#	修改：     application/admin/controller/Order.php
+#	修改：     application/admin/logic/RefundLogic.php
+#	修改：     application/common.php
+#	修改：     application/common/logic/CartLogic.php
+#	修改：     application/common/logic/FreightLogic.php
+#	修改：     application/common/logic/OrderLogic.php
+#	修改：     application/common/logic/Pay.php
+#	修改：     application/common/logic/PlaceOrder.php
+#	修改：     application/mobile/controller/Cart.php
+#	修改：     application/mobile/controller/Community.php
+#	修改：     application/mobile/controller/Goods.php
+#	修改：     application/mobile/controller/Order.php
+#	修改：     application/mobile/controller/Payment.php
+#	修改：     application/seller/controller/Order.php
+#	修改：     application/seller/logic/OrderLogic.php
+#	修改：     application/seller/new/order/detail.html
+#	新文件：   template/mobile/default/cart/cart2ByExchange.html
+#	新文件：   template/mobile/default/goods/goodsInfoByExchange.html
+#	修改：     template/mobile/default/index/index.html
+#	修改：     template/mobile/default/store/index.html
+#

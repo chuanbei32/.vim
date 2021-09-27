@@ -1,0 +1,1597 @@
+<?php
+
+namespace app\api\controller;
+
+use \think\Db;
+use think\Request;
+use think\Controller;
+use think\captcha\Captcha;
+use app\api\model\GoodsShop;
+use app\api\model\KeywordReport;
+use app\api\model\Admin as adminmodel;
+use app\api\model\BaiduReportAccountQ;
+use app\api\model\KeywordReportHistory;
+use app\api\model\GeneralizeOpportunist;
+use app\api\model\FinanceFauxsumerismOther;
+use app\api\model\FinanceFauxsumerismExpire;
+
+class Consumption extends Base
+{
+    public function statement()
+    {
+        $data = request()->param();
+        $ad[] = $data['uid'];
+        if (!(isset($data['uid']) && isset($data['text']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['name']) && !empty($data['name'])) {
+            $where['name'] = ['like', '%' . $data['name'] . '%'];
+        }
+        $adminInfo = Db('admin')->where('id', $data['uid'])->value('admin_cate_id');
+        if ($adminInfo == 6 || $adminInfo == 1) {
+            $excel = db('finance_fauxsumerism')->where('status', 3)->group('uid')->select();
+            $idd = array_column($excel, 'uid');
+            $time = strtotime(date('Y-m-d'));
+            $array = Db('admin')->field('id,name')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', 'in', $idd)->order('id desc')->select();
+            foreach ($array as $k => $v) {
+                $array[$k]['money'] = db('finance_fauxsumerism')->where('uid', $v['id'])->where('status', 3)->sum('money');
+                $array[$k]['break'] = db('finance_fauxsumerism')->where('uid', $v['id'])->where('status', 1)->where('add_time', '>=', $time)->where('add_time', '<', $time + 86400)->sum('money');
+            }
+            $count = Db('admin')->where('del', 1)->where('status', 1)->where($where)->where('id', 'in', $idd)->where('admin_cate_id', 4)->count();
+        }
+        return json(['status' => 1, 'msg' => '操作成功', 'data' => $array, 'count' => $count]);
+    }
+
+    public function hidePay()
+    {
+        $data = request()->param();
+        //dump($data);die;
+        if (isset($data['id'])) {
+            return json(['status' => 2, 'msg' => '参数错误']);
+        }
+        $where = [];
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        $list = Db('finance_fauxsumerism')
+            ->field('A.*,B.name,B.mobile')
+            ->alias('A')
+            ->where($where)
+            ->where('A.status', 3)
+            ->where('A.uid', $data['uid'])
+            ->join('admin B', 'B.id = A.uid')
+            ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+            ->order('A.add_time desc')
+            ->select();
+        $count = Db('finance_fauxsumerism')
+            ->where('A.uid', $data['uid'])
+            ->alias('A')
+            ->where('A.status', 3)
+            ->where($where)
+            ->count();
+        foreach ($list as $k => $v) {
+            $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+            $list[$k]['jia_time'] = date('Y-m-d H:i', $v['jia_time']);
+            if ($v['consumer'] == 1) {
+                $list[$k]['consumer'] = 'PC';
+            } else {
+                $list[$k]['consumer'] = '手机端';
+            }
+        }
+        return json(['status' => 1, 'msg' => '操作成功', 'data' => $list, 'count' => $count]);
+    }
+
+    public function delAllOne()
+    {
+        $data = request()->param();
+        if (!isset($data['id'])) {
+            return json(['status' => 2, 'msg' => '参数错误']);
+        }
+        $list = Db('finance_fauxsumerism')->where('id', 'in', $data['id'])->update(['status' => 2, 'del_time' => time(), 'cause' => $data['cause'], 'adminid' => $data['adminid']]);
+        if ($list) {
+            return json(['status' => 1, 'msg' => '删除成功']);
+        } else {
+            return json(['status' => 2, 'msg' => '删除失败']);
+        }
+    }
+
+    public function delAll()
+    {
+        $data = request()->param();
+        if (!isset($data['id'])) {
+            return json(['status' => 2, 'msg' => '参数错误']);
+        }
+        $list = Db('finance_fauxsumerism')->where('id', 'in', $data['id'])->update(['status' => 2]);
+        foreach ($data['id'] as $k => $v) {
+            $info = Db('finance_fauxsumerism')->where('id', $v)->find();
+            Db('admin')->where('id', $info['uid'])->setInc('balance', $info['money']);
+        }
+        if ($list) {
+            return json(['status' => 1, 'msg' => '删除成功']);
+        } else {
+            return json(['status' => 2, 'msg' => '删除失败']);
+        }
+    }
+
+    public function expenditure()
+    {
+        $data = request()->param();
+        if (!(isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['name']) && !empty($data['name'])) {
+            $where['a.name'] = ['like', '%' . $data['name'] . '%'];
+        }
+        if (isset($data['uid']) && !empty($data['uid'])) {
+            $where['b.name'] = ['like', '%' . $data['uid'] . '%'];
+        }
+        if (isset($data['pid']) && !empty($data['pid'])) {
+            $where['c.name'] = ['like', '%' . $data['pid'] . '%'];
+        }
+        if (isset($data['kefu_id']) && !empty($data['kefu_id'])) {
+            $where['d.name'] = ['like', '%' . $data['kefu_id'] . '%'];
+        }
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['a.add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['a.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['a.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        $data = Db('expenditure')
+                ->alias('a')
+                ->field('a.id,b.name as uid,c.name as pid,d.name as kefu_id,a.add_time,a.money')
+                ->where($where)
+                ->join('admin b', 'a.uid = b.id', 'left')
+                ->join('admin c', 'a.pid = c.id', 'left')
+                ->join('admin d', 'a.kefu_id = d.id', 'left')
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->order('a.id desc')
+                ->select();
+        $count = Db('expenditure')->count();
+        if ($data) {
+            foreach ($data as $k => $v) {
+                $data[$k]['add_time'] = date('Y-m-d, H:i', $v['add_time']);
+            }
+        } else {
+            $data = [];
+        }
+        return json(['status' => 1, 'msg' => '操作成功', 'data' => $data, 'count' => $count]);
+    }
+
+    public function liushui()
+    {
+        $data = request()->param();
+        $ad[] = $data['uid'];
+        if (!(isset($data['uid']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        $count = '';
+        $array = [];
+        $admin = Db('admin')->where('id', $data['uid'])->value('admin_cate_id');
+        if ($admin == 1 || 6) {
+            $array = Db('recharge')->where($where)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->order('id desc')->select();
+            $count = Db('recharge')->where($where)->count();
+        }
+        if ($admin == 2) {
+            $admintwo = Db('admin')->where('pid', $data['uid'])->where('del', 1)->order('id desc')->select();
+            $ids = array_column($admintwo, 'id');
+            if (!empty($ids)) {
+                $adminthree = Db('admin')->where('pid', 'in', $ids)->where('del', 1)->select();
+                $idss = array_column($adminthree, 'id');
+                if (!empty($idss)) {
+                    $arrayid = array_merge($ids, $idss, $ad);
+                    $array = Db('recharge')->where($where)->where('del', 1)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where('uid', 'in', $arrayid)->order('id desc')->select();
+                    $count = Db('recharge')->where($where)->where('del', 1)->where('uid', 'in', $arrayid)->count();
+                } else {
+                    $arrayid = array_merge($ids, $ad);
+                    $array = Db('recharge')->where($where)->where('del', 1)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where('uid', 'in', $arrayid)->order('id desc')->select();
+                    $count = Db('recharge')->where($where)->where('del', 1)->where('uid', 'in', $arrayid)->count();
+                }
+            } else {
+                $array = Db('recharge')->where($where)->where('del', 1)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where('uid', 'in', $ad)->order('id desc')->select();
+                $count = Db('recharge')->where($where)->where('del', 1)->where('uid', 'in', $ad)->count();
+            }
+        }
+        if ($admin == 3) {
+            $array = Db('admin')->where('pid', $data['uid'])->where('del', 1)->order('id desc')->select();
+            $ids = array_column($array, 'id');
+            if (!empty($ids)) {
+                $arrayid = array_merge($ids, $ad);
+                $array = Db('recharge')->where($where)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where('uid', 'in', $arrayid)->order('id desc')->select();
+                $count = Db('recharge')->where($where)->where('uid', 'in', $arrayid)->count();
+            } else {
+                $array = Db('recharge')->where($where)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where('uid', 'in', $ad)->order('id desc')->select();
+                $count = Db('recharge')->where($where)->where('uid', 'in', $ad)->count();
+            }
+        }
+        foreach ($array as $k => $v) {
+            $array[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+            $info = Db('admin')->where('id', $v['pid'])->value('name');
+            $pid = Db('admin')->where('id', $v['uid'])->find();
+            $array[$k]['name'] = $pid['name'];
+            $array[$k]['admin'] = $info . '给' . $pid['name'] . '充值';
+        }
+        if ($array) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $array, 'count' => $count]);
+        } else {
+            return json(['status' => 2, 'msg' => '操作失败', 'data' => '']);
+        }
+    }
+
+    public function adminConsume()
+    {
+        $data = request()->param();
+        if (!(isset($data['uid']) && isset($data['text']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        if ($data['text'] == 1) {
+            $list = Db('finance_fauxsumerism')
+                ->field('A.*,B.name,B.mobile')
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->where('A.uid', $data['uid'])
+                ->join('admin B', 'B.id = A.uid')
+                // ->join('goods_goods_shop g', 'A.goods_id = g.id')
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->order('A.add_time desc')
+                ->order('A.id desc')
+                ->select();
+            $count = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->count();
+
+            $url = 'http://api.map.baidu.com/location/ip?ak=1QbeTXxNK4q1NM6HH04RmxvQs2UlISGp&ip=%s';
+            $map = [
+                'CHINANET' => '中国电信',
+                'UNICOM' => '中国联通',
+                'CMNET' => '中国移动',
+                'CERNET' => '教育网',
+                'BJENET' => '北京教育信息网',
+                'WASU' => '华数宽带',
+                'COLNET' => '东方有线',
+                'FOUNDERBN' => '方正宽带',
+                'TOPWAY-NET' => '天威视讯',
+                'DXTNET' => '二级接入商',
+                'OTHER' => '其他'
+            ];
+            foreach ($list as $k => &$v) {
+                $v['goods_title'] = $v['goods_id'] ? GoodsShop::where('id', $v['goods_id'])->value('title') : '店铺首页';
+                $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+                if ($v['consumer'] == 1) {
+                    $list[$k]['consumer'] = 'PC';
+                } elseif ($v['consumer'] = 2) {
+                    $list[$k]['consumer'] = '手机端';
+                } else {
+                    $port = GeneralizeOpportunist::where('uid', $v['uid'])->value('fenduan');
+                    $port = explode(',', $port);
+                    $list[$k]['consumer'] = $port[array_rand($port)];
+                }
+                $v['click_ratio'] = sprintf('%.2f', $v['clicks'] / $v['pv'] * 100) . '%';
+                if (empty($v['operation'])) {
+                    $ipInfo = file_get_contents(sprintf($url, $v['ip']));
+                    $ipinfo = json_decode($ipInfo, true);
+                    if (!isset($ipinfo['address'])) {
+                        $v['operation'] = $map['OTHER'];
+                    } else {
+                        $yun = explode('|', $ipinfo['address']);
+                        $v['operation'] = $map[$yun[4]] ?? $map['OTHER'];
+                    }
+                }
+            }
+
+            $clicks = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->sum('clicks');
+            $consumeClickPc = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 1)
+                ->where($where)
+                ->sum('clicks');
+            $consumeClickMobile = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 2)
+                ->where($where)
+                ->sum('clicks');
+            $totals = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->sum('money');
+            $consumeTotalPc = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 1)
+                ->where($where)
+                ->sum('money');
+            $consumeTotalMobile = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 2)
+                ->where($where)
+                ->sum('money');
+            $statistics = compact('clicks', 'consumeClickPc', 'consumeClickMobile', 'totals', 'consumeTotalPc', 'consumeTotalMobile');
+        } else {
+            $list = Db('recharge')
+                ->field('A.*,B.name,B.mobile')
+                ->alias('A')
+                ->where('A.uid', $data['uid'])
+                ->where($where)
+                ->join('admin B', 'B.id = A.uid')
+                ->order('A.add_time desc')
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->select();
+            foreach ($list as $k => $v) {
+                $list[$k]['add_time'] = date('Y-m-d');
+                $info = Db('admin')->where('id', $v['pid'])->value('name');
+                $list[$k]['admin'] = $info . '给' . $v['name'] . '充值';
+            }
+            $count = Db('recharge')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where($where)
+                ->count();
+        }
+        if ($list) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $list, 'count' => $count, 'statistics' => $statistics ?? []]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function index()
+    {
+        $data = request()->param();
+        if (!(isset($data['uid']) && isset($data['text']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];///为什么要+1??
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        if (isset($data['words']) && $data['words']) {
+            $where['A.antistop'] = ['like', '%' . $data['words'] . '%'];
+        }
+
+        if ($data['text'] == 1) {
+            $list = Db('finance_fauxsumerism')
+                ->field('A.*,B.name')
+                ->alias('A')
+                ->where('A.uid', $data['uid'])
+                ->join('admin B', 'B.id = A.uid')
+                ->where('A.status', 1)
+                ->order('A.add_time desc')
+                ->where($where)
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->select();
+            $url = 'http://api.map.baidu.com/location/ip?ak=1QbeTXxNK4q1NM6HH04RmxvQs2UlISGp&ip=%s';
+            $map = [
+                'CHINANET' => '中国电信',
+                'UNICOM' => '中国联通',
+                'CMNET' => '中国移动',
+                'CERNET' => '教育网',
+                'BJENET' => '北京教育信息网',
+                'WASU' => '华数宽带',
+                'COLNET' => '东方有线',
+                'FOUNDERBN' => '方正宽带',
+                'TOPWAY-NET' => '天威视讯',
+                'DXTNET' => '二级接入商',
+                'OTHER' => '其他'
+            ];
+            foreach ($list as $k => &$v) {
+                $v['goods_title'] = $v['goods_id'] ? GoodsShop::where('id', $v['goods_id'])->value('title') : '店铺首页';
+                $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+                if ($v['consumer'] == 1) {
+                    $list[$k]['consumer'] = 'PC';
+                } else {
+                    $list[$k]['consumer'] = '手机端';
+                }
+                $v['click_ratio'] = sprintf('%.2f', $v['clicks'] / $v['pv'] * 100) . '%';
+                if (empty($v['operation'])) {
+                    $ipInfo = file_get_contents(sprintf($url, $v['ip']));
+                    $ipinfo = json_decode($ipInfo, true);
+                    if (!isset($ipinfo['address'])) {
+                        $v['operation'] = $map['OTHER'];
+                    } else {
+                        $yun = explode('|', $ipinfo['address']);
+                        $v['operation'] = $map[$yun[4]] ?? $map['OTHER'];
+                    }
+                }
+            }
+            $count = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->count();
+            $clicks = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->sum('clicks');
+            $consumeClickPc = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 1)
+                ->where($where)
+                ->sum('clicks');
+            $consumeClickMobile = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 2)
+                ->where($where)
+                ->sum('clicks');
+            $totals = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->sum('money');
+            $consumeTotalPc = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 1)
+                ->where($where)
+                ->sum('money');
+            $consumeTotalMobile = Db('finance_fauxsumerism')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where('A.consumer', 2)
+                ->where($where)
+                ->sum('money');
+            $statistics = compact('clicks', 'consumeClickPc', 'consumeClickMobile', 'totals', 'consumeTotalPc', 'consumeTotalMobile');
+        } else {
+            $list = Db('recharge')
+                ->field('A.*,B.name')
+                ->alias('A')
+                ->where('A.uid', $data['uid'])
+                ->join('admin B', 'B.id = A.uid')
+                ->order('A.id desc')
+                ->where($where)
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->select();
+            foreach ($list as $k => $v) {
+                $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+                $info = Db('admin')->where('id', $v['pid'])->value('name');
+                $list[$k]['admin'] = $info . '给' . $v['name'] . '充值';
+            }
+            $count = Db('recharge')
+                ->where('uid', $data['uid'])
+                ->count();
+        }
+        return json(['status' => 1, 'msg' => '操作成功', 'data' => $list, 'count' => $count, 'statistics' => $statistics ?? []]);
+    }
+
+    public function ipEdit()
+    {
+        $data = request()->param();
+        if (!isset($data)) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $list = Db('finance_fauxsumerism')->where('status', 1)->field('id,ip,antistop,add_time,area,city,operator')->where('id', $data['id'])->find();
+        if ($list) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $list]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function ipEditPost()
+    {
+        $data = request()->param();
+        if (!isset($data)) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $list = Db('finance_fauxsumerism')->where('id', $data['id'])->update($data);
+        if ($list) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $list]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function sum()
+    {
+        $data = request()->param();
+        $ad[] = $data['uid'];
+        if (!(isset($data['uid']) && isset($data['text']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['name']) && !empty($data['name'])) {
+            $where['name'] = ['like', '%' . $data['name'] . '%'];
+        }
+        $adminInfo = Db('admin')->where('id', $data['uid'])->value('admin_cate_id');
+        if ($adminInfo == 6) {
+            $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->order('id desc')->select();
+            $count = Db('admin')->where($where)->where('admin_cate_id', 4)->where('del', 1)->where('status', 1)->count();
+        }
+        if ($adminInfo == 1) {
+            $admin = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('pid', $data['uid'])->order('id desc')->select();
+            $id = array_column($admin, 'id');
+            if (!empty($id)) {
+                $admintwo = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('pid', 'in', $id)->select();
+                $ids = array_column($admintwo, 'id');
+                if (!empty($ids)) {
+                    $adminthree = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('pid', 'in', $ids)->select();
+                    $idss = array_column($adminthree, 'id');
+                    if (!empty($idss)) {
+                        $arrayid = array_merge($ids, $id, $idss, $ad);
+                        $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', 'in', $arrayid)->order('id desc')->select();
+                        $count = Db('admin')->where($where)->where('id', 'in', $arrayid)->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->count();
+                    } else {
+                        $arrayid = array_merge($ids, $id, $ad);
+                        $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', 'in', $arrayid)->order('id desc')->select();
+                        $count = Db('admin')->where($where)->where('id', 'in', $arrayid)->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->select();
+                    }
+                } else {
+                    $arrayid = array_merge($id, $ad);
+                    $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', 'in', $arrayid)->order('id desc')->select();
+                    $count = Db('admin')->where($where)->where('id', 'in', $arrayid)->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->count();
+                }
+            } else {
+                $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', $data['uid'])->order('id desc')->select();
+                $count = Db('admin')->where($where)->where('id', $data['uid'])->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->count();
+            }
+        }
+        if ($adminInfo == 2) {
+            $admintwo = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('pid', $data['uid'])->order('id desc')->select();
+            $ids = array_column($admintwo, 'id');
+            if (!empty($ids)) {
+                $adminthree = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('pid', 'in', $ids)->select();
+                $idss = array_column($adminthree, 'id');
+                if (!empty($idss)) {
+                    $arrayid = array_merge($ids, $idss, $ad);
+                    $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', 'in', $arrayid)->order('id desc')->select();
+                    $count = Db('admin')->where($where)->where('id', 'in', $arrayid)->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->count();
+                } else {
+                    $arrayid = array_merge($ids, $ad);
+                    $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', 'in', $arrayid)->order('id desc')->select();;
+                    $count = Db('admin')->where($where)->where('id', 'in', $arrayid)->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->count();;
+                }
+            } else {
+                $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where($where)->where('id', $data['uid'])->order('id desc')->select();
+                $count = Db('admin')->where($where)->where('id', $data['uid'])->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->count();
+            }
+        }
+        if ($adminInfo == 3) {
+            $list = Db('admin')->where('pid', $data['uid'])->where('del', 1)->where('status', 1)->select();
+            $ids = array_column($list, 'id');
+            if ($ids) {
+                $arrayid = array_merge($ids, $ad);
+                $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->where($where)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where('pid', 'in', $arrayid)->order('id desc')->select();
+                $count = Db('admin')->where($where)->where('del', 1)->where('status', 1)->where('pid', 'in', $arrayid)->count();
+            } else {
+                $array = Db('admin')->field('id,name,mobile,add_time')->where('del', 1)->where('status', 1)->where('admin_cate_id', 4)->where($where)->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])->where('pid', $data['uid'])->order('id desc')->select();
+                $count = Db('admin')->where($where)->where('pid', $data['uid'])->where('del', 1)->where('status', 1)->count();
+            }
+        }
+        if ($data['text'] == 1) {
+            foreach ($array as $k => $v) {
+                $array[$k]['sum'] = Db('finance_fauxsumerism')->where('status', 1)->where('uid', $v['id'])->sum('money');
+                $array[$k]['add_time'] = date('Y-m-d', $v['add_time']);
+            }
+        } else {
+            foreach ($array as $k => $v) {
+                $array[$k]['sum'] = Db('recharge')->where('uid', $v['id'])->sum('money');
+                $array[$k]['add_time'] = date('Y-m-d', $v['add_time']);
+            }
+        }
+        $beginToday = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        $endToday = mktime(0, 0, 0, date('m'), date('d') + 1, date('Y')) - 1;
+        $beginYesterday = mktime(0, 0, 0, date('m'), date('d') - 1, date('Y'));
+        $endYesterday = mktime(0, 0, 0, date('m'), date('d'), date('Y')) - 1;
+        $start = strtotime(date('Y-m-d')) + (24 * 60 * 60 - 1);
+
+        $end = $start - 60 * 60 * 24 * 7 - (24 * 60 * 60 - 1);
+        foreach ($array as $k => $v) {
+            $array[$k]['today'] = Db('finance_fauxsumerism')->where('status', 1)->where('uid', $v['id'])->where('add_time', '<=', $endToday)->where('add_time', '>=', $beginToday)->sum('money');
+            $array[$k]['yesterday'] = Db('finance_fauxsumerism')->where('status', 1)->where('uid', $v['id'])->where('add_time', '<=', $endYesterday)->where('add_time', '>=', $beginYesterday)->sum('money');
+            $array[$k]['sevendays'] = Db('finance_fauxsumerism')->where('status', 1)->where('uid', $v['id'])->where('add_time', '>=', $end)->where('add_time', '<=', time())->sum('money');
+        }
+        if ($array) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $array, 'count' => $count]);
+        } else {
+            return json(['status' => 2, 'msg' => '操作失败', 'data' => '']);
+        }
+    }
+
+    public function finance()
+    {
+        $field = input('post.field');
+        $fieldName = input('post.fieldName');
+        $data = input('post.data');
+        $id = input('post.id');
+        $uid = input('post.uid');
+        $tt = input('post.tt');
+        if ($field == 'add_time') {
+            $data = strtotime($data);
+        }
+        if ($field == 'consumer') {
+            $map = ['PC' => 1, '手机端' => 2];
+            $data = $map[$data];
+        }
+        if ($field == 'money') {
+            if (!isset($tt)) {
+                $money = db('finance_fauxsumerism')->where('id', $id)->value('money');
+
+                if ($data > $money) {
+                    $num = $data - $money;
+                    db('admin')->where('id', $uid)->setDec('balance', $num);
+                } else {
+                    $num = $money - $data;
+                    db('admin')->where('id', $uid)->setInc('balance', $num);
+                }
+            }
+        }
+        $agoData = db('finance_fauxsumerism')->where('id', $id)->value($field);
+
+        $res = db('finance_fauxsumerism')->where('id', $id)->update([$field => $data]);
+        $res ? $code = 200 : $code = 101;
+        db('finance_edit_log')->insert([
+            'uid' => $uid,
+            'c_id' => $id,
+            'time' => time(),
+            'edit_field_name' => $fieldName,
+            'edit_field' => $field,
+            'edit_data' => $data,
+            'ago_data' => $agoData
+        ]);
+        returnJson(['code' => $code]);
+    }
+
+    public function getPayExcel()
+    {
+        $uid = input('param.uid');
+        $start_time = input('param.start_time') ? strtotime(input('param.start_time')) : strtotime('-7 day');
+        $end_time = input('param.end_time') ? strtotime(input('param.end_time')) : time();
+        if (!$uid) {
+            echo 'Sorry, can not export';
+            exit();
+        }
+        $state = db('admin')->where('id', $uid)->value('admin_cate_id');
+        if ($state == 3) {
+            $khid = db('admin')->field('id')->where('pid', $uid)->select();
+        } elseif ($state == 5 || $state == 6) {
+            $khid = db('admin')->field('id')->where('kefuid', $uid)->select();
+        } elseif ($state == 2 || $state == 1) {
+            $khid = db('admin')->field('id')->where('pid', $uid)->select();
+            $ids = array_column($khid, 'id');
+            $khid = db('admin')->field('id')->where('pid', 'in', $ids)->select();
+        }
+        if ($state == 4) {
+            $ids = [$uid];
+        } else {
+            $ids = array_column($khid, 'id');
+        }
+
+        $list = Db('finance_fauxsumerism')
+            ->field('A.add_time,A.antistop, A.area, A.city, A.biaoantistop, A.consumer,A.ip, A.money, A.operator,B.name')
+            ->alias('A')
+            ->where('A.status', 1)
+            ->where('A.uid', 'in', $ids)
+            ->where('A.add_time', '<', $end_time)
+            ->where('A.add_time', '>', $start_time)
+            ->join('admin B', 'B.id = A.uid')
+            ->order('A.add_time desc')
+            ->select();
+
+        foreach ($list as $k => $v) {
+            $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+            if ($v['consumer'] == 1) {
+                $list[$k]['consumer'] = 'PC';
+            } else {
+                $list[$k]['consumer'] = '手机端';
+            }
+        }
+        ini_set('memory_limit', '1024M');
+        vendor('phpexcel.Classes.PHPExcel');
+        $excelLine = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+        header('content-type:text/html;charset=utf8');
+        $objExcel = new \PHPExcel();
+        $objSheet = $objExcel->getActiveSheet();
+        $objExcel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+        $objExcel->getActiveSheet()->getColumnDimension('B')->setWidth(8);
+        $objExcel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+        $objExcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+        $objExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+        $objExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+        $objExcel->getActiveSheet()->getColumnDimension('G')->setWidth(15);
+        $objExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+        $objExcel->getActiveSheet()->getColumnDimension('U')->setWidth(15);
+        $objSheet->setTitle("客服{$uid}关联用户消费数据导出");
+        $objSheet->setCellValue('A1', '用户名')
+            ->setCellValue('B1', '金额')
+            ->setCellValue('C1', 'IP')
+            ->setCellValue('D1', '省')
+            ->setCellValue('E1', '市')
+            ->setCellValue('F1', '运营商')
+            ->setCellValue('G1', '关键词')
+            ->setCellValue('H1', '客户端')
+            ->setCellValue('I1', '时间');
+        $j = 2;
+        foreach ($list as $k => $v) {
+            $objSheet->setCellValue('A' . $j, $v['name'])
+                ->setCellValue('B' . $j, $v['money'])
+                ->setCellValue('C' . $j, $v['ip'])
+                ->setCellValue('D' . $j, $v['area'])
+                ->setCellValue('E' . $j, $v['city'])
+                ->setCellValue('F' . $j, $v['operator'])
+                ->setCellValue('G' . $j, $v['antistop'])
+                ->setCellValue('H' . $j, $v['consumer'])
+                ->setCellValue('I' . $j, $v['add_time']);
+            $j++;
+        }
+        $file_name = "用户{$uid}关联用户消费数据导出" . '.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment;filename=$file_name");
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit;
+    }
+
+    public function plans()
+    {
+        $data = request()->param();
+        $ad[] = $data['uid'];
+        if (!(isset($data['uid']) && isset($data['text']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['name']) && !empty($data['name'])) {
+            $where['uid'] = Db('admin')->where('name', $data['name'])->value('id');
+        }
+
+        $adminInfo = Db('admin')->where('id', $data['uid'])->value('admin_cate_id');
+
+        $array = FinanceFauxsumerismOther::where('status', 1)
+                    ->field('uid, count(uid) as counts, sum(money) as sums')
+                    ->where($where)
+                    ->group('uid')
+                    ->with('users')
+                    ->paginate($data['num'] ?? 10, false, ['page' => $data['p']]);
+
+//        if($adminInfo == 1){
+//            $admin = Db('admin')->field('id,name,mobile,add_time')->where('del',1)->where('status',1)->where('pid',$data['uid'])->order('id desc')->select();
+//            $id = array_column($admin,'id');
+//            if(!empty($id)){
+//                $admintwo = Db('admin')->field('id,name,mobile,add_time')->where('del',1)->where('status',1)->where('pid','in',$id)->select();
+//                $ids = array_column($admintwo,'id');
+//                if(!empty($ids)){
+//                    $adminthree = Db('admin')->field('id,name,mobile,add_time')->where('del',1)->where('status',1)->where('pid','in',$ids)->select();
+//                    $idss = array_column($adminthree,'id');
+//                    if(!empty($idss)){
+//                        $arrayid = array_merge($ids,$id,$idss,$ad);
+//                        $array = Db('admin')->field('id,name,mobile,add_time')->where('del',1)->where('status',1)->where('admin_cate_id',4)->limit(($data['num']*$data['p']-$data['num']),$data['num'])->where($where)->where('id','in',$arrayid)->order('id desc')->select();
+//                        $count = Db('admin')->where($where)->where('id','in',$arrayid)->where('del',1)->where('status',1)->where('admin_cate_id',4)->count();
+//                    }else{
+//                        $arrayid = array_merge($ids,$id,$ad);
+//                        $array = Db('admin')->field('id,name,mobile,add_time')->where('del',1)->where('status',1)->where('admin_cate_id',4)->limit(($data['num']*$data['p']-$data['num']),$data['num'])->where($where)->where('id','in',$arrayid)->order('id desc')->select();
+//                        $count = Db('admin')->where($where)->where('id','in',$arrayid)->where('del',1)->where('status',1)->where('admin_cate_id',4)->select();
+//                    }
+//                }else{
+//                    $arrayid = array_merge($id,$ad);
+//                    $array = Db('admin')->field('id,name,mobile,add_time')->where('del',1)->where('status',1)->where('admin_cate_id',4)->limit(($data['num']*$data['p']-$data['num']),$data['num'])->where($where)->where('id','in',$arrayid)->order('id desc')->select();
+//                    $count = Db('admin')->where($where)->where('id','in',$arrayid)->where('del',1)->where('status',1)->where('admin_cate_id',4)->count();
+//                }
+//            }else{
+//                $array = Db('admin')->field('id,name,mobile,add_time')->where('del',1)->where('status',1)->where('admin_cate_id',4)->limit(($data['num']*$data['p']-$data['num']),$data['num'])->where($where)->where('id',$data['uid'])->order('id desc')->select();
+//                $count = Db('admin')->where($where)->where('id',$data['uid'])->where('del',1)->where('status',1)->where('admin_cate_id',4)->count();
+//            }
+//        }
+
+//        if($data['text'] == 1){
+//            foreach($array as $k => $v){
+//                $array[$k]['sum'] = Db('finance_fauxsumerism')->where('status',1)->where('uid',$v['id'])->sum('money');
+//                $array[$k]['add_time'] = date('Y-m-d',$v['add_time']);
+//            }
+//        }else{
+//            foreach($array as $k => $v){
+//                $array[$k]['sum'] = Db('recharge')->where('uid',$v['id'])->sum('money');
+//                $array[$k]['add_time'] = date('Y-m-d',$v['add_time']);
+//            }
+//        }
+//        $beginToday=mktime(0,0,0,date('m'),date('d'),date('Y'));
+//        $endToday=mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1;
+//        $beginYesterday=mktime(0,0,0,date('m'),date('d')-1,date('Y'));
+//        $endYesterday=mktime(0,0,0,date('m'),date('d'),date('Y'))-1;
+//        $start = strtotime(date("Y-m-d"))+(24 * 60 * 60 - 1);
+//
+//        $end = $start - 60 * 60 * 24 * 7 - (24 * 60 * 60 -1);
+//        foreach ($array as $k => $v){
+//            $array[$k]['today'] = Db('finance_fauxsumerism')->where('status',1)->where('uid',$v['id'])->where('add_time','<=',$endToday)->where('add_time','>=',$beginToday)->sum('money');
+//            $array[$k]['yesterday'] = Db('finance_fauxsumerism')->where('status',1)->where('uid',$v['id'])->where('add_time','<=',$endYesterday)->where('add_time','>=',$beginYesterday)->sum('money');
+//            $array[$k]['sevendays'] = Db('finance_fauxsumerism')->where('status',1)->where('uid',$v['id'])->where('add_time','>=',$end)->where('add_time','<=',time())->sum('money');
+//        }
+        if ($array) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $array, 'count' => $array->count()]);
+        } else {
+            return json(['status' => 2, 'msg' => '操作失败', 'data' => '']);
+        }
+    }
+
+    public function supers()
+    {
+        $data = request()->param();
+        if (!(isset($data['uid']) && isset($data['text']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        if ($data['text'] == 1) {
+            $list = Db('finance_fauxsumerism_other')
+                ->field('A.*,B.name,B.mobile')
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->where('A.uid', $data['uid'])
+                ->join('admin B', 'B.id = A.uid')
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->order('A.add_time desc')
+                ->order('A.id desc')
+                ->select();
+            $count = Db('finance_fauxsumerism_other')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->count();
+            $url = 'http://api.map.baidu.com/location/ip?ak=1QbeTXxNK4q1NM6HH04RmxvQs2UlISGp&ip=%s';
+            $map = [
+                'CHINANET' => '中国电信',
+                'UNICOM' => '中国联通',
+                'CMNET' => '中国移动',
+                'CERNET' => '教育网',
+                'BJENET' => '北京教育信息网',
+                'WASU' => '华数宽带',
+                'COLNET' => '东方有线',
+                'FOUNDERBN' => '方正宽带',
+                'TOPWAY-NET' => '天威视讯',
+                'DXTNET' => '二级接入商',
+                'OTHER' => '其他'
+            ];
+            foreach ($list as $k => &$v) {
+                $v['goods_title'] = $v['goods_id'] ? GoodsShop::where('id', $v['goods_id'])->value('title') : '店铺首页';
+                $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+                if ($v['consumer'] == 1) {
+                    $list[$k]['consumer'] = 'PC';
+                } elseif ($v['consumer'] = 2) {
+                    $list[$k]['consumer'] = '手机端';
+                } else {
+                    $port = GeneralizeOpportunist::where('uid', $v['uid'])->value('fenduan');
+                    $port = explode(',', $port);
+                    $list[$k]['consumer'] = $port[array_rand($port)];
+                }
+
+                $v['click_ratio'] = sprintf('%.2f', $v['clicks'] / $v['pv'] * 100) . '%';
+                if (empty($v['operation'])) {
+                    $ipInfo = file_get_contents(sprintf($url, $v['ip']));
+                    $ipinfo = json_decode($ipInfo, true);
+                    if (!isset($ipinfo['address'])) {
+                        $v['operation'] = $map['OTHER'];
+                    } else {
+                        $yun = explode('|', $ipinfo['address']);
+                        $v['operation'] = $map[$yun[4]] ?? $map['OTHER'];
+                    }
+                }
+            }
+        } else {
+            $list = Db('recharge')
+                ->field('A.*,B.name,B.mobile')
+                ->alias('A')
+                ->where('A.uid', $data['uid'])
+                ->where($where)
+                ->join('admin B', 'B.id = A.uid')
+                ->order('A.add_time desc')
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->select();
+            foreach ($list as $k => $v) {
+                $list[$k]['add_time'] = date('Y-m-d');
+                $info = Db('admin')->where('id', $v['pid'])->value('name');
+                $list[$k]['admin'] = $info . '给' . $v['name'] . '充值';
+            }
+            $count = Db('recharge')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where($where)
+                ->count();
+        }
+        if ($list) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $list, 'count' => $count]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function supersDel()
+    {
+        $ids = request()->post('ids/a', null);
+        if (empty($ids)) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $res = Db('finance_fauxsumerism_other')->where('id', 'in', $ids)->delete();
+        return json(['status' => 1, 'msg' => '操作成功']);
+    }
+
+    public function financeOther()
+    {
+        $field = input('post.field');
+        $fieldName = input('post.fieldName');
+        $data = input('post.data');
+        $id = input('post.id');
+        $uid = input('post.uid');
+        $tt = input('post.tt');
+        if ($field == 'add_time') {
+            $data = strtotime($data);
+        }
+        if ($field == 'consumer') {
+            $map = ['PC' => 1, '手机端' => 2];
+            $data = $map[$data];
+        }
+        if ($field == 'money') {
+//            if(!isset($tt)){
+//                $money = db('finance_fauxsumerism_other')->where('id',$id)->value('money');
+//
+//                if($data > $money){
+//                    $num = $data - $money;
+//                    db('admin')->where('id',$uid)->setDec('balance',$num);
+//                }else{
+//                    $num = $money - $data;
+//                    db('admin')->where('id',$uid)->setInc('balance',$num);
+//                }
+//            }
+        }
+        $agoData = db('finance_fauxsumerism_other')->where('id', $id)->value($field);
+
+        $res = db('finance_fauxsumerism_other')->where('id', $id)->update([$field => $data]);
+        $res ? $code = 200 : $code = 101;
+        db('finance_edit_log')->insert([
+            'uid' => $uid,
+            'c_id' => $id,
+            'time' => time(),
+            'edit_field_name' => $fieldName,
+            'edit_field' => $field,
+            'edit_data' => $data,
+            'ago_data' => $agoData
+        ]);
+        returnJson(['code' => $code]);
+    }
+
+    public function reportCollect()
+    {
+        $data = request()->param();
+        $ad[] = $data['uid'];
+        if (!(isset($data['uid']) && isset($data['text']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['name']) && !empty($data['name'])) {
+            $where['uid'] = Db('admin')->where('name', $data['name'])->value('id');
+        }
+        $adminCate = Db('admin')->where('id', $data['uid'])->value('admin_cate_id');
+        if (1 != $adminCate) {
+            $where['uid'] = $data['uid'];
+        }
+
+        $res = KeywordReport::field('uid, count(uid) as counts, sum(shows) as shows, sum(clicks) as clicks')
+                    ->where($where)
+                    ->group('uid')
+                    ->with('users')
+                    ->paginate($data['num'] ?? 10, false, ['page' => $data['p']]);
+        $count = $res->count();
+        $resData = $res->toArray();
+        foreach ($resData['data'] as &$item) {
+            $item['bdShows'] = KeywordReport::where('uid', $item['uid'])->where('type', 1)->sum('shows');
+            $item['bdClicks'] = KeywordReport::where('uid', $item['uid'])->where('type', 1)->sum('clicks');
+            $item['qhShows'] = KeywordReport::where('uid', $item['uid'])->where('type', 2)->sum('shows');
+            $item['qhClicks'] = KeywordReport::where('uid', $item['uid'])->where('type', 2)->sum('clicks');
+            // $item['sgShows'] = KeywordReport::where('uid', $item['uid'])->where('type', 3)->sum('shows');
+            // $item['sgClicks'] = KeywordReport::where('uid', $item['uid'])->where('type', 3)->sum('clicks');
+            $item['bdaShows'] = KeywordReport::where('uid', $item['uid'])->where('type', 4)->sum('shows');
+            $item['bdaClicks'] = KeywordReport::where('uid', $item['uid'])->where('type', 4)->sum('clicks');
+        }
+        unset($item);
+
+        if ($res) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $resData, 'count' => $count]);
+        } else {
+            return json(['status' => 2, 'msg' => '操作失败', 'data' => '']);
+        }
+    }
+
+    public function reportCollectDetailed()
+    {
+        $data = request()->param();
+        if (!(isset($data['uid']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        $where['uid'] = $data['uid'];
+        // if (isset($data['start_time']) && $data['start_time'] != '') {
+        //     $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        // }
+        // if (isset($data['end_time']) && $data['end_time'] != '') {
+        //     $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        // }
+        // if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+        //     $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+        //     $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        // }
+        $res = KeywordReport::field('id, uid, keywords, shows, clicks, type, dates')
+                    ->where($where)
+                    ->order('id', 'desc')
+                    ->paginate($data['num'] ?? 10, false, ['page' => $data['p']]);
+        $count = $res->count();
+        $resData = $res->toArray();
+        foreach ($resData['data'] as &$item) {
+            switch ($item['type']) {
+                case 1:
+                    $item['typeName'] = '百度';
+                    break;
+                case 2:
+                    $item['typeName'] = '360';
+                    break;
+                case 3:
+                    $item['typeName'] = '搜狗';
+                    break;
+                case 4:
+                    $item['typeName'] = '百度爱采购';
+                    break;
+                default:
+                    $item['typeName'] = '';
+                    break;
+            }
+        }
+        if ($resData) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $resData, 'count' => $count]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function reportCollectDetailedDel()
+    {
+        $ids = request()->post('ids/a', null);
+        if (empty($ids)) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $res = KeywordReport::where('id', 'in', $ids)->delete();
+        return json(['status' => 1, 'msg' => '操作成功']);
+    }
+
+    public function reportCollectApi()
+    {
+        $paramData = request()->param();
+        extract($paramData);
+        if (!(isset($quan_name) && isset($p))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        $where['uid'] = Db('admin')->where('quan_name', $quan_name)->value('id');
+
+        $res = KeywordReport::field('id, uid, keywords, shows, clicks, type, create_time, dates')
+                    ->where($where)
+                    ->order('dates', 'desc')
+                    ->paginate($num ?? 10, false, ['page' => $p]);
+        $count = $res->count();
+        $resData = $res->toArray();
+        foreach ($resData['data'] as &$item) {
+            switch ($item['type']) {
+                case 1:
+                    $item['typeName'] = '百度';
+                    break;
+                case 2:
+                    $item['typeName'] = '360';
+                    break;
+                case 3:
+                    $item['typeName'] = '搜狗';
+                    break;
+                case 4:
+                    $item['typeName'] = '百度';
+                    break;
+                default:
+                    $item['typeName'] = '';
+                    break;
+            }
+            // $item['date'] = substr($item['create_time'], 0, 10);
+        }
+        $resData['showsTotal'] = KeywordReport::where('uid', $item['uid'])->sum('shows');
+        $resData['clicksTotal'] = KeywordReport::where('uid', $item['uid'])->sum('clicks');
+        if ($resData) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $resData, 'count' => $count]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function checkIsUser()
+    {
+        $quan_name = request()->get('quan_name', '');
+        $where = [];
+        $where['quan_name'] = $quan_name;
+        $checkIsUser = adminmodel::where($where)->limit(1)->count();
+
+        if ($checkIsUser) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => true]);
+        } else {
+            return json(['status' => 0, 'msg' => '操作成功', 'data' => false]);
+        }
+    }
+
+    public function reportAccount()
+    {
+        $data = request()->param();
+        if (!(isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (!empty($data['name'])) {
+            $where['u_name'] = $data['name'];
+        }
+        if (!empty($data['dates'])) {
+            $where['dates'] = $data['dates'];
+        }
+
+        $res = BaiduReportAccountQ::field('*')
+                    ->where($where)
+                    ->paginate($data['num'] ?? 10, false, ['page' => $data['p']]);
+        $count = $res->count();
+        $resData = $res->toArray();
+        if ($res) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $resData, 'count' => $count]);
+        } else {
+            return json(['status' => 2, 'msg' => '操作失败', 'data' => '']);
+        }
+    }
+
+    public function reportAccountDel()
+    {
+        $ids = request()->post('ids/a', null);
+        if (empty($ids)) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        BaiduReportAccountQ::where('id', 'in', $ids)->delete();
+        return json(['status' => 1, 'msg' => '操作成功']);
+    }
+
+    public function reportHistory()
+    {
+        $data = request()->param();
+        $ad[] = $data['uid'];
+        if (!(isset($data['uid']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['name']) && !empty($data['name'])) {
+            $where['uid'] = Db('admin')->where('name', $data['name'])->value('id');
+        }
+
+        $list = FinanceFauxsumerismExpire::where($where)
+                    ->field('uid, count(uid) as counts, sum(money) as sums')
+                    ->group('uid')
+                    ->with('users')
+                    ->paginate($data['num'] ?? 10, false, ['page' => $data['p']]);
+
+        if ($list) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $list, 'count' => $list->count()]);
+        } else {
+            return json(['status' => 2, 'msg' => '操作失败', 'data' => '']);
+        }
+    }
+
+    public function reportHistorySuper()
+    {
+        $data = request()->param();
+        if (!isset($data['uid'])) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        $list = Db('finance_fauxsumerism_expire')
+                ->field('A.*,B.name,B.mobile')
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->where('A.uid', $data['uid'])
+                ->join('admin B', 'B.id = A.uid')
+                ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+                ->order('A.add_time desc')
+                ->order('A.id desc')
+                ->select();
+        $count = Db('finance_fauxsumerism_expire')
+                ->where('A.uid', $data['uid'])
+                ->alias('A')
+                ->where('A.status', 1)
+                ->where($where)
+                ->count();
+        foreach ($list as $k => &$v) {
+            $v['goods_title'] = $v['goods_id'] ? GoodsShop::where('id', $v['goods_id'])->value('title') : '店铺首页';
+            $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+            switch ($v['consumer']) {
+                case 1:
+                    $list[$k]['consumer'] = 'PC';
+                    break;
+                case 2:
+                    $list[$k]['consumer'] = '手机端';
+                    break;
+                default:
+                    $port = GeneralizeOpportunist::where('uid', $v['uid'])->value('fenduan');
+                    $port = explode(',', $port);
+                    $list[$k]['consumer'] = $port[array_rand($port)];
+                    break;
+            }
+            $v['click_ratio'] = sprintf('%.2f', $v['clicks'] / $v['pv'] * 100) . '%';
+        }
+        if ($list) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $list, 'count' => $count]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function reportHistorySuperDel()
+    {
+        $ids = request()->post('ids/a', null);
+        if (empty($ids)) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $res = Db('finance_fauxsumerism_expire')->where('id', 'in', $ids)->delete();
+        return json(['status' => 1, 'msg' => '操作成功']);
+    }
+
+    public function reportHistoryFinanceOther()
+    {
+        $field = input('post.field');
+        $fieldName = input('post.fieldName');
+        $data = input('post.data');
+        $id = input('post.id');
+        $uid = input('post.uid');
+        $tt = input('post.tt');
+        if ($field == 'add_time') {
+            $data = strtotime($data);
+        }
+        if ($field == 'consumer') {
+            $map = ['PC' => 1, '手机端' => 2];
+            $data = $map[$data];
+        }
+        if ($field == 'money') {
+            // if (!isset($tt)) {
+            //     $money = db('finance_fauxsumerism_other')->where('id', $id)->value('money');
+            //     if ($data > $money) {
+            //         $num = $data - $money;
+            //         db('admin')->where('id', $uid)->setDec('balance', $num);
+            //     } else {
+            //         $num = $money - $data;
+            //         db('admin')->where('id', $uid)->setInc('balance', $num);
+            //     }
+            // }
+        }
+        // $agoData = db('finance_fauxsumerism_expire')->where('id', $id)->value($field);
+        $res = db('finance_fauxsumerism_expire')->where('id', $id)->update([$field => $data]);
+        $res ? $code = 200 : $code = 101;
+        // db('finance_edit_log')->insert([
+        //     'uid' => $uid,
+        //     'c_id' => $id,
+        //     'time' => time(),
+        //     'edit_field_name' => $fieldName,
+        //     'edit_field' => $field,
+        //     'edit_data' => $data,
+        //     'ago_data' => $agoData
+        // ]);
+        returnJson(['code' => $code]);
+    }
+
+    public function reportCollectHistory()
+    {
+        $data = request()->param();
+        $ad[] = $data['uid'];
+        if (!(isset($data['uid']) && isset($data['text']) && isset($data['p']) && isset($data['num']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        if (isset($data['name']) && !empty($data['name'])) {
+            $where['uid'] = Db('admin')->where('name', $data['name'])->value('id');
+        }
+        $adminCate = Db('admin')->where('id', $data['uid'])->value('admin_cate_id');
+        if (1 != $adminCate) {
+            $where['uid'] = $data['uid'];
+        }
+
+        $res = KeywordReportHistory::field('uid, count(uid) as counts, sum(shows) as shows, sum(clicks) as clicks')
+                    ->where($where)
+                    ->group('uid')
+                    ->with('users')
+                    ->paginate($data['num'] ?? 10, false, ['page' => $data['p']]);
+        $count = $res->count();
+        $resData = $res->toArray();
+        foreach ($resData['data'] as &$item) {
+            $item['bdShows'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 1)->sum('shows');
+            $item['bdClicks'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 1)->sum('clicks');
+            $item['qhShows'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 2)->sum('shows');
+            $item['qhClicks'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 2)->sum('clicks');
+            // $item['sgShows'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 3)->sum('shows');
+            // $item['sgClicks'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 3)->sum('clicks');
+            $item['bdaShows'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 4)->sum('shows');
+            $item['bdaClicks'] = KeywordReportHistory::where('uid', $item['uid'])->where('type', 4)->sum('clicks');
+        }
+        unset($item);
+
+        if ($res) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $resData, 'count' => $count]);
+        } else {
+            return json(['status' => 2, 'msg' => '操作失败', 'data' => '']);
+        }
+    }
+
+    public function reportCollectHistoryDetailed()
+    {
+        $data = request()->param();
+        if (!(isset($data['uid']))) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $where = [];
+        $where['uid'] = $data['uid'];
+        // if (isset($data['start_time']) && $data['start_time'] != '') {
+        //     $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        // }
+        // if (isset($data['end_time']) && $data['end_time'] != '') {
+        //     $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        // }
+        // if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+        //     $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+        //     $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        // }
+        $res = KeywordReportHistory::field('id, uid, keywords, shows, clicks, type, dates')
+                    ->where($where)
+                    ->paginate($data['num'] ?? 10, false, ['page' => $data['p']]);
+        $count = $res->count();
+        $resData = $res->toArray();
+        foreach ($resData['data'] as &$item) {
+            switch ($item['type']) {
+                case 1:
+                    $item['typeName'] = '百度';
+                    break;
+                case 2:
+                    $item['typeName'] = '360';
+                    break;
+                case 3:
+                    $item['typeName'] = '搜狗';
+                    break;
+                case 4:
+                    $item['typeName'] = '百度爱采购';
+                    break;
+                default:
+                    $item['typeName'] = '';
+                    break;
+            }
+        }
+        if ($resData) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $resData, 'count' => $count]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+
+    public function reportCollectHistoryDetailedDel()
+    {
+        $ids = request()->post('ids/a', null);
+        if (empty($ids)) {
+            return json(['status' => 2, 'msg' => '参数错误', 'data' => '']);
+        }
+        $res = KeywordReportHistory::where('id', 'in', $ids)->delete();
+        return json(['status' => 1, 'msg' => '操作成功']);
+    }
+
+    public function reportCollectFinanceOther()
+    {
+        $field = input('post.field');
+        $fieldName = input('post.fieldName');
+        $data = input('post.data');
+        $id = input('post.id');
+        $uid = input('post.uid');
+        $tt = input('post.tt');
+        // if ($field == 'dates') {
+        //     $data = strtotime($data);
+        // }
+        $agoData = KeywordReportHistory::where('id', $id)->value($field);
+        $res = KeywordReportHistory::where('id', $id)->update([$field => $data]);
+        $res ? $code = 200 : $code = 101;
+        db('finance_edit_log')->insert([
+            'uid' => $uid,
+            'c_id' => $id,
+            'time' => time(),
+            'edit_field_name' => $fieldName,
+            'edit_field' => $field,
+            'edit_data' => $data,
+            'ago_data' => $agoData
+        ]);
+        returnJson(['code' => $code]);
+    }
+    public function reportCollectHistoryDetailedSup()
+    {
+        try {
+            Db::startTrans();
+            $id = request()->param('id/a');
+            // 原始数据
+            $originalData = KeywordReportHistory::where('id', 'in', $id)->select();
+            $userSum = [];
+            $data = array_map(function ($value) use (&$userSum) {
+                $values = $value->toArray();
+                unset($values['id']);
+                return $values;
+            }, $originalData);
+            $res = (new KeywordReport())->saveAll($data);
+            if (!$res) {
+                throw new \Exception();
+            }
+            $res = KeywordReportHistory::whereIn('id', $id)->delete();
+            if (!$res) {
+                throw new \Exception();
+            }
+            Db::commit();
+            return json(['status' => 1, 'msg' => '操作成功']);
+        } catch (\Exception $e) {
+            Db::rollback();
+            return json(['status' => 0, 'msg' => '操作失败']);
+        }
+    }
+    
+    public function adminConsumeAll()
+    {
+        $data = request()->param();
+        $where = [];
+        if (!empty($data['name'])) {
+            Db('admin')->where('name', $data['name'])->value('id');
+        }
+        if (isset($data['start_time']) && $data['start_time'] != '') {
+            $where['A.add_time'] = ['>=', strtotime($data['start_time'])];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '') {
+            $where['A.add_time'] = ['<', strtotime('+1 day', strtotime($data['end_time']))];
+        }
+        if (isset($data['end_time']) && $data['end_time'] != '' && isset($data['start_time']) && $data['start_time'] != '') {
+            $max_time = strtotime($data['end_time']) + (24 * 60 * 60 - 1);
+            $where['A.add_time'] = [['>=', strtotime($data['start_time'])], ['<=', $max_time]];
+        }
+        $list = Db('finance_fauxsumerism')
+            ->field('A.*,B.name,B.mobile')
+            ->alias('A')
+            ->where('A.status', 1)
+            ->where($where)
+            ->join('admin B', 'B.id = A.uid')
+            // ->join('goods_goods_shop g', 'A.goods_id = g.id')
+            ->limit(($data['num'] * $data['p'] - $data['num']), $data['num'])
+            ->order('A.add_time desc')
+            ->order('A.id desc')
+            ->select();
+        $count = Db('finance_fauxsumerism')
+            ->alias('A')
+            ->where('A.status', 1)
+            ->where($where)
+            ->count();
+
+        $url = 'http://api.map.baidu.com/location/ip?ak=1QbeTXxNK4q1NM6HH04RmxvQs2UlISGp&ip=%s';
+        $map = [
+            'CHINANET' => '中国电信',
+            'UNICOM' => '中国联通',
+            'CMNET' => '中国移动',
+            'CERNET' => '教育网',
+            'BJENET' => '北京教育信息网',
+            'WASU' => '华数宽带',
+            'COLNET' => '东方有线',
+            'FOUNDERBN' => '方正宽带',
+            'TOPWAY-NET' => '天威视讯',
+            'DXTNET' => '二级接入商',
+            'OTHER' => '其他'
+        ];
+        foreach ($list as $k => &$v) {
+            $v['goods_title'] = $v['goods_id'] ? GoodsShop::where('id', $v['goods_id'])->value('title') : '店铺首页';
+            $list[$k]['add_time'] = date('Y-m-d H:i', $v['add_time']);
+            if ($v['consumer'] == 1) {
+                $list[$k]['consumer'] = 'PC';
+            } elseif ($v['consumer'] = 2) {
+                $list[$k]['consumer'] = '手机端';
+            } else {
+                $port = GeneralizeOpportunist::where('uid', $v['uid'])->value('fenduan');
+                $port = explode(',', $port);
+                $list[$k]['consumer'] = $port[array_rand($port)];
+            }
+            $v['click_ratio'] = sprintf('%.2f', $v['clicks'] / $v['pv'] * 100) . '%';
+            if (empty($v['operation'])) {
+                $ipInfo = file_get_contents(sprintf($url, $v['ip']));
+                $ipinfo = json_decode($ipInfo, true);
+                if (!isset($ipinfo['address'])) {
+                    $v['operation'] = $map['OTHER'];
+                } else {
+                    $yun = explode('|', $ipinfo['address']);
+                    $v['operation'] = $map[$yun[4]] ?? $map['OTHER'];
+                }
+            }
+        }
+
+        if ($list) {
+            return json(['status' => 1, 'msg' => '操作成功', 'data' => $list, 'count' => $count, 'statistics' => $statistics ?? []]);
+        } else {
+            return json(['status' => 1, 'msg' => '暂无数据', 'data' => '']);
+        }
+    }
+}

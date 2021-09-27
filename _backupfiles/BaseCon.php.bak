@@ -1,0 +1,101 @@
+<?php
+
+namespace  app\m\controller;
+
+use think\Controller;
+
+class BaseCon extends Controller
+{
+    public function _initialize()
+    {
+        switch ($_SERVER['HTTP_HOST']) {
+            case 'e.kuhuoyun.1com':
+                $baseUrlLogo = '/static/image/mofang.png';
+                $baseUrlLogoStyle = '';
+                $baseName = '获客魔方';
+                $baseUrl = 'http://caigou.mythq.cn';
+                break;
+            case 'proxy.e.kuhuoyun.com':
+                $baseUrlLogo = '/static/image/cai.png';
+                $baseUrlLogoStyle = '';
+                $baseName = '爱购网';
+                $baseUrl = 'http://huoke.lxsjzyh.com';
+                break;
+            case 'caigou.sdrc.vip':
+                $baseUrlLogo = '/static/image/logos.png';
+                $baseUrlLogoStyle = 'height: 60px;width: 180px';
+                $baseName = '润优采';
+                $baseUrl = 'http://caigou.sdrc.cn';
+                break;
+            case 'qwt.xmmila.com':
+                $baseUrlLogo = '';
+                $baseUrlLogoStyle = '';
+                $baseName = '米辣科技';
+                $baseUrl = 'http://qwt.xmmila.com';
+                break;
+            default:
+            case 'e.kuhuoyun.com':
+            case 'shop.zhaochanpin.com':
+            case 'nhkadmin.dnsresolve.cn:800':
+                $baseUrlLogo = '/static/image/zhao.png';
+                $baseUrlLogoStyle = '';
+                $baseName = '找产品';
+                $baseUrl = 'http://www.zhaochanpin.cn';
+                break;
+        }
+        $this->assign('baseUrlLogo', $baseUrlLogo);
+        $this->assign('baseUrlLogoStyle', $baseUrlLogoStyle);
+        $this->assign('baseName', $baseName);
+        $this->assign('baseUrl', $baseUrl);
+    }
+
+    /**
+     * 空置操作
+     */
+    public function _empty()
+    {
+        $action = request()->action();
+        if (request()->isPost()) {
+            $arr = Model(request()->controller())->$action();
+            returnJson($arr);
+        }
+        return view($action);
+    }
+
+    public function swCompany(&$data): void
+    {
+        switch ($_SERVER['HTTP_HOST']) {
+            case 'e.kuhuoyun.com':
+                // $data['name'] = mb_substr($data['name'], 2);
+                break;
+            case 'caigou.sdrc.vip':
+            case 'shop.zhaochanpin.com':
+            default:
+                break;
+        }
+    }
+
+    public function swTele(): string
+    {
+        switch ($_SERVER['HTTP_HOST']) {
+            case 'proxy.e.kuhuoyun.com':
+                $template = 'cai/';
+                break;
+            case 'caigou.sdrc.vip':
+            case 'nhkadmin.dnsresolve.cn:800':
+                $template = 'run/';
+                break;
+            case 'qwt.xmmila.com':
+                $template = 'qwt/';
+                break;
+            case 'e.kuhuoyun.com':
+            case 'shop.zhaochanpin.com':
+            default:
+                //$template = 'index/';
+                $template = 'zhao/';
+                break;
+        }
+        return $template;
+
+    }
+}

@@ -1,0 +1,304 @@
+<?php
+/**
+ * tpshop
+ * ============================================================================
+ * 版权所有 2015-2027 深圳搜豹网络科技有限公司，并保留所有权利。
+ * 网站地址: http://www.tp-shop.cn
+ * ----------------------------------------------------------------------------
+ * 商业用途务必到官方购买正版授权, 使用盗版将严厉追究您的法律责任。
+ * 采用最新Thinkphp5助手函数特性实现单字母函数M D U等简写方式
+ * ============================================================================
+ * Author: 当燃
+ * Date: 2015-09-21
+ */
+
+namespace app\api\controller;
+use app\common\model\Users;
+use think\Db;
+use think\Page;
+use think\Request;
+
+class Identify extends Base{
+    public function info(){
+        $where["user_id"] = $this->user_id;
+        $info = M('user_identify')->where($where)->find();
+        if(!$info){
+            $info["name"] = "";
+            $info["IDCard"] = "";
+            $info["img"] = "";
+        }
+        $json = array(
+            'status'=>1,
+            'msg'=>'获取成功',
+            'result'=> $info
+        );
+        $this->ajaxReturn($json);
+    }
+
+    public function submit(){
+        $user = M('users')->where('user_id', $this->user_id)->find();
+        $data = I('post.');
+        $data['user_id'] = $this->user_id;
+        $data['add_time'] = time();
+        //查询是否已提交
+        $user_info = M('user_identify')->where("user_id=".$this->user_id)->where('is_examine', 'in', [0, 2])->find();
+        if($user_info){
+            $json = array('status'=>0, 'msg'=>'请勿重复提交');
+            $this->ajaxReturn($json);
+        }
+        //查询是否已经绑定过了
+        $IDCard = $data["IDCard"];
+        $IDCard_info = M('user_identify')->where("IDCard='$IDCard'")->find();
+        if($user["community_grade"] <= 0){
+            if(!empty($IDCard_info) && $IDCard_info["user_id"] != $this->user_id){
+                $json = array('status'=>0, 'msg'=>'该身份证已绑定账号');
+                $this->ajaxReturn($json);
+            }
+        }else{
+            $count = M('user_identify')->where("IDCard='$IDCard'")->count();
+            if($count > 1){
+                $json = array('status'=>0, 'msg'=>'该身份证已绑定账号');
+                $this->ajaxReturn($json);
+            }
+            if($IDCard_info["is_examine"] == 2) $data["is_examine"] = 2;
+        }
+        $v = $_FILES['img'];
+        if (empty($v['tmp_name']) && !$user_info['id']) {
+            //$json = array('status'=>0, 'msg'=>'请上传身份证照片');
+            //$this->ajaxReturn($json);
+        }else{
+            $files = $this->request->file();
+            foreach ($files as $key => $file) {
+                $object = UPLOAD_PATH.md5(time()).'.'.pathinfo($file->getInfo('name'), PATHINFO_EXTENSION);
+                $ossClient = new \app\common\logic\OssLogic;
+                $real_path = $file->getRealPath();
+                $return_url = $ossClient->uploadFile($real_path, $object);
+                $file = null;//关闭文件句柄，不然无法删除
+                @unlink($real_path); //上传后删除
+                $data[$key] = $return_url;
+            }
+        }
+
+        if($id = M('user_identify')->where('user_id' , $this->user_id)->value('id')){
+            $data["is_examine"] = 0;
+            $data['certify_id'] = '';
+            $data['reason'] = '';
+            $rs = M('user_identify')->where('id', $id)->save($data);
+        }else{
+            if($data["is_examine"] == 2){
+                M('users')->where("user_id=".$this->user_id)->update(["is_alipay_authentication"=>2]);
+            }
+            $rs = M('user_identify')->add($data);
+        }
+        if ($rs) {
+            $json = array('status'=>1, 'msg'=>'提交成功,请等待审核结果');
+            $this->ajaxReturn($json);
+        } else {
+            $json = array('status'=>0, 'msg'=>'服务器繁忙,请联系官方客服');
+            $this->ajaxReturn($json);
+        }
+    }
+
+    //支付宝刷脸认证
+    //人脸识别
+    public function certifyOpenInitialize(){
+        $data = I('post.');
+        $data['user_id'] = $this->user_id;
+        $data['add_time'] = time();
+        $user_info = Users::get($this->user_id);
+        if($user_info["main_user_id"] > 0){
+            $return = ['status' => 0, 'msg' => '子账号不可实名认证！'];
+            $this->ajaxReturn($return);
+        }
+        //查询是否已提交
+        $info = M('user_identify')->where("user_id=".$this->user_id)->find();
+        if($info && !$data["id"]){
+            $json = array('status'=>0, 'msg'=>'请勿重复提交');
+            $this->ajaxReturn($json);
+        }
+        //查询是否已经绑定过了
+        $IDCard = $data["IDCard"];
+        $info = M('user_identify')->where("IDCard='$IDCard'")->find();
+        if($info){
+            if(!$data["id"]){
+                $json = array('status'=>0, 'msg'=>'该身份证已绑定账号');
+                $this->ajaxReturn($json);
+            }elseif($data["id"] && $info["user_id"] != $this->user_id){
+                $json = array('status'=>0, 'msg'=>'该身份证已绑定账号'.$this->user_id."**".$info["user_id"]);
+                $this->ajaxReturn($json);
+            }
+
+        }
+
+        $paymentPlugin = M('Plugin')->where("code='newalipay' and  type = 'payment' ")->find();
+        $cfgVal = unserialize($paymentPlugin['config_value']); // 配置反序列化
+        if (!$cfgVal || empty($cfgVal['app_id']) || empty($cfgVal['merchant_private_key']) || empty($cfgVal['alipay_public_key'])) {
+            $json = array('status'=>0, 'msg'=>'支付宝重要配置不能为空');
+            $this->ajaxReturn($json);
+        }
+        require_once PLUGIN_PATH.'payment/newalipay/app_pay/AopSdk.php';
+        require_once PLUGIN_PATH.'payment/newalipay/aop/request/AlipayUserCertifyOpenInitializeRequest.php';
+        $aop = new \AopClient();
+        $aop -> gatewayUrl = 'https://openapi.alipay.com/gateway.do';
+        $aop -> appId = $cfgVal['app_id'];
+        $aop -> rsaPrivateKey = $cfgVal['merchant_private_key'];
+        $aop -> alipayrsaPublicKey=$cfgVal['alipay_public_key'];
+        $aop -> apiVersion = '1.0';
+        $aop -> signType = 'RSA2';
+        $aop -> postCharset='UTF-8';
+        $aop -> format='json';
+        $request = new \AlipayUserCertifyOpenInitializeRequest();
+        $outer_order_no = 'jk'.time().rand(1000,9999);
+        $return_url = SITE_URL.'/index.php/Api/Payment/newalipayUserNotify';
+        $name = $data["name"];
+        $id_card = $data["IDCard"];
+       /* $name = '王巧';
+        $id_card = '370181199007153420';*/
+        $request->setBizContent("{".
+            "outer_order_no:'".$outer_order_no."',".
+            "biz_code:'FACE',".
+            "identity_param:{identity_type:'CERT_INFO',cert_type:'IDENTITY_CARD',cert_name:'".$name."',cert_no:'".$id_card."'},".
+            "merchant_config:{return_url:'".$return_url."'}".
+           /* "face_contrast_picture:'xydasf=='".*/
+            "  }");//print_r($request);//exit;
+        $result = $aop -> execute($request);
+
+        $responseNode = str_replace(".", "_", $request -> getApiMethodName()). "_response";
+        $resultCode = $result -> $responseNode -> code;//echo "<br><br><br>";print_r($result);exit;
+        if (!empty($resultCode) && $resultCode == 10000) {
+            $data['certify_id'] = $result -> $responseNode ->certify_id;
+            if($data['id']){
+                $where["id"] = $data["id"];
+                //$where["is_examine"] = 1;
+                $data["is_examine"] = 0;
+                $rs = M('user_identify')->where($where)->save($data);//$sql = M('user_identify')->getlastsql();addLog("log/user","shuju",$sql);
+            }else{
+                $rs = M('user_identify')->add($data);
+            }
+            if ($rs) {
+                $json = array('status'=>1, 'msg'=>'提交成功,请进行人脸识别','certify_id' => $data['certify_id']);
+                $this->ajaxReturn($json);
+                //$this->redirect('/Mobile/Identify/certify/certify_id/'.$data['certify_id']);
+                //$this->success('提交成功,请进行人脸识别', U('/Mobile/Identify/certify/certify_id/'.$data['certify_id']));
+            } else {
+                $json = array('status'=>0, 'msg'=>'服务器繁忙,请联系官方客服');
+                $this->ajaxReturn($json);
+            }
+        } else {
+            $msg = $result -> $responseNode ->msg;
+            $json = array('status'=>0, 'msg'=>$msg);
+            $this->ajaxReturn($json);
+        }
+    }
+
+    public function user_certify(){
+        $certify_id = I('certify_id');
+        //$certify_id = '676a2310da20594e986ac7f1fcc47824';
+        $paymentPlugin = M('Plugin')->where("code='newalipay' and  type = 'payment' ")->find();
+        $cfgVal = unserialize($paymentPlugin['config_value']); // 配置反序列化
+        if (!$cfgVal || empty($cfgVal['app_id']) || empty($cfgVal['merchant_private_key']) || empty($cfgVal['alipay_public_key'])) {
+            $json = array('status'=>0, 'msg'=>'支付宝重要配置不能为空!');
+            $this->ajaxReturn($json);
+        }
+        require_once PLUGIN_PATH.'payment/newalipay/app_pay/AopSdk.php';
+        require_once PLUGIN_PATH.'payment/newalipay/aop/request/AlipayUserCertifyOpenCertifyRequest.php';
+        $aop = new \AopClient();
+        $aop -> gatewayUrl = 'https://openapi.alipay.com/gateway.do';
+        $aop -> appId = $cfgVal['app_id'];
+        $aop -> rsaPrivateKey = $cfgVal['merchant_private_key'];
+        $aop -> alipayrsaPublicKey=$cfgVal['alipay_public_key'];
+        $aop -> apiVersion = '1.0';
+        $aop -> signType = 'RSA2';
+        $aop -> postCharset='UTF-8';
+        $aop -> format='json';
+        $request = new \AlipayUserCertifyOpenCertifyRequest();
+        $request -> setBizContent("{".
+            "\"certify_id\":\"$certify_id\"".
+            "  }");//print_r($request);
+        $result = $aop->pageExecute($request,"GET");//echo "<br><br>";echo htmlspecialchars($result);exit;
+        $this->ajaxReturn(['status' => 1, 'msg' => '成功','url' => htmlspecialchars($result)]);
+    }
+
+    public function newalipayUserNotify()
+    {
+        $paymentPlugin = M('Plugin')->where("code='newalipay' and  type = 'payment' ")->find(); // 找到支付插件的配置
+        $cfgVal = unserialize($paymentPlugin['config_value']); // 配置反序列化
+        if (!$cfgVal || empty($cfgVal['app_id']) || empty($cfgVal['merchant_private_key']) || empty($cfgVal['alipay_public_key'])) {
+            $json = array('status'=>0, 'msg'=>'支付宝重要配置不能为空!');
+            $this->ajaxReturn($json);
+        }
+
+        require_once PLUGIN_PATH.'payment/newalipay/app_pay/AopSdk.php';
+        require_once PLUGIN_PATH.'payment/newalipay/aop/request/AlipayUserCertifyOpenQueryRequest.php';
+        $aop = new \AopClient;
+        $aop->alipayrsaPublicKey = $cfgVal['alipay_public_key'];
+        $flag = true;
+        /*$flag = $aop->rsaCheckV1($_POST, NULL, "RSA2");
+        file_put_contents('./public/newalipayUserNotify.txt', $flag);*/
+        //认证成功
+        if ($flag) {
+            $certify_id = I("certify_id");
+            //$certify_id = 'b4f3c75fd81a57d4193f0f9c08810759';
+            //修改会员的账号
+            $where["certify_id"] = $certify_id;
+            $user_identify = M("user_identify")->where($where)->find();
+            $user_id = $user_identify["user_id"];
+            //查询结果
+            //$aop = new AopClient ();
+            $aop->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
+            $aop->appId = $cfgVal['app_id'];
+            $aop->rsaPrivateKey = $cfgVal['merchant_private_key'];
+            //$aop->alipayrsaPublicKey='请填写支付宝公钥，一行字符串';
+            $aop->apiVersion = '1.0';
+            $aop->signType = 'RSA2';
+            $aop->postCharset='UTF-8';
+            $aop->format='json';
+            $request = new \AlipayUserCertifyOpenQueryRequest();
+            $request->setBizContent("{" .
+                "\"certify_id\":\"$certify_id\"" .
+                "  }");//print_r($request);echo "<br>";
+            $result = $aop->execute ( $request);//print_r($result);exit;
+
+            $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+            $resultCode = $result->$responseNode->code;
+            $passed = $result->$responseNode->passed;
+            if(!empty($resultCode)&&$resultCode == 10000 && $passed == 'T'){
+                //echo "成功";
+                $update_u["is_alipay_authentication"] = 2;
+                $update_u["is_authentication"] = 2;
+                /*if($user_id > 5517){
+                    $update_u["liveness"] = 1;
+                }*/
+                $update["is_examine"] = 2;
+                add_user_candy_bag($user_id);
+                update_grade($user_id);
+                $result = ['status' => 0, 'msg' => '认证成功'];
+            } else {
+                //echo "失败";
+                $update_u["is_alipay_authentication"] = 1;
+                //$update_u["is_authentication"] = 1;
+                $update["is_examine"] = 1;
+                $result = ['status' => 0, 'msg' => '认证失败'];
+            }
+            M("users")->where("user_id",$user_id)->update($update_u);
+            M("user_identify")->where("id",$user_identify["id"])->update($update);
+
+
+            //echo "success"; //  告诉支付宝支付成功 请不要修改或删除
+        } else {
+            $result = ['status' => 0, 'msg' => '认证失败'];
+            //echo "fail"; //验证失败
+        }
+        $this->ajaxReturn($result);
+    }
+
+    //请理刘成的数据
+    public function empty_identify(){
+        //删除表的信息
+        $where["user_id"] = 614;
+        M("user_identify")->where($where)->delete();
+        $update['is_authentication'] = 0;
+        M("users")->where($where)->update($update);
+        echo '成功';
+    }
+}

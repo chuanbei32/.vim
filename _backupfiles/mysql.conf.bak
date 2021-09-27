@@ -1,0 +1,20 @@
+server {
+    listen 65505;
+    proxy_pass mysql8.0:3306;
+    proxy_connect_timeout 1h;
+    proxy_timeout 24h;
+}
+
+server {
+    listen 65506;
+    proxy_pass mysql8.0-slave:3306;
+    proxy_connect_timeout 1h;
+    proxy_timeout 24h;
+}
+
+server {
+    listen 65507;
+    proxy_pass mysql5.7:3306;
+    proxy_connect_timeout 1h;
+    proxy_timeout 24h;
+}

@@ -1,0 +1,204 @@
+{extend name="common/sdrcHeader"}
+
+{block name="content"}
+<style>
+    .shop-sign-mobile1 {
+        position: absolute;
+        right: 0px;
+        top: 20px;
+        width: 300px;
+    }
+
+    .shop-sign-mobile1-div-text {
+        color: rgb(212, 3, 0);
+        font-weight: 700;
+        font-size: 26px;
+    }
+</style>
+<!--search-->
+<div class="shops-header">
+    <div class="container shops-relative">
+
+        <div class="shops-header-logo">
+            <a href="javascript:;"><img style="{$baseUrlLogoStyle}" src="{$baseUrlLogo}"></a>
+        </div>
+        <div class="shops-sign">
+            <div class="shop-header-namebox L" style="margin-left: -30px;">
+            </div>
+            <div class="shop-sign-mobile1">
+            </div>
+        </div>
+    </div>
+</div>
+<!--search end-->
+
+<!--店铺名start-->
+<div class="sd-signboard signboard signboard5">
+    <div class="wrap-middle relative">
+        <h1 class="signboard-name" style="left: 50px;color: rgb(212, 37, 55)">
+            {$data.name}
+        </h1>
+        <!-- <div class="signboard-phone" style="color: rgb(212, 37, 55);">
+            <img src="../../prod/images/phone.png"
+                style="width: 28px;float: left;margin-top: 17px;margin-left: -13px; margin-right: 10px;">
+
+            <div style="display: inline" class="signboard-phone-s">
+                {$data.mobile}
+
+
+            </div>
+        </div> -->
+    </div>
+</div>
+<!--店铺名end-->
+
+{include file="common/href"}
+
+<div class="wrap-middle">
+
+    <div class="shop-crumbs">当前位置：
+        <a href="javascript:;" target="_blank">爱采购</a>&nbsp;&gt;
+        <a href="javascript:;">{$data.name}</a>&nbsp;&gt;
+        <a href="">联系方式</a>
+    </div>
+
+    <div class="shop-detail clearfix">
+        <div class="shop-detail-l L">
+
+            <!--公司信息start-->
+
+            <div class="shop-member qytong mb10">
+                <div class="member-logo"><img style="padding-top: 10px;" width="126px" height="46px"
+                        src="/static/image/ic.png"></div>
+                <div class="member-info">
+                    <ul>
+                        <li>
+                            <a class="com-name" target="_blank">{$data.name}</a>
+                        </li>
+                        <li>联系姓名：
+                            <span target="_blank">{$data.linkman}</span>
+                        </li>
+                        <li>电话号码：<span class="member-phone">{$data.mobile}</span></li>
+                        <li>经营模式：生产厂家</li>
+                        <!-- <li>所在地区：{$data.address}</li> -->
+                        <li>主营产品：
+                            {$data.e_mail}
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!--公司信息end-->
+
+            {include file="common/slide"}
+
+            <!--左侧列表主打产品start-->
+            <div class="shop-section">
+                <div class="shop-section-tit"><span class="shop-section-tit-c">老板推荐</span></div>
+                <ul class="shop-l-pro-ul">
+                    {foreach $click as $k => $v}
+                    <li>
+                        <div class="adaption-imgbox shop-lpro-imgbox">
+                            <a href="{$url}/detail/{$v['id']}/" target="_blank" title=""><img
+                                    style="width: 220px;height: 220px" src={$v.images}></a>
+                        </div>
+                        <p class="shop-lpro-price"><span class="f14">&yen;&nbsp;</span>{$v.money}</p>
+                        <p class="shop-lpro-name">
+                            <a href="{$url}/detail/{$v['id']}/" target="_blank" title="">{$v.title}</a>
+                        </p>
+                    </li>
+                    </br>
+                    {/foreach}
+
+                </ul>
+            </div>
+            <!--左侧产品列表end-->
+        </div>
+        <div class="shop-detail-r R">
+
+            <!--联系方式名片start-->
+
+            <table cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                    <tr>
+                        <div class="main_head">
+                            <div><strong>联系方式</strong></div>
+                        </div>
+                        <div class="main_body">
+                            <div class="contact-list">
+                                <dl>
+                                    <dt>公司名称：</dt>
+                                    <dd>{$data.name}</dd>
+                                </dl>
+                                <!-- <dl>
+                                    <dt>公司地址：</dt><dd>{$data.address}</dd>
+                                </dl> -->
+                                <dl>
+                                    <dt>公司电话：</dt>
+                                    <dd>{$data.mobile1}</dd>
+                                </dl>
+                                <dl>
+                                    <dt>QQ：</dt>
+                                    <dd>{$data.qq}</dd>
+                                </dl>
+                                <dl>
+                                    <dt>联 系 人：</dt>
+                                    <dd>{$data.linkman}&nbsp;</dd>
+                                </dl>
+
+                                <dl>
+                                    <dt>手机号码：</dt>
+                                    <dd>{$data.mobile}</dd>
+                                </dl>
+
+                                <dl>
+                                    <dt>扫码关注：</dt>
+                                    <dd><img src="{$data.code}" style="margin-top: 14px;" width="100px" height="100px"
+                                            border="0"></dd>
+                                </dl>
+
+
+                            </div>
+                        </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--联系方式名片end-->
+
+
+            {include file="common/moreGoods"}
+
+            <!--最新上架产品start-->
+            <div class="shop-section">
+                <div class="shop-section-tit">
+                    <span class="shop-section-tit-c">最新上架产品</span>
+                    <a style="padding-left: 78%" href="/supply/{$data['id']}/" target="_blank">查看更多>></a>
+                </div>
+                <div class="shop-section-con">
+                    <ul class="pro-lists clearfix">
+                        {foreach $newGoods as $k => $v}
+                        <li style="display:inline-block">
+                            <div class="adaption-imgbox pro-lists-imgbox">
+                                <a href="{$url}/detail/{$v['id']}/" target="_blank" title=""><img
+                                        style="width: 218px;height: 218px" src="{$v.images}"></a>
+                            </div>
+                            <p class="pro-lists-price"><span class="f14">&yen;&nbsp;</span>{$v.money}</p>
+                            <p class="pro-lists-name">
+                                <a href="{$url}/detail/{$v['id']}/" target="_blank" title="">{$v.title}</a>
+                            </p>
+                        </li>
+                        &nbsp;
+                        {/foreach}
+
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{/block}

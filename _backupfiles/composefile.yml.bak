@@ -1,0 +1,361 @@
+version: "3.7"
+
+networks:
+    default:
+        # driver: bridges
+        external:
+            name: bridges
+            # name: hosts
+
+# volumes: # 数据卷
+#   data:
+
+# configs: # 选项
+#   my_config:
+#     file: ./my_config.txt
+#   my_other_config:
+#     external: true
+#   my_credentials_spec:
+#     file: ./my-credential-spec.json
+
+services:
+    nginx:
+        build:
+            context: ./dockerfile
+            dockerfile: nginx.dockerfile
+        image: nginx
+        container_name: "nginx"
+        restart: always
+        ports:
+            - "80:80"
+            - "443:443"
+            - "65500-65535:65500-65535"
+        volumes:
+            - /iwork/project/docker/data/nginx:/etc/nginx
+            - /iwork/project/docker/data/nginx/logs:/var/log/nginx
+            - /iwork/project:/usr/share/nginx/html
+    apache:
+        build:
+            context: ./dockerfile
+            dockerfile: apache.dockerfile
+        image: apache
+        container_name: "apache"
+        restart: always
+        ports:
+            - "800:80"
+            - "4430:443"
+        volumes:
+            - /iwork/project/docker/data/apache/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
+            - /iwork/project/docker/data/apache/logs:/usr/local/apache2/logs
+            - /iwork/project:/usr/local/apache2/htdocs
+    php-fpm5.6:
+        build:
+            context: ./dockerfile
+            dockerfile: php-fpm5.6.dockerfile
+        image: php-fpm5.6
+        container_name: "php-fpm5.6"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/php-fpm5.6/php.ini:/usr/local/etc/php/php.ini
+            - /iwork/project/docker/data/php-fpm5.6/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - /iwork/project/docker/data/php-fpm5.6/xdebug/xdebug.log:/tmp/xdebug.log
+            - /iwork/project/php/5.6:/php
+    php-fpm7.0:
+        build:
+            context: ./dockerfile
+            dockerfile: php-fpm7.0.dockerfile
+        image: php-fpm7.0
+        container_name: "php-fpm7.0"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/php-fpm7.0/php.ini:/usr/local/etc/php/php.ini
+            - /iwork/project/docker/data/php-fpm7.0/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - /iwork/project/docker/data/php-fpm7.0/xdebug/xdebug.log:/tmp/xdebug.log
+            - /iwork/project/php/7.0:/php
+    php-fpm7.1:
+        build:
+            context: ./dockerfile
+            dockerfile: php-fpm7.1.dockerfile
+        image: php-fpm7.1
+        container_name: "php-fpm7.1"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/php-fpm7.1/php.ini:/usr/local/etc/php/php.ini
+            - /iwork/project/docker/data/php-fpm7.1/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - /iwork/project/docker/data/php-fpm7.1/xdebug/xdebug.log:/tmp/xdebug.log
+            - /iwork/project/php/7.1:/php
+    php-fpm7.2:
+        build:
+            context: ./dockerfile
+            dockerfile: php-fpm7.2.dockerfile
+        image: php-fpm7.2
+        container_name: "php-fpm7.2"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/php-fpm7.2/php.ini:/usr/local/etc/php/php.ini
+            - /iwork/project/docker/data/php-fpm7.2/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - /iwork/project/docker/data/php-fpm7.2/xdebug/xdebug.log:/tmp/xdebug.log
+            - /iwork/project/php/7.2:/php
+    php-fpm7.3:
+        build:
+            context: ./dockerfile
+            dockerfile: php-fpm7.3.dockerfile
+        image: php-fpm7.3
+        container_name: "php-fpm7.3"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/php-fpm7.3/php.ini:/usr/local/etc/php/php.ini
+            - /iwork/project/docker/data/php-fpm7.3/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - /iwork/project/docker/data/php-fpm7.3/xdebug/xdebug.log:/tmp/xdebug.log
+            - /iwork/project/php/7.3:/php
+    php-fpm7.4:
+        build:
+            context: ./dockerfile
+            dockerfile: php-fpm7.4.dockerfile
+        image: php-fpm7.4
+        container_name: "php-fpm7.4"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/php-fpm7.4/php.ini:/usr/local/etc/php/php.ini
+            - /iwork/project/docker/data/php-fpm7.4/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - /iwork/project/docker/data/php-fpm7.4/xdebug/xdebug.log:/tmp/xdebug.log
+            - /iwork/project/php/7.4:/php
+    php-fpm8.0:
+        build:
+            context: ./dockerfile
+            dockerfile: php-fpm8.0.dockerfile
+        image: php-fpm8.0
+        container_name: "php-fpm8.0"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/php-fpm8.0/php.ini:/usr/local/etc/php/php.ini
+            - /iwork/project/docker/data/php-fpm8.0/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - /iwork/project/docker/data/php-fpm8.0/xdebug/xdebug.log:/tmp/xdebug.log
+            - /iwork/project/php/8.0:/php
+    # php-fpm8.1:
+    #     build:
+    #         context: ./dockerfile
+    #         dockerfile: php-fpm8.1.dockerfile
+    #     image: php-fpm8.1
+    #     container_name: "php-fpm8.1"
+    #     restart: always
+    #     volumes:
+    #         - /iwork/project/docker/data/php-fpm8.1/php.ini:/usr/local/etc/php/php.ini
+    #         - /iwork/project/docker/data/php-fpm8.1/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    #         # - /iwork/project/docker/data/php-fpm8.0/xdebug/xdebug.log:/tmp/xdebug.log
+    #         - /iwork/project/php/8.1:/php
+    java:
+        build:
+            context: ./dockerfile
+            dockerfile: java.dockerfile
+        image: java
+        container_name: "java"
+        restart: always
+        tty: true
+        volumes:
+            - /iwork/project/java:/java
+    node:
+        build:
+            context: ./dockerfile
+            dockerfile: node.dockerfile
+        image: node
+        container_name: "node"
+        restart: always
+        tty: true
+        volumes:
+            - /iwork/project/node:/node
+    python:
+        build:
+            context: ./dockerfile
+            dockerfile: python.dockerfile
+        image: python
+        container_name: "python"
+        restart: always
+        tty: true
+        volumes:
+            - /iwork/project/python:/python
+    gcc:
+        build:
+            context: ./dockerfile
+            dockerfile: gcc.dockerfile
+        image: gcc
+        container_name: "gcc"
+        restart: always
+        tty: true
+        volumes:
+            - /iwork/project/cc++:/cc++
+    # lua:
+    #     build:
+    #         context: ./dockerfile
+    #         dockerfile: lua.dockerfile
+    #     image: lua
+    #     container_name: "lua"
+    #     restart: always
+    #     tty: true
+    #     volumes:
+    #         - /iwork/project/lua:/lua
+    go:
+        build:
+            context: ./dockerfile
+            dockerfile: go.dockerfile
+        image: go
+        container_name: "go"
+        restart: always
+        tty: true
+        volumes:
+            - /iwork/project/go:/go
+    mysql5.7:
+        build:
+            context: ./dockerfile
+            dockerfile: mysql5.7.dockerfile
+        image: mysql5.7
+        container_name: "mysql5.7"
+        restart: always
+        command: --skip-grant-tables
+        environment:
+            MYSQL_ROOT_PASSWORD: 2zxqWHrrazA4doQx
+        volumes:
+            - /iwork/project/docker/data/mysql5.7/data/:/var/lib/mysql/
+            - /iwork/project/docker/data/mysql5.7/cnf/:/etc/mysql/
+            - /iwork/project/docker/data/mysql5.7/mysql-files/:/var/lib/mysql-files
+    mysql8.0:
+        build:
+            context: ./dockerfile
+            dockerfile: mysql8.0.dockerfile
+        image: mysql8.0
+        container_name: "mysql8.0"
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 2zxqWHrrazA4doQx
+        security_opt:
+          - seccomp:unconfined
+        #volumes:
+            #- /iwork/project/docker/data/mysql8.0/data/:/var/lib/mysql/
+            #- /iwork/project/docker/data/mysql8.0/cnf/:/etc/mysql/
+            #- /iwork/project/docker/data/mysql8.0/mysql-files/:/var/lib/mysql-files
+    mysql8.0-slave:
+        build:
+            context: ./dockerfile
+            dockerfile: mysql8.0-slave.dockerfile
+        image: mysql8.0-slave
+        container_name: "mysql8.0-slave"
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 2zxqWHrrazA4doQx
+        volumes:
+            - /iwork/project/docker/data/mysql8.0-slave/cnf/:/etc/mysql/
+            - /iwork/project/docker/data/mysql8.0-slave/mysql-files/:/var/lib/mysql-files
+    redis:
+        build:
+            context: ./dockerfile
+            dockerfile: redis.dockerfile
+        image: redis
+        container_name: "redis"
+        restart: always
+        volumes:
+            - /iwork/project/docker/data/redis/data:/data
+            - /iwork/project/docker/data/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf
+    memcached:
+        build:
+            context: ./dockerfile
+            dockerfile: memcached.dockerfile
+        image: memcached
+        container_name: "memcached"
+        restart: always
+        # volumes:
+        #     - /iwork/project/docker/datadocker/memcached1.6:/data
+    mongodb:
+        build:
+            context: ./dockerfile
+            dockerfile: mongodb.dockerfile
+        image: mongodb
+        container_name: "mongodb"
+        command: # 重写默认命令。
+            - "--auth"
+            # - '-f'
+            # - '/data/configdb/mongod.conf'
+        restart: always
+        environment:
+            - mongo_initdb_root_username=admin
+            - mongo_initdb_root_password=admin
+        # volumes:
+        #     - type: volume
+        #       source: mongodbdata
+        #       target: /data
+        #       volume:
+        #         nocopy: true
+        #         - /iwork/project/docker/datadocker/logs/mongodb.logs:/usr/share/elasticsearch/logs
+    elasticsearch6:
+        build:
+            context: ./dockerfile
+            dockerfile: elasticsearch6.dockerfile
+        image: elasticsearch6
+        container_name: "elasticsearch6"
+        restart: always
+        environment:
+            es_java_opts: "-xms200m -xmx200m"
+        volumes:
+            - /iwork/project/docker/data/elasticsearch6:/usr/share/elasticsearch
+    logstash6:
+        build:
+            context: ./dockerfile
+            dockerfile: logstash6.dockerfile
+        image: logstash6
+        container_name: "logstash6"
+        restart: always
+        environment:
+            es_java_opts: "-xms200m -xmx200m"
+        volumes:
+            - /iwork/project/docker/data/logstash6:/usr/share/logstash
+    kibana6:
+        build:
+            context: ./dockerfile
+            dockerfile: kibana6.dockerfile
+        image: kibana6
+        container_name: "kibana6"
+        restart: always
+        environment:
+            server_host: 0.0.0.0
+            elasticsearch_hosts: http://elasticsearch6:9200
+            elasticsearch_url: http://elasticsearch6:9200
+            es_java_opts: "-xms200m -xmx200m"
+        volumes:
+            - /iwork/project/docker/data/kibana6:/usr/share/kibana
+    # zookeeper-kafka:
+    #     build:
+    #         context: ./dockerfile
+    #         dockerfile: zookeeper-kafka.dockerfile
+    #     image: zookeeper-kafka
+    #     container_name: "zookeeper-kafka"
+    #     mem_limit: 512M
+    #     environment:
+    #         ZOOKEEPER_CLIENT_PORT: 2181
+    # kafka5:
+    #     build:
+    #         context: ./dockerfile
+    #         dockerfile: kafka5.dockerfile
+    #     image: kafka5
+    #     container_name: "kafka5"
+    #     mem_limit: 512M
+    #     depends_on:
+    #         - zookeeper-kafka
+    #     environment:
+    #         KAFKA_BROKER_NO: 1
+    #         KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+    #         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://127.0.0.1:9092
+    #         KAFKA_ZOOKEEPER_CONNECT: zookeeper-kafka:2181
+    #         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    #         KAFKA_HEAP_OPTS: "-Xmx512M -Xms16M"
+    # jenkins:
+    #     build:
+    #         context: ./dockerfile
+    #         dockerfile: jenkins.dockerfile
+    #     image: jenkins
+    #     user: root
+    #     container_name: "jenkins"
+    #     restart: always
+    #     ports:
+    #         - "58080:8080"
+    #         - "50000:50000"
+    #     volumes:
+    #         - /iwork/project/docker/data/jenkins:/var/jenkins_iwork

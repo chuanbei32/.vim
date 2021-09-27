@@ -1,0 +1,5 @@
+const AndroidAppUrl: string = "https://wwa.lanzoui.com/iaBVRlwh2tg"; // 安卓下载链接
+
+const IosAppUrl: string = "https://testflight.apple.com/join/r8DEATfw"; //IOS下载链接
+
+export { AndroidAppUrl, IosAppUrl };

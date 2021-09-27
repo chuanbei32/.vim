@@ -1,0 +1,241 @@
+{extend name="common/sdrcHeader"}
+
+{block name="content"}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style>
+    .shop-rpro-con .nav-lists li {
+        float: left;
+        margin-bottom: 8px;
+        width: 19%;
+        margin-right: 1%;
+    }
+
+    .shop-rpro-con .nav-lists li a {
+        display: inline-block;
+        padding: 2px 0;
+        color: #333;
+        border-radius: 3px;
+    }
+
+    /*.shop-rpro-con .nav-lists li a :hover {*/
+    /*color : red;*/
+    /*}*/
+    a:hover {
+        color: orange;
+    }
+
+    .container {
+        padding-left: 83px;
+        padding-left: 0px;
+        margin-right: auto;
+        margin-left: 356px;
+    }
+
+    .signboard5 .signboard-name {
+        font-size: 34px;
+        position: absolute;
+        top: 28px;
+        left: 185px;
+        color: #111;
+    }
+
+    /*.s-mod-page{*/
+    /*    display: none!important;*/
+    /*}*/
+</style>
+<style>
+    .shop-sign-mobile1 {
+        position: absolute;
+        right: -21px;
+        top: 20px;
+        width: 300px;
+    }
+
+    .shop-sign-mobile1-div-text {
+        color: rgb(212, 3, 0);
+        font-weight: 700;
+        font-size: 26px;
+    }
+</style>
+<script>
+    var url = window.location.href;//当前页面
+    var shang = window.document.referrer; //来源上一页
+    var biaos = encodeURIComponent("自设入口");//标识
+    console.log(shang)
+</script>
+<!--search-->
+<div class="shops-header">
+    <div class="container shops-relative">
+        <div class="shops-header-logo">
+            <a href="javascript:;"><img style="{$baseUrlLogoStyle}" src="{$baseUrlLogo}"></a>
+        </div>
+        <div class="shops-sign">
+            <div class="shop-header-namebox L" style="margin-left: -30px;">
+            </div>
+            <div class="shop-sign-mobile1">
+            </div>
+        </div>
+    </div>
+</div>
+<!--search end-->
+
+<!--店铺名start-->
+<div class="sd-signboard signboard signboard5">
+    <div class="wrap-middle relative">
+        <h1 class="signboard-name" style="left: 50px">
+            {$data.name}
+        </h1>
+        <div class="signboard-phone" style="width: 450px !important;background: none !important;right: -250px;">
+
+            <img src="../../prod/images/phone.png"
+                style="width: 28px;float: left;margin-top: 17px;margin-left: -13px; margin-right: 10px;">
+
+            <div style="display: inline"
+                onclick="redHref('{if (1 == $baseShowTelStar)}{$data.mobile}{else/}{$data.uid}{/if}', this)"
+                class="signboard-phone-s">
+                {if (1 == $baseShowTel)}{$data.mobile}{elseif (1 == $baseShowTelStar)}{:substr_replace($data.mobile,
+                '****', 3, 4)}<spqn style="font-size: 22px;color: red; border: 1px solid;padding: 2px;">点击查看完整电话</spqn>
+                {else/}查看电话{/if}
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--店铺名end-->
+
+<!--店铺导航start-->
+{include file="common/href"}
+<!--店铺导航end-->
+
+<div class="wrap-middle">
+
+    <div class="shop-crumbs">当前位置：
+        <a href="javascript:;" target="_blank">爱采购</a>&nbsp;&gt;
+        <a href="javascript:;">{$data.name}</a>&nbsp;&gt;
+        <a href="">供应产品</a>
+    </div>
+
+    <div class="shop-detail clearfix">
+        <div class="shop-detail-l L">
+
+            <!--公司信息start-->
+
+            <div class="shop-member qytong mb10">
+                <div class="member-logo"><img style="padding-top: 10px;" width="126px" height="46px"
+                        src="/static/image/ic.png"></div>
+                <div class="member-info">
+                    <ul>
+                        <li>
+                            <a class="com-name" target="_blank">{$data.name}</a>
+                        </li>
+
+                        <li>联系姓名：
+                            <span target="_blank">{$data.linkman}</span>
+                        </li>
+                        <li>电话号码：<span class="member-phone"
+                                onclick="redHref('{if (1 == $baseShowTelStar)}{$data.mobile}{else/}{$data.uid}{/if}', this)"
+                                class="signboard-phone-s">
+                                {if (1 == $baseShowTel)}{$data.mobile}{elseif (1 ==
+                                $baseShowTelStar)}{:substr_replace($data.mobile, '****', 3, 4)}{else/}查看电话{/if}
+                            </span></li>
+                        <li>经营模式：生产厂家</li>
+                        <!-- <li>所在地区：{$data.address}</li> -->
+                        <li>主营产品：
+                            {$data.e_mail}
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!--公司信息end-->
+
+            <!--左侧产品列表start-->
+            <div class="shop-section">
+                <div class="shop-section-tit"><span class="shop-section-tit-c">老板推荐</span></div>
+                <ul class="shop-l-pro-ul">
+                    {foreach $click as $k => $v}
+                    <li>
+                        <div class="adaption-imgbox shop-lpro-imgbox">
+                            <a href="{$url}/detail/{$v['id']}/" target="_blank" title=""><img
+                                    style="width: 220px;height: 220px" src={$v.images}></a>
+                        </div>
+                        <p class="shop-lpro-price"><span class="f14">&yen;&nbsp;</span>{$v.money}</p>
+                        <p class="shop-lpro-name">
+                            <a href="{$url}/detail/{$v['id']}/" target="_blank" title="">{$v.title}</a>
+                        </p>
+                    </li>
+                    </br>
+                    {/foreach}
+
+                </ul>
+            </div>
+            <!--左侧产品列表end-->
+
+        </div>
+        <div class="shop-detail-r R">
+
+            <!--供应产品start-->
+            <div class="shop-section mb10">
+                <div class="shop-section-tit"><span class="shop-section-tit-c">产品列表</span></div>
+                <div class="shop-rpro-con">
+
+
+                    <ul class="nav-lists clearfix" style="padding:10px">
+
+                        <li class="cur" id="allprocount">
+
+                            <a href="/supply/{$data['uid']}/">全部产品 &nbsp;&nbsp; {$sun}<span class="nav-lists-num"
+                                    id="span_allcount"></span> </a>
+                        </li>
+                        {foreach $slide as $k => $v}
+                        <li id="typeid-201355">
+                            <a href="/supply/{$data['uid']}/{$v['like']}/">{$v.catname}&nbsp;&nbsp;{$v.num} <span
+                                    class="nav-lists-num" id="span-201355"></span> </a>
+                        </li>
+                        {/foreach}
+                    </ul>
+                    <div class="sort-box">
+                        <div class="sort" style="padding: 10px">
+                            供应产品
+                        </div>
+                    </div>
+
+
+                    <ul class="pro-lists clearfix">
+                        {foreach $newGoods as $k => $v}
+                        <li style="display:inline-block;padding-left: 12px">
+                            <div class="adaption-imgbox pro-lists-imgbox">
+                                <a href="{$url}/detail/{$v['id']}/" target="_blank" title=""><img
+                                        style="width: 218px;height: 218px" src="{$v.images}"></a>
+                            </div>
+                            <p class="shop-newgoods-price"><span class="f14">&yen;&nbsp;</span>{$v.money}元</p>
+                            <p class="shop-newgoods-name" style="
+    width: 218px;
+    word-break: break-all;
+    overflow:hidden;
+">{$v.title}</p>
+                            </p>
+                        </li>
+                        {/foreach}
+
+
+                    </ul>
+
+                    <div style="margin: 0 auto ; display: inline-block">
+                        {$newGoods->render()}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            <!--供应产品end-->
+
+        </div>
+    </div>
+</div>
+
+{/block}

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+vars=asdasdasd
+vars2=123123
+
+echo $0 $1 $2 
+echo $* 
+echo $@ 
+echo 参数个数=$#

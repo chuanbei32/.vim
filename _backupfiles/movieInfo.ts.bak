@@ -1,0 +1,12 @@
+import { request } from "./request";
+
+export function getMovieData(id: number, episodeNum: number) {
+  return request({
+    url: "api/v2/movie/selectMovieInformation",
+    method: 'post'
+    params: {
+      id,
+      episodeNum,
+    },
+  });
+}

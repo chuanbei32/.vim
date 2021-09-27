@@ -1,0 +1,1146 @@
+<?php
+
+namespace app\command;
+
+use think\Db;
+use think\Env;
+use app\extend\ReqHttp;
+use think\console\Input;
+use think\console\Output;
+use app\admin\model\Admin;
+use app\admin\model\Goods;
+use think\console\Command;
+use app\admin\model\AreaAll;
+use app\admin\model\GoodsSf;
+use app\admin\model\IpCount;
+use app\admin\model\IpMarket;
+use app\admin\model\GoodsCity;
+use app\admin\model\BdKeywords;
+use app\admin\model\IpCountOther;
+use think\console\Input\Argument;
+use app\admin\model\BaiduReportAccountQ;
+
+class PromoteKeywords extends Command
+{
+    protected $redis = null;
+    protected $start_time = '';
+    protected $end_time = '';
+    protected $baiduDatas = [];
+    protected $baiduDeatilDatas = [];
+    protected $tmpNamePv = [];
+    protected $userIds = [];
+    protected $keywords = [];
+    protected $rediskey = '';
+    protected $redisDetailKey = '';
+    protected $redisAccountKey = '';
+
+    public function __construct(?string $name = null)
+    {
+        $this->request = new ReqHttp();
+        $this->rediskey = 'gw:bdPlan:' . date('Ymd');
+        $this->redisDetailKey = 'gw:detail:' . date('Ymd');
+        $this->redisAccountKey = 'gw:account';
+        $this->redis = new \Redis();
+        $this->redis->connect(Env::get('REDIS_HOST'), Env::get('REDIS_PORT'));
+        $this->redis->auth(Env::get('REDIS_PASSWD'));
+        $this->redis->select(0);
+        parent::__construct($name);
+    }
+
+    protected function configure()
+    {
+        // $this->addArgument('start_time', Argument::OPTIONAL);
+        // $this->addArgument('end_time', Argument::OPTIONAL);
+
+        $this->setName('promoteKeywords');
+        $this->setDescription('推广关键字数据');
+    }
+
+    protected function execute(Input $input, Output $output)
+    {
+        // 执行逻辑
+        try {
+            // if (date('Ymd') < '20210320') {
+            //     echo "还未到执行时间\n----------\n";
+            //     return false;
+            // }
+
+            // if (in_array(date('H'), [0, 1, 2, 3, 4, 5, 6, 7])) {
+            //     $output->writeln('未到执行时间');
+            //     exit;
+            // }
+
+            $output->writeln('开始执行关键词拆分任务');
+
+            // $start_time = $input->getArgument('start_time') ?? date('Y-m-d', strtotime(date('Y-m-d'))); // 开始时间
+            // $end_time = $input->getArgument('end_time') ?? date('Y-m-d', strtotime(date('Y-m-d 23:59:59'))); // 结束时间
+            $this->start_time = date('Y-m-d', strtotime(date('Y-m-d')));
+            $this->end_time = date('Y-m-d', strtotime(date('Y-m-d 23:59:59')));
+
+            $lockFilePath = './public/lock';
+            if (!is_dir($lockFilePath)) {
+                mkdir($lockFilePath, 777, true);
+            }
+            $lockFilePathName = $lockFilePath . '/' . preg_replace('/-/', '', $this->start_time) . '.lock';
+            if (!is_file($lockFilePathName)) {
+                file_put_contents($lockFilePathName, 0);
+            }
+            $fp = fopen($lockFilePathName, 'r+'); // 获取锁信息
+            if (!flock($fp, LOCK_EX | LOCK_NB)) {
+                $output->writeln('任务已在处理');
+                return false;
+            }
+
+            // 获取百度数据
+            $baiduData = $this->getbdData();
+            if (empty($baiduData)) {
+                throw new \Exception('未获取到原始百度数据');
+            }
+
+            // 过滤百度数据
+            $baiduDatas['pc'] = array_merge_recursive(
+                $baiduData['res'][0][0],
+                $baiduData['res'][0][1],
+                $baiduData['res'][0][2],
+                $baiduData['res'][0][3],
+                $baiduData['res'][0][4],
+                $baiduData['res'][0][5],
+                $baiduData['res'][0][6],
+                $baiduData['res'][0][7],
+                $baiduData['res'][0][8],
+                $baiduData['res'][0][9],
+                $baiduData['res'][0][10],
+                $baiduData['res'][0][11],
+                $baiduData['res'][0][12]
+            );
+            $baiduDatas['mobile'] = array_merge_recursive(
+                $baiduData['res'][1][0],
+                $baiduData['res'][1][1],
+                $baiduData['res'][1][2],
+                $baiduData['res'][1][3],
+                $baiduData['res'][1][4],
+                $baiduData['res'][1][5],
+                $baiduData['res'][1][6],
+                $baiduData['res'][1][7],
+                $baiduData['res'][1][8],
+                $baiduData['res'][1][9],
+                $baiduData['res'][1][10],
+                $baiduData['res'][1][11],
+                $baiduData['res'][1][12]
+            );
+            $baiduDatas['pc'] = array_values(array_filter($baiduDatas['pc'], function ($item) {
+                list($campaignNameStatus, $click) = [$item['campaignNameStatus'], $item['click']];
+                preg_match('/^\(.*获.*\)(.*)(?:[已删除])?$/', $campaignNameStatus, $matchs);
+                if (!empty($matchs)) {
+                    return false;
+                }
+                if (0 == $click) {
+                    return false;
+                }
+                return true;
+            }));
+            $baiduDatas['mobile'] = array_values(array_filter($baiduDatas['mobile'], function ($item) {
+                list($campaignNameStatus, $click) = [$item['campaignNameStatus'], $item['click']];
+                preg_match('/^\(.*获.*\)(.*)(?:[已删除])?$/', $campaignNameStatus, $matchs);
+                if (!empty($matchs)) {
+                    return false;
+                }
+                if (0 == $click) {
+                    return false;
+                }
+                return true;
+            }));
+            if (empty($baiduDatas['pc']) && empty($baiduDatas['mobile'])) {
+                throw new \Exception('未获取到过滤百度数据');
+            }
+            $this->baiduDatas = $baiduDatas;
+            $baiduDeatilDatas['pc'] = array_merge_recursive(
+                $baiduData['resDetail'][0][0],
+                $baiduData['resDetail'][0][1],
+                $baiduData['resDetail'][0][2],
+                $baiduData['resDetail'][0][3],
+                $baiduData['resDetail'][0][4],
+                $baiduData['resDetail'][0][5],
+                $baiduData['resDetail'][0][6],
+                $baiduData['resDetail'][0][7],
+                $baiduData['resDetail'][0][8],
+                $baiduData['resDetail'][0][9],
+                $baiduData['resDetail'][0][10],
+                $baiduData['resDetail'][0][11],
+                $baiduData['resDetail'][0][12]
+            );
+            $baiduDeatilDatas['mobile'] = array_merge_recursive(
+                $baiduData['resDetail'][1][0],
+                $baiduData['resDetail'][1][1],
+                $baiduData['resDetail'][1][2],
+                $baiduData['resDetail'][1][3],
+                $baiduData['resDetail'][1][4],
+                $baiduData['resDetail'][1][5],
+                $baiduData['resDetail'][1][6],
+                $baiduData['resDetail'][1][7],
+                $baiduData['resDetail'][1][8],
+                $baiduData['resDetail'][1][9],
+                $baiduData['resDetail'][1][10],
+                $baiduData['resDetail'][1][11],
+                $baiduData['resDetail'][1][12],
+            );
+            // $baiduDeatilDatas['pc'] = array_values(array_filter($baiduDeatilDatas['pc'], function ($item) {
+            //     list($campaignNameStatus, $click) = [$item['campaignNameStatus'], $item['click']];
+            //     preg_match('/^\(.*获.*\)(.*)(?:[已删除])?$/', $campaignNameStatus, $matchs);
+            //     if (empty($matchs)) {
+            //         return false;
+            //     }
+            //     if (0 == $click) {
+            //         return false;
+            //     }
+            //     return true;
+            // }));
+            // $baiduDeatilDatas['mobile'] = array_values(array_filter($baiduDeatilDatas['mobile'], function ($item) {
+            //     list($campaignNameStatus, $click) = [$item['campaignNameStatus'], $item['click']];
+            //     preg_match('/^\(.*获.*\)(.*)(?:[已删除])?$/', $campaignNameStatus, $matchs);
+            //     if (empty($matchs)) {
+            //         return false;
+            //     }
+            //     if (0 == $click) {
+            //         return false;
+            //     }
+            //     return true;
+            // }));
+            $this->baiduDeatilDatas = $baiduDeatilDatas;
+
+            $output->writeln(count($baiduDatas['pc']) + count($baiduDatas['mobile']) . ' 总原始数据');
+
+            Db::startTrans();
+
+            // 获取当日已有关键字数据
+            $bdKeywords = BdKeywords::where('event_day', $this->start_time)->select();
+            if (!empty($bdKeywords)) {
+                foreach ($bdKeywords as $item) {
+                    $username = $item['unit_name_second'];
+                    $this->keywords[$username][] = [
+                        'id' => $item['id'],
+                        'query_word' => $item['query_word'],
+                        'clicks' => $item['clicks'],
+                        'pv' => $item['pv'],
+                        'price_ratio' => $item['price_ratio'],
+                        'cost' => $item['cost'],
+                        'diff_price' => $item['diff_price'],
+                        'creative_id' => $item['creative_id'],
+                        'unit_name' => $item['unit_name'],
+                        'prots' => $item['prots'],
+                        'goods_id' => $item['goods_id'],
+                    ];
+                }
+            }
+
+            $userSum = []; // 用户本次消费
+            $userSumTo = []; // 用户之前消费
+            $userTotal = IpCount::where('addtime', '>=', strtotime($this->start_time))
+                ->whereIn('is_show', [0, 1])
+                ->field('uid, sum(price2) as price2s')
+                ->group('uid')
+                ->select();
+            if (!empty($userTotal)) {
+                $userSumTo = array_combine(array_column($userTotal, 'uid'), array_column($userTotal, 'price2s'));
+            }
+
+            $insData = []; // 临时数据
+            $insDatas = []; // 拆分数据
+            $insDatasOther = []; // 超量数据
+            $keywordsClicks = []; // 关键词更新
+            $bdDatas = []; // 关键词添加
+            $pc = function () use ($baiduDatas) {
+                foreach ($baiduDatas['pc'] as $item) {
+                    yield $item;
+                }
+            };
+            $mobile = function () use ($baiduDatas) {
+                foreach ($baiduDatas['mobile'] as $item) {
+                    yield $item;
+                }
+            };
+            foreach ($pc() as $item) {
+                // echo count($item) . " PC 待处理数据\n";
+                $insDataTmp = $this->lin($item, $keywordsClicks, $bdDatas); // 临时数据
+                if (empty($insDataTmp)) {
+                    continue;
+                }
+                // echo count($insDataTmp) . " PC 临时数据\n";
+                $insData = array_merge_recursive($insData, $insDataTmp);
+                $insDatasTmp = $this->ti($insDataTmp[0], $userSum, $userSumTo, $insDatasOther); //数据拆分
+                if (empty($insDatasTmp)) {
+                    continue;
+                }
+                // echo count($insDatasTmp ?? []) . " PC 数据拆分\n----------\n";
+                $insDatas = array_merge_recursive($insDatas, $insDatasTmp); // 数据合并
+            }
+            foreach ($mobile() as $item) {
+                // echo count($item) . " WEB 待处理数据\n";
+                $insDataTmp = $this->lin($item, $keywordsClicks, $bdDatas); // 临时数据
+                if (empty($insDataTmp)) {
+                    continue;
+                }
+                // echo count($insDataTmp) . " WEB 临时数据\n";
+                $insData = array_merge_recursive($insData, $insDataTmp);
+                $insDatasTmp = $this->ti($insDataTmp[0], $userSum, $userSumTo, $insDatasOther); //数据拆分
+                if (empty($insDatasTmp)) {
+                    continue;
+                }
+                // echo count($insDatasTmp ?? []) . " WEB 数据拆分\n----------\n";
+                $insDatas = array_merge_recursive($insDatas, $insDatasTmp); // 数据合并
+            }
+            echo count($insData) . " 总临时数据\n";
+            echo count($insDatas) . " 总数据拆分\n";
+            echo count($insDatasOther) . " 总数据拆分超量\n";
+            echo count($keywordsClicks) . " 关键词更新\n";
+            echo count($bdDatas) . " 关键词添加\n";
+
+            if (!empty($insDatas)) {
+                $res = (new IpCount())->saveAll($insDatas);
+                if (!$res) {
+                    throw new \Exception('添加数据失败');
+                }
+            }
+
+            if (!empty($insDatasOther)) {
+                $res = (new IpCountOther())->saveAll($insDatasOther);
+                if (!$res) {
+                    throw new \Exception('添加超量数据失败');
+                }
+            }
+
+            if (!empty($keywordsClicks)) {
+                $res = (new BdKeywords())->saveAll($keywordsClicks);
+                if (!$res) {
+                    throw new \Exception('更新关键词数据失败');
+                }
+            }
+
+            if (!empty($bdDatas)) {
+                $res = (new BdKeywords())->saveAll($bdDatas);
+                if (!$res) {
+                    throw new \Exception('添加关键词数据失败');
+                }
+            }
+
+            flock($fp, LOCK_UN);
+            fclose($fp);
+
+            Db::commit();
+
+            $output->writeln('结束执行关键词拆分任务');
+        } catch (\Throwable $t) {
+            Db::rollback();
+            $output->writeln('退出执行关键词拆分任务');
+            $output->writeln($t->getMessage() . '------' . $t->getFile() . '--------' . $t->getLine());
+        }
+    }
+
+    /** 获取百度数据 */
+    protected function getbdData()
+    {
+        try {
+            $url = 'https://api.baidu.com/json/sms/service/OpenApiReportService/getReportData';
+            $headers = Config('bdAccount');
+            $res = [];
+            $resDetail = [];
+            foreach ($headers as $header) {
+                foreach ([0, 1] as $item) {
+                    $this->request->host = $url;
+                    $this->request->method = 'POST';
+                    $body = [
+                        'reportType' => 5381679,
+                        'startDate' => $this->start_time,
+                        'endDate' => $this->end_time,
+                        'timeUnit' => 'DAY',
+                        'columns' => [
+                            'date',
+                            'campaignId',
+                            'campaignNameStatus',
+                            'adGroupId',
+                            'adGroupNameStatus',
+                            'wInfoNameStatus',
+                            'queryWord',
+                            'landingPageUrl',
+                            'device',
+                            'click',
+                            'cost',
+                            'cpc',
+                            'landings',
+                            'landingRate',
+                            'avgLandingPageDurationSec'
+                        ],
+                        'startRow' => 0,
+                        'rowCount' => 1000,
+                        'needSum' => true,
+                        'filters' => [
+                            [
+                                'column' => 'device',
+                                'operator' => 'EQ',
+                                'values' => [
+                                    $item
+                                ],
+                            ]
+                        ]
+                    ];
+                    $tmpBdData = [];
+                    while (true) {
+                        $this->request->params = json_encode(compact('header', 'body'));
+                        $tmpRes = $this->request->call();
+                        if (0 != $tmpRes['header']['status'] || empty($tmpRes['body']['data'][0]['rows'])) {
+                            break;
+                        }
+                        $tmpBdData = array_merge_recursive($tmpBdData, $tmpRes['body']['data'][0]['rows']);
+                        $body['startRow'] += $body['rowCount'];
+                    }
+                    $res[$item][] = $tmpBdData ?? [];
+                    $body = [
+                        'reportType' => 4017932,
+                        'startDate' => $this->start_time,
+                        'endDate' => $this->end_time,
+                        'timeUnit' => 'DAY',
+                        'columns' => [
+                            'dateTime',
+                            'cityName',
+                            'queryWord',
+                            'wInfoNameStatus',
+                            'landingPageUrl',
+                            'ip',
+                            'antiCode',
+                            'landingPageDurationSec',
+                            'device'
+                        ],
+                        'startRow' => 0,
+                        'rowCount' => 1000,
+                        'needSum' => true,
+                        'filters' => [
+                            [
+                                'column' => 'device',
+                                'operator' => 'EQ',
+                                'values' => [
+                                    $item
+                                ],
+                            ]
+                        ]
+                    ];
+                    $tmpBdData = [];
+                    while (true) {
+                        $this->request->params = json_encode(compact('header', 'body'));
+                        $tmpRes = $this->request->call();
+                        if (0 != $tmpRes['header']['status'] || empty($tmpRes['body']['data'][0]['rows'])) {
+                            break;
+                        }
+                        $tmpBdData = array_merge_recursive($tmpBdData, $tmpRes['body']['data'][0]['rows']);
+                        $body['startRow'] += $body['rowCount'];
+                    }
+                    $resDetail[$item][] = $tmpBdData ?? [];
+                }
+            }
+            return compact('res', 'resDetail');
+        } catch (\Throwable $t) {
+            return [];
+        }
+    }
+
+    /** 临时整合数据 */
+    protected function lin(array $bdItem, array &$keywordsClicks, array &$bdDatas)
+    {
+        // 未找到数据到回调
+        $func = function (&$insData, $bdItem, $username, $uid, $flag = false) {
+            // if (empty($bdItem['click'])) {
+            //     echo $username . " {$bdItem['queryWord']} 点击为 {$bdItem['click']}" . "\n";
+            //     file_put_contents('./public/lock/' . date('Ymd', strtotime($this->start_time)) . '.miss', $username . " {$bdItem['queryWord']} 点击为 {$bdItem['click']}" . "\n", FILE_APPEND);
+            //     return [];
+            // }
+            $baiduDetailInfo = $this->searchKeywordsInDetail($bdItem['device'], $bdItem['queryWord'], $this->strReplace($bdItem['landingPageUrl']));
+            if (!empty($baiduDetailInfo)) {
+                $ip = $baiduDetailInfo['ip'];
+                $ipAddressInfo = $this->getIpInfo($ip);
+                if (empty($ipAddressInfo[1]) || empty($ipAddressInfo[2])) {
+                    $citys = $this->getAreaByCity($baiduDetailInfo['cityName']);
+                    if (empty($citys)) {
+                        goto citys;
+                    }
+                } else {
+                    $citys = [$ipAddressInfo[1], $ipAddressInfo[2]];
+                }
+                $ip = [
+                    'ip' => $baiduDetailInfo['ip'],
+                    'operation' => $this->getIsp($ip)
+                ];
+            } else {
+                citys: {
+                $citys = $this->getArea($uid);
+                if (2 != count($citys)) {
+                    $accountData = [
+                        'uid' => $uid,
+                        'u_name' => $username,
+                        'dates' => date('Y-m-d'),
+                        'problem' => '没有找到投放地区'
+                    ];
+                    BaiduReportAccountQ::create($accountData);
+                    $this->redis->lpush($this->redisAccountKey . ':list', json_encode($accountData));
+                    echo $username . ' 没有找到投放地区' . "\n";
+                    return [];
+                }
+                $ip = $this->getIp($citys);
+                }
+            }
+            preg_match('/(\d{4})(\d{2})(\d{2})/', date('Ymd', strtotime($bdItem['date'])), $matchs);
+            $insData[] = [
+                'ip' => $ip['ip'],
+                'carrier' => $ip['operation'],
+                'consumer' => ['计算机' => 'PC', '移动设备' => 'WEB'][$bdItem['device']],
+                'year' => $matchs[1],
+                'month' => $matchs[2],
+                'day' => $matchs[3],
+                'time' => '',
+                'url' => '',
+                'ip' => $ip['ip'],
+                'province' => $citys[0],
+                'city' => $citys[1],
+                'district' => '',
+                'uid' => $uid,
+                'title' => $bdItem['queryWord'],
+                'name' => $username,
+                'price1' => $bdItem['cpc'],
+                'price2' => $bdItem['cpc'],
+                'addtime' => strtotime($bdItem['date']),
+                'goodsId' => $this->strReplace($bdItem['landingPageUrl']),
+                'is_show' => 0,
+                'click' => $bdItem['click'],
+                'pv' => $bdItem['landings'],
+                'items' => $bdItem,
+                'itemsDetails' => $baiduDetailInfo,
+                'second' => $flag
+            ];
+        };
+        // 关键字添加
+        $bdFunc = function ($bdItem) use (&$bdDatas) {
+            preg_match_all('/(.*\(.*\)|\（.*\）)(.*)/', $bdItem['campaignNameStatus'], $matches);
+            $bdDatas[] = [
+                'query_word' => $bdItem['queryWord'],
+                'event_day' => $bdItem['date'],
+                'plan_name' => $bdItem['campaignNameStatus'],
+                'unit_name_first' => $matches[1][0] ?? '',
+                'unit_name_second' => $matches[2][0] ?? $bdItem['campaignNameStatus'],
+                'pv' => $bdItem['landings'],
+                'clicks' => $bdItem['click'],
+                'cost' => $bdItem['cost'],
+                'price_ratio' => $bdItem['cpc'],
+                'click_ratio' => 0,
+                'creative_id' => $bdItem['adGroupId'],
+                'unit_name' => $bdItem['adGroupNameStatus'],
+                'prots' => ['计算机' => 'pc', '移动设备' => 'mobile'][$bdItem['device']],
+                'goods_id' => $this->strReplace($bdItem['landingPageUrl'])
+            ];
+        };
+        // 临时整合数据
+        $insData = [];
+        extract($bdItem);
+        $username = preg_replace('/(.*\(.*\)|\（.*\）)|\[已删除\]/', '', $campaignNameStatus);
+        // $adGroupNameStatus = preg_replace('/\[已删除\]/', '', $adGroupNameStatus);
+
+        $flag = false;
+        if (!empty($this->keywords) && isset($this->keywords[$username])) { // 有关键词 更新
+            foreach ($this->keywords[$username] as $item) {
+                if ($queryWord == $item['query_word'] &&
+                    $adGroupId == $item['creative_id'] &&
+                    $adGroupNameStatus == $item['unit_name'] &&
+                    ['计算机' => 'pc', '移动设备' => 'mobile'][$bdItem['device']] == $item['prots'] &&
+                    $item['goods_id'] == $this->strReplace($landingPageUrl)
+                ) {
+                    if ($click == $item['clicks']) {
+                        $flag = null;
+                        break;
+                    }
+                    $baiduClick = $click - $item['clicks']; // 超出次数
+                    if ($baiduClick <= 0) {
+                        echo $username . " {$queryWord} 点击为 {$baiduClick}" . "\n";
+                        file_put_contents('./public/lock/' . date('Ymd', strtotime($this->start_time)) . '.miss', $username . " {$queryWord} 点击为 {$baiduClick}" . "\n", FILE_APPEND);
+                        $flag = null;
+                        break;
+                    }
+                    $baiduPrice = $cpc;
+                    $t = [
+                        'id' => $item['id'],
+                        'clicks' => $click,
+                        'pv' => $landings,
+                        'cost' => $cost,
+                        'price_ratio' => $baiduPrice,
+                        'click_ratio' => 0
+                    ];
+                    if ($baiduPrice > $item['price_ratio']) {
+                        $baiduClick++;
+                        $t['diff_price'] = $item['diff_price'] + 1;
+                    }
+                    $bdItem['click'] = $baiduClick;
+                    $bdItem['cost'] = $cost;
+                    $keywordsClicks[] = $t;
+                    $flag = true;
+                    break;
+                }
+            }
+            if (false === $flag) {
+                $bdFunc($bdItem);
+            }
+            if (null === $flag) {
+                return [];
+            }
+        } else { // 没有关键词 添加
+            $bdFunc($bdItem);
+        }
+
+        $uid = Admin::where('name', $username)->value('id');
+        if (empty($uid)) {
+            $accountData = [
+                'uid' => $uid ?? 0,
+                'u_name' => $username,
+                'dates' => date('Y-m-d'),
+                'problem' => '没有找到用户'
+            ];
+            BaiduReportAccountQ::create($accountData);
+            $this->redis->lpush($this->redisAccountKey . ':list', json_encode($accountData));
+            echo $username . " 没有找到用户\n";
+            return [];
+        }
+        $this->userIds[] = $uid;
+        if (empty($resIp)) {
+            $func($insData, $bdItem, $username, $uid, $flag);
+            return $insData;
+        }
+    }
+
+    /** 替换数据 */
+    protected function ti(array $bdItem, array &$userSum, array &$userSumTo, array &$insDatasOther)
+    {
+        // 拆分替换数据
+        $insDatas = [];
+
+        $users = Admin::whereIn('id', $bdItem['uid'])->field('id, name, cishu, zjbl')->select();
+        $userIds = array_column($users, 'id');
+        $usersArrs = array_combine($userIds, array_column($users, 'zjbl')); // 用户扣费比例
+        $usersPlan = array_combine($userIds, array_column($users, 'cishu')); // 用户消费限额
+
+        // $tmpPlans = array_column($users, 'user_plan');
+        // $tmpPlansUid = array_column($tmpPlans, 'uid');
+
+        // $plans = array_combine(array_column($tmpPlans, 'uid'), array_column($tmpPlans, 'price2'));
+        // if (count($plans) != count($userIds)) {
+        //     $ts = array_diff($userIds, $tmpPlansUid);
+        //     foreach ($ts as $values) {
+        //         $plans[$values] = sprintf('%.2f', 0);
+        //     }
+        //     asort($plans);
+        // }
+        // $usersPlan = array_combine($userIds, $plans); // 用户消费限额
+
+        // $planStatus = array_combine(array_column($tmpPlans, 'uid'), array_column($tmpPlans, 'price2'));
+        // if (count($planStatus) != count($userIds)) {
+        //     $ts = array_diff($userIds, $tmpPlansUid);
+        //     foreach ($ts as $values) {
+        //         $planStatus[$values] = sprintf('%.2f', 0);
+        //     }
+        //     asort($planStatus);
+        // }
+        // $usersPlanStatus = array_combine($userIds, $planStatus); // 用户计划状态
+
+        $username = $bdItem['name'];
+        $uid = $bdItem['uid'];
+        $tmpItems = $bdItem['items'];
+        $tmpItemsDetails = $bdItem['itemsDetails'];
+        unset($bdItem['items'], $bdItem['itemsDetails']);
+
+        // $keywordsData = $replaceKeywords = Goods::where('admin_id', $uid)
+        //         ->where('brand', '=', preg_replace('[已删除]', '', $tmpItems['adGroupNameStatus']))
+        //         ->where('shenhe', 1)
+        //         ->where('suoyin', 1)
+        //         ->where('xml', 'in', [1, 2])
+        //         ->field('id, shop_price, goods_name')
+        //         ->select();
+        // if (empty($replaceKeywords)) {
+        //     $keywordsData = $replaceKeywords = Goods::where('admin_id', $uid)
+        //             ->where('shenhe', 1)
+        //             ->where('suoyin', 1)
+        //             ->where('xml', 'in', [1, 2])
+        //             ->field('id, shop_price, goods_name')
+        //             ->select();
+        // }
+        // if (empty($replaceKeywords)) {
+        //     echo $username . ' 没有找到商品' . "\n";
+        //     return;
+        // }
+
+        $keywordsData = $replaceKeywords = Goods::where('admin_id', $uid)
+                ->where('shenhe', 1)
+                ->where('suoyin', 1)
+                ->where('brand', preg_replace('[已删除]', '', $tmpItems['adGroupNameStatus']))
+                ->where('xml', 'in', [1, 2])
+                ->field('id, shop_price, goods_name')
+                ->select();
+        if (empty($replaceKeywords)) {
+            $keywordsData = $replaceKeywords = Goods::where('admin_id', $uid)
+                    ->where('shenhe', 1)
+                    ->where('suoyin', 1)
+                    ->where('xml', 'in', [1, 2])
+                    ->field('id, shop_price, goods_name')
+                    ->select();
+        }
+        if (empty($replaceKeywords)) {
+            $accountData = [
+                'uid' => $uid,
+                'u_name' => $username,
+                'dates' => date('Y-m-d'),
+                'problem' => '没有找到商品'
+            ];
+            BaiduReportAccountQ::create($accountData);
+            $this->redis->lpush($this->redisAccountKey . ':list', json_encode($accountData));
+            echo $username . ' 没有找到商品' . "\n";
+            return;
+        }
+
+        $tclick = $bdItem['click'];
+        $tsecond = $bdItem['second'];
+        for ($i = 0; $i < $tclick; $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                $t = $bdItem;
+                unset($t['second']);
+                $t['click'] = 1;
+
+                $tPrice = $t['price2'];
+
+                $goodsId = Goods::where('id', $this->strReplace($tmpItems['landingPageUrl']))->limit(1)->value('id');
+                $goods = $keywordsData[array_rand($keywordsData)];
+                if (1 < $bdItem['price2']) {
+                    if (0 == $j) {
+                        $t['price2'] = sprintf('%.2f', $tPrice / 2 * (100 + $usersArrs[$uid]) * 2 * 0.51 / 100);
+                        $t['goodsId'] = (int)$goodsId;
+                        if (0 != $i || true == $tsecond) {
+                            goto replaces;
+                        }
+                    } else {
+                        $t['price2'] = sprintf('%.2f', $tPrice / 2 * (100 + $usersArrs[$uid]) * 2 * 0.49 / 100);
+                        $t['title'] = $goods['goods_name'];
+                        $t['goodsId'] = (int)$goods['id'];
+
+                        replaces: {
+                        $cityName = $this->getArea($uid);
+                        if (2 != count($cityName)) {
+                            $accountData = [
+                                'uid' => $uid,
+                                'u_name' => $username,
+                                'dates' => date('Y-m-d'),
+                                'problem' => '没有找到投放地区'
+                            ];
+                            BaiduReportAccountQ::create($accountData);
+                            $this->redis->lpush($this->redisAccountKey . ':list', json_encode($accountData));
+                            echo $username . ' 没有找到投放地区' . "\n";
+                            return [];
+                        }
+                        $t['province'] = $cityName[0];
+                        $t['city'] = $cityName[1];
+                        $ip = $this->getIp($cityName);
+                        $t['ip'] = $ip['ip'];
+                        $t['carrier'] = $ip['operation'];
+                        // $tmpConsumer = $this->getConsumer($uid);
+                        // if (false == $tmpConsumer) {
+                        //     echo $username . ' 存在不在计划内端口数据' . "\n";
+                        //     return [];
+                        // }
+                        // $t['consumer'] = $tmpConsumer;
+                        }
+                    }
+                } else {
+                    $t['price2'] = sprintf('%.2f', $tPrice * (100 + $usersArrs[$uid]) / 100);
+                    $t['goods_id'] = (int)$goodsId;
+                    if (0 != $i || true == $tsecond) {
+                        goto replaces;
+                    }
+                    $j++;
+                }
+
+                $t['pv'] = ($tKeyword = $this->isOver($t['title'], $uid)) ? $tKeyword + mt_rand(2, 5) : $this->randPow();
+                $times = $this->randTime(($uid));
+                if (false == $times) {
+                    $accountData = [
+                        'uid' => $uid,
+                        'u_name' => $username,
+                        'dates' => date('Y-m-d'),
+                        'problem' => '存在不在计划内时间数据'
+                    ];
+                    BaiduReportAccountQ::create($accountData);
+                    $this->redis->lpush($this->redisAccountKey . ':list', json_encode($accountData));
+                    echo $username . ' 存在不在计划内时间数据' . "\n";
+                    return [];
+                }
+                $t['addtime'] = $times;
+                $t['time'] = date('H:i:s', $t['addtime']);
+
+                $tmpSum = ($userSumTo[$uid] ?? 0) + ($userSum[$uid] ?? 0) + $t['price2'];
+                if ($tmpSum > (float)$usersPlan[$uid] * 0.85) {
+                    if (!$this->redis->sismember($this->rediskey . ':set', $uid)) {
+                        $this->redis->sadd($this->rediskey . ':set', $uid);
+                        $this->redis->lpush($this->rediskey . ':list', json_encode($tmpItems));
+                    }
+                }
+                if ($tmpSum > (float)$usersPlan[$uid] * 1.2) {
+                    $insDatasOther[] = $t;
+                } else {
+                    $insDatas[] = $t;
+                    $userSum[$uid] = ($userSum[$uid] ?? 0) + $t['price2'];
+                    $this->tmpNamePv[] = $t;
+                }
+            }
+        }
+        return $insDatas;
+    }
+
+    protected function randPow()
+    {
+        static $mapStatic;
+        $mapStatic ?? $mapStatic = 0;
+        $maps = [
+            [1, 9],
+            [10, 50],
+            [50, 90],
+        ];
+        $num = mt_rand($maps[$mapStatic][0], $maps[$mapStatic][1]);
+        $mapStatic++;
+        if (2 < $mapStatic) {
+            $mapStatic = null;
+        }
+        return $num;
+    }
+
+    protected function isOver(string $name, int $uid)
+    {
+        $tmp = [];
+        foreach ($this->tmpNamePv as $value) {
+            if ($name == $value['title'] && $uid == $value['uid']) {
+                $tmp[] = $value;
+            }
+        }
+        if (empty($tmp)) {
+            return false;
+        }
+        $res = array_column($tmp, 'pv');
+        rsort($res);
+        return array_shift($res);
+    }
+
+    protected function randTime(int $uid)
+    {
+        $userIds = array_values(array_unique($this->userIds));
+        $res = Admin::whereIn('id', $userIds)->field('id, name, start, end, online, downline')->select();
+        $tmp = [];
+        foreach ($res as $value) {
+            $tuid = $value['id'];
+            if (!array_key_exists($tuid, $tmp)) {
+                $tmp[$tuid] = $value;
+            }
+        }
+
+        $func = function (int $endTime, int $planStartTime = 0, int $planEndTime = 0) {
+            if (date('Ymd', $endTime) == date('Ymd')) {
+                if (0 == $planStartTime && 0 == $planEndTime) {
+                    $times = mt_rand(strtotime('+8 hour', strtotime(date('Y-m-d'))), strtotime('+22 hour', strtotime(date('Y-m-d'))));
+                } else {
+                    $i = 5;
+                    while (true && $i) {
+                        $times = mt_rand(strtotime('-29 min', $endTime), $endTime);
+                        // $times = mt_rand(strtotime(date('Y-m-d 8:00:00')), $endTime);
+                        if (date('H', $times) < $planStartTime || date('H', $times) > $planEndTime) {
+                            $i--;
+                            continue;
+                        }
+                        break;
+                    }
+                }
+                return $times ?? false;
+            // return mt_rand(strtotime('-29 min', $endTime), $endTime);
+            } else {
+                if (0 == $planStartTime && 0 == $planEndTime) {
+                    return mt_rand(strtotime('+8 hour', $endTime), strtotime('+22 hour', $endTime));
+                } else {
+                    return mt_rand(strtotime("+{$planStartTime} hour", $endTime), strtotime("+{$planEndTime} hour", $endTime));
+                }
+            }
+        };
+
+        // 用户设置投放周
+        $week = date('N');
+        $userPlanWeek = [];
+        if (empty($tmp[$uid]['start']) || empty($tmp[$uid]['end'])) {
+            $userPlanWeek = [];
+        } else {
+            for ($i = $tmp[$uid]['start']; $i <= $tmp[$uid]['end']; $i++) {
+                $userPlanWeek[] = $i;
+            }
+        }
+
+        $times =
+            ($systemTime = strtotime(date('Y-m-d 00:00:00'))) == ($inputTime = strtotime($this->start_time))
+                ? time()
+                : strtotime(floor(($inputTime - $systemTime) / 3600 / 24) . ' day', $systemTime);
+        // 用户设置投放时间段
+        $userPlanTime = [$tmp[$uid]['online'], $tmp[$uid]['downline']];
+        // 无投放计划
+        if (!in_array($week, $userPlanWeek)) {
+            // return $func($times);
+            return false;
+        }
+        // 有投放计划
+        $hour = date('H');
+        // 在投放计划时间内
+        if ($hour >= $userPlanTime[0] && $hour <= $userPlanTime[1]) {
+            return $func($times, $userPlanTime[0], $userPlanTime[1]);
+        }
+        // 不在投放时间内
+        // return $func($times);
+        return false;
+    }
+
+    public function getAreaByCity(string $city)
+    {
+        $pid = AreaAll::where('catname', $city)->value('parentid');
+        $pName = AreaAll::where('catid', $pid)->value('catname');
+        if (empty($pName)) {
+            return [];
+        }
+        return [$pName, $city];
+    }
+
+    protected function getArea(int $uid) :array
+    {
+        $func = function (array &$tmp) use (&$func): array {
+            if (empty($tmp)) {
+                return [];
+            }
+            $randArea = array_rand($tmp);
+            $areaName = $tmp[$randArea];
+            $cityName = [];
+            $cityName = $this->getAreas($areaName);
+            if (empty($cityName)) {
+                unset($tmp[$randArea]);
+                return $func($tmp);
+            }
+            return $cityName;
+        };
+
+        $res = $this->isInArea($uid);
+
+        return $func($res);
+    }
+
+    protected function getAreas(string $cityName = '', &$tmp = []) :array
+    {
+        try {
+            $tmp[] = $cityName;
+
+            $where = [];
+            $where['areajb'] = ['=', 1];
+            $where['catname'] = ['=', $cityName];
+
+            $areaInfo = AreaAll::where($where)->field('catid, parentid, catname, areajb')->find(); // 省级
+            if (!empty($areaInfo)) { // 选择了全省
+                $areaList = AreaAll::where('pid', $areaInfo['id'])->field('catid, parentid, catname, areajb')->select();
+                if (empty($areaList)) {
+                    $tmp[] = $cityName;
+                } else {
+                    $tmp[] = $areaList[array_rand($areaList)]['catname'];
+                }
+            } else {
+                $where['areajb'] = ['=', 2];
+                $areaInfo = AreaAll::where($where)->field('catid, parentid, catname, areajb')->find(); // 市
+                $tmp[] = $areaInfo->area_parent_data->catname;
+                krsort($tmp, SORT_NUMERIC);
+                $tmp = array_values($tmp);
+            }
+            return $tmp;
+        } catch (\Throwable $t) {
+            return [];
+        }
+    }
+
+    protected function isInArea(int $uid) :array
+    {
+        $goodsIds = Goods::where('admin_id', $uid)
+            ->where('shenhe', 1)
+            ->where('suoyin', 1)
+            ->where('xml', 'in', [1, 2])
+            ->field('id')
+            ->select();
+
+        $goodsIds = array_column($goodsIds, 'id');
+        $goodsSf = GoodsSf::whereIn('goods_id', $goodsIds)->field('sf_id')->group('sf_id')->select();
+        $goodsSf = array_column($goodsSf, 'sf_id');
+        $tmpProince = !empty($goodsSf) ? AreaAll::whereIn('parentid', $goodsSf)->field('catname')->select() : [];
+        $province = !empty($tmpProince) ? array_column($tmpProince, 'catname') : [];
+
+        $goodsCity = GoodsCity::whereIn('goods_id', $goodsIds)->field('city_id')->group('city_id')->select();
+        $goodsCity = array_column($goodsCity, 'city_id');
+        $tmpCity = !empty($goodsCity) ? AreaAll::whereIn('catid', $goodsCity)->field('catname')->select() : [];
+        $city = !empty($tmpCity) ? array_column($tmpCity, 'catname') : [];
+
+        $strUserGoodsArea = array_values(array_merge($province, $city));
+        return $strUserGoodsArea ?? [];
+    }
+
+    protected function getIp(array $area)
+    {
+        try {
+            $province = $area[0];
+            $city = preg_replace('/市|地区/', '', $area[1]);
+
+            $res = IpMarket::where('province', $province)->where('city', $city)->field('ip_start, ip_end')->select();
+            if (empty($res)) {
+                $res = IpMarket::where('province', $province)->where('city', $province)->where('district', 'like', "{$city}%")->field('ip_start, ip_end')->select();
+            }
+            // if (empty($res)) {
+            //     $res = IpMarket::where('province', $province)->where('city', $province)->field('ip_start, ip_end')->select();
+            // }
+            if (empty($res)) {
+                $res = IpMarket::where('province', $province)->field('ip_start, ip_end')->select();
+            }
+
+            $ips = $res[array_rand($res)];
+
+            $ip_start = explode('.', $ips['ip_start']);
+            $ip_end = explode('.', $ips['ip_end']);
+            $ipOne = $ip_start[0] < $ip_end[0] ? mt_rand($ip_start[0], $ip_end[0]) : mt_rand($ip_end[0], $ip_start[0]);
+            $ipTwo = $ip_start[1] < $ip_end[1] ? mt_rand($ip_start[1], $ip_end[1]) : mt_rand($ip_end[1], $ip_start[1]);
+            $ipThree = $ip_start[2] < $ip_end[2] ? mt_rand($ip_start[2], $ip_end[2]) : mt_rand($ip_end[2], $ip_start[2]);
+            $ipFour = $ip_start[3] < $ip_end[3] ? mt_rand($ip_start[3], $ip_end[3]) : mt_rand($ip_end[3], $ip_start[3]);
+            $ip = $ipOne . '.' . $ipTwo . '.' . $ipThree . '.' . $ipFour;
+            $operation = $ips['isp'] ?? $this->getIsp($ip);
+
+            if (empty($ip)) {
+                throw new \Exception();
+            }
+        } catch (\Throwable $t) {
+            echo $province . $city . ' 没有找到地区IP范围' . "\n";
+            $ip = '';
+            $operation = '';
+        }
+        return compact('ip', 'operation');
+    }
+
+    public function getConsumer()
+    {
+        $t = ['PC', 'WEB'];
+        return $t[array_rand($t)];
+    }
+
+    public function getIsp(string $ip)
+    {
+        try {
+            $url = 'http://api.map.baidu.com/location/ip?ak=1QbeTXxNK4q1NM6HH04RmxvQs2UlISGp&ip=%s';
+            $map = [
+                'CHINANET' => '中国电信',
+                'UNICOM' => '中国联通',
+                'CMNET' => '中国移动',
+                'CERNET' => '教育网',
+                'BJENET' => '北京教育信息网',
+                'WASU' => '华数宽带',
+                'COLNET' => '东方有线',
+                'FOUNDERBN' => '方正宽带',
+                'TOPWAY-NET' => '天威视讯',
+                'DXTNET' => '二级接入商',
+                'OTHER' => '其他'
+            ];
+            $this->request->host = sprintf($url, $ip);
+            $this->request->method = 'GET';
+            $ipInfo = $this->request->call();
+            if (!isset($ipInfo['address'])) {
+                $carrier = $map['OTHER'];
+            } else {
+                $yun = explode('|', $ipInfo['address']);
+                $carrier = $map[$yun[4]] ?? $map['OTHER'];
+            }
+            return $carrier;
+        } catch (\Throwable $t) {
+            return '';
+        }
+    }
+
+    public function getIpInfo(string $ip)
+    {
+        try {
+            $url = 'http://api.map.baidu.com/location/ip?ak=1QbeTXxNK4q1NM6HH04RmxvQs2UlISGp&ip=%s';
+            $this->request->host = sprintf($url, $ip);
+            $this->request->method = 'GET';
+            $i = 0;
+            while (true) {
+                $ipInfo = $this->request->call();
+                if (!empty($ipInfo['address'])) {
+                    break;
+                }
+                if (3 <= $i) {
+                    break;
+                }
+                // sleep(1);
+                $i++;
+            }
+            $addressInfo = explode('|', $ipInfo['address'] ?? '');
+            return $addressInfo;
+        } catch (\Throwable $t) {
+            return '';
+        }
+    }
+
+    private function searchKeywordsInDetail(string $port, string $queryWord, $goodsId)
+    {
+        $ports = $this->portMap($port);
+        $func = function () use ($ports) {
+            foreach ($this->baiduDeatilDatas[$ports] as $item) {
+                yield $item;
+            }
+        };
+        $search = [];
+        foreach ($func() as $item) {
+            if ($queryWord == $item['queryWord'] && $goodsId == $this->strReplace($item['landingPageUrl'])) {
+                $search[] = $item;
+                // $search = $item;
+                break;
+            }
+        }
+        if (empty($search)) {
+            return [];
+        }
+        foreach ($search as $key => $value) {
+            if ($this->redis->sismember($this->redisDetailKey, $value['dateTime']) &&
+                $this->redis->sismember($this->redisDetailKey, $value['ip'])) {
+                unset($search[$key]);
+            }
+        }
+        if (empty($search)) {
+            return [];
+        }
+        $searchInfo = $search[array_rand($search)];
+        $this->redis->sadd($this->redisDetailKey, $searchInfo['dateTime']);
+        $this->redis->sadd($this->redisDetailKey, $searchInfo['ip']);
+        return $searchInfo;
+        // return $search;
+    }
+
+    private function portMap(string $port)
+    {
+        return ['计算机' => 'pc', '移动设备' => 'mobile'][$port];
+    }
+
+    private function strReplace(string $str)
+    {
+        $goodsId = preg_replace('/^.*\/goods_(\d*)(?:\.html)?$/', '\\1', $str);
+        if (!is_numeric($goodsId)) {
+            $goodsId = preg_replace('/^.*\/(\d*)(?>\/)?$/', '\\1', $str);
+        }
+        if (!is_numeric($goodsId)) {
+            // $goodsId = false == strpos($str, 'fdetail') ? 0 : -1; // 0 pc 1 mobile
+            $goodsId = 0;
+        }
+        // if (!is_numeric($goodsId)) {
+        //     $goodsId = false == strpos($str, 'fdetail') ? 0 : -1; // 0 pc 1 mobile
+        // }
+        return $goodsId;
+    }
+}

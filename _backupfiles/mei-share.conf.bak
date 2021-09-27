@@ -1,0 +1,13 @@
+server {
+
+    listen 80;
+
+    server_name mei-share.dnsresolve.cn;
+
+    charset utf-8;
+
+    location / {
+        proxy_pass http://node:8080;
+    }
+}
+

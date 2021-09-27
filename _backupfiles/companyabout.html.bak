@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <meta name="robots" content="noindex,follow">
+    <title>联系我们 - {$data.name}</title>
+    <meta name="keywords" content="联系我们 - {$data.name}">
+    <meta name="description" content="联系我们 - {$data.name}">
+
+    <link rel="stylesheet" type="text/css" href="/static/css/base-m.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/common-rem.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/vant.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/contact.css">
+    <script src="/static/js/resize.js"></script>
+    <script>
+        //提前声明一下
+        function loadLib(url) {
+            let script = document.createElement("script");
+            script.async = false;
+            script.src = url;
+            document.body.appendChild(script);
+        }
+
+    </script>
+    <style>
+        .call {
+            width: 168px;
+            color: #fff;
+            background-color: #ff6900;
+            text-align: center;
+            border: none;
+            -webkit-border-radius: 20px;
+            border-radius: 20px;
+            margin-top: 5px;
+            outline: none;
+            right: 20px;
+        }
+
+        .tel {
+            position: relative;
+        }
+
+        .warps {
+            margin: 20px 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="min-height: 40px;">
+        <img src="{$baseUrlLogo}" style="height: 40px;">
+        <span style="float: right;font-size: 14px;height: 40px;position: relative;transform: translateY(20%);">平台联系电话：4001331235</span>
+    </div>
+    <div class="wrapper ">
+
+        <!-- 头部s -->
+        <header class="header fixWrap" :class="classes">
+            <div class="header-l">
+                <i class="iconfont icon-fanhui header-back"></i>
+            </div>
+            <div class="header-c">
+                <div class="header-title text-ellipsis">企业名片</div>
+            </div>
+            <div class="header-r">
+                <i class="iconfont icon-genguo header-more"></i>
+                <div class="header-topdown">
+                    <div class="header-topdown-triangle"></div>
+                    <div class="header-topdown-con van-hairline--surround">
+                        <a href="javascript:;" class="topdown-item topdown-item-index van-hairline--bottom">
+                            <i class="iconfont icon-gengduo-shouye topdown-icon v-top"></i>首页
+                        </a>
+                        <a href="javascript:;" class="topdown-item topdown-item-search van-hairline--bottom">
+                            <i class="iconfont icon-gengduo-sousuo topdown-icon v-top"></i>搜索
+                        </a>
+                        <a href="javascript:;" class="topdown-item topdown-item-ucenter van-hairline--bottom">
+                            <i class="iconfont icon-gengduo-fenlei topdown-icon v-top"></i>分类
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- 头部e -->
+        <div class="contact-bg" style="margin-top: 40px;">
+            <div class="contact-head flexBox flexAlignCenter">
+                <div class="contact-head-pic">
+
+                    <img src="{$logo.logo}">
+                </div>
+                <div class="contact-head-int flex1">
+                    <div class="contact-head-int-name">{$data.linkman}
+                    </div>
+                    <div class="contact-head-int-comp">
+                        <h1>{$data.name}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-infomation">
+                <!--<a id="call" href="tel:{$data.mobile}" style="display: none;"></a>-->
+                <div class="contact-infomation-lists flexBox flexAlignCenter flexWrap warps">
+                    <span class="contact-infomation-list-label"><i class="iconfont icon-ipone"></i></span>
+                    <div class="contact-infomation-list-value" style="font-size: 25px;">{$data.mobile}</div>
+                    <div class="call"><span class="tel" style="font-size: 25px;"><a href="tel:{$data.mobile}">一键拨打电话</a></span></div>
+                </div>
+                <div class="contact-infomation-lists flexBox flexAlignCenter flexWrap warps">
+                    <span class="contact-infomation-list-label"><i class="iconfont icon-dianhua"></i></span>
+                    <div class="contact-infomation-list-value" style="font-size: 25px;">{$data.mobile1 ?? $data.mobile}</div>
+                    <div class="call"><span class="tel" style="font-size: 25px;"><a href="tel:{$data.mobile}">一键拨打电话</a></span></div>
+                </div>
+                <div class="contact-infomation-lists flexBox flexAlignCenter flexWrap warps">
+                    <span class="contact-infomation-list-label"><i class="iconfont icon-email-e"></i></span>
+                    <div class="contact-infomation-list-value">{$data.e_mail}</div>
+                </div>
+                <!-- <div class="contact-infomation-lists">
+                    <span class="contact-infomation-list-label L"><i class="iconfont icon-map"></i></span>
+                    <input type="hidden" id="shopAddr" value="{$data.area}">
+                    <div class="contact-infomation-list-value L R">{$data.area}</div>
+                </div> -->
+            </div>
+        </div>
+        <!-- 底线s -->
+        <footer class="divider">
+            <!-- <span class="divider-con">
+        找产品网版权所有
+    </span> -->
+        </footer>
+
+
+    </div>
+
+    <script src="/static/js/jquery-1.8.2.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script>
+        loadLib('/static/js/sq.js')
+        loadLib('/static/js/all.js')
+    </script>
+    <script>
+        $(window).scroll(function () {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            if (scrollTop + windowHeight == scrollHeight) {
+                $('.shop-index-bottom').css('bottom', '60px');
+            } else {
+                $('.shop-index-bottom').css('bottom', '0px');
+            }
+        });
+        $('.call').on('click', function () {
+            $('#call')[0].click();
+        })
+    </script>
+    <div style="text-align: center;font-size: 21px;">
+        <a href="http://www.zhaochanpin.com">找产品网</a>
+        <span>平台联系电话：4001331235</span>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <meta name="robots" content="noindex,follow">
+    <title>{$h} - {$data.name}</title>
+    <meta name="keywords" content="{$h} - {$data.name}">
+    <meta name="description" content="{$h} - {$data.name}">
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="canonical" href="/static/css/css">
+    <link rel="stylesheet" type="text/css" href="/static/css/base-m.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/common-rem.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/vant.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/shop_index.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/tc.css">
+    <link href="/static/css/swiper.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/m-1.0.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/component1.css" rel="stylesheet" type="text/css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <img src="{$baseUrlLogo}" style="height: 40px;">
+
+
+    </div>
+    <div id="app">
+        <div class="detail">
+
+            <!--detail-tab-->
+            <div class="detail-tab">
+                <div class="top-bar">
+                    <div class="top-bar-l">
+                        <!--{if condition = "$logo.logo"}-->
+                        <!--<img src="{$logo.logo}" class="shop-head-con-info-logo">-->
+                        <!--{/if}-->
+                    </div>
+                    <div class="c-navs-wrap c-navs-container top-bar-nav c-line-bottom">
+                        <ul class="c-navs-common-content">
+                            <li class="c-color-gray-a active">
+                                <div class="c-navs-common-span-clamp">
+                                    <span>商品</span>
+                                </div>
+                            </li>
+                            <li class=" c-color-gray-a">
+                                <div class="c-navs-common-span-clamp">
+                                    <span>详情</span>
+                                </div>
+                            </li>
+                            <li class=" c-color-gray-a">
+                                <div class="c-navs-common-span-clamp">
+                                    <span>推荐</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--                <div class="more-wrapper dl-menuwrapper" id="dl-menu">
+                    <div class="top-tooltip-wrapper qy-menu" id="dl-menu-button">
+                        <div class="slot-wrapper">
+                            <div class="c-touchable c-touchable-no more-btn">
+                                <i class="c-icon more-icon">菜单</i>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="dl-menu">
+                        <li><a href="javascript:;"><i class="c-icon"></i>首页</a></li>
+                        <li><a href="javascript:;"><i class="c-icon"></i>搜索</a></li>
+                    </ul>
+                </div>-->
+
+                </div>
+            </div>
+
+            <!----->
+            <div class="detail-success">
+                <!--detail-pic-->
+                <div class="detail-pic hook-item" id="commodity">
+                    <div class="product-carousel">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper" id="imgs">
+                                <!--{foreach $images}-->
+                                <div class="swiper-slide">
+                                    <p class="swiper-img"
+                                        style="background-image:url({$goodslist.images});-moz-background-size:100% 100%; background-size:100% 100%;">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--detail-pic-->
+
+                <!--detail-section-->
+                <div class="detail-section-wrap">
+                    <!---->
+                    <div class="detail-section">
+                        <div>
+                            <div class="no-title"></div>
+                            <div class="detail-content">
+                                <div class="main-info">
+                                    <h1>{$goodslist.title}</h1>
+                                    <div class="prices">
+
+                                        <div class="prices-item">
+                                            <h3><span class="yuan">￥</span>{$goodslist.money}</h3>
+                                            <p>&ge;1件 起批</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="sub-info"><span class="fh-location">{$data.address}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-bottom">
+                            <div class="parameters">
+                                <div class="parameters-ellipsis">
+                                    <div class="c-touchable c-touchable-no">
+                                        <div class="c-touchable-content md-trigger" data-modal="modal-7">
+                                            <div class="parameters-ellipsis-wrap">
+                                                <h3>产品参数</h3>
+                                                <ul class="parameters-ellipsis-parames">
+
+                                                    <li>
+                                                        <span>批发数量</span>
+                                                        <span>&ge;1件 起批</span>
+                                                    </li>
+
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="md-modal md-effect" id="modal-7">
+                                        <div class="md-content">
+                                            <div class="md-modal-header">
+                                                <div class="c-title">产品参数</div>
+                                                <div class="md-close"></div>
+                                            </div>
+                                            <div class="c-popup-content">
+                                                <div class="c-gap-inner-top c-gap-inner-bottom cgaps">
+                                                    <ul>
+
+                                                        <li>
+                                                            <span>批发数量</span>
+                                                            <span>&ge;1件 起批</span>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="stiky-bottom">
+                                                <div class="btns no-chat">
+                                                    <div class="btn-wrapper">
+                                                        <a href="tel:{$data.mobile}" class="">
+                                                            <button
+                                                                class="c-btn c-gap-top-small c-gap-bottom-small c-btn-touchable"
+                                                                style="border-color: rgb(46, 107, 199); color: rgb(46, 107, 199);"><span>立即询价</span></button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="btn-wrapper">
+                                                        <a href="tel:{$data.mobile}">
+                                                            <button
+                                                                class="c-btn c-gap-top-small c-gap-bottom-small c-btn-touchable"
+                                                                style="border-color: rgb(46, 107, 199); color: rgb(255, 255, 255); opacity: 1; background: linear-gradient(to right, #2e81c7, #2e6bc7"><span>拨打电话</span></button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="md-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!---->
+
+                    <!---->
+                    <div class="detail-section">
+                        <div>
+                            <div class="no-title"></div>
+                            <div class="detail-content">
+                                <div>
+                                    <div class="c-touchable c-touchable-no" style="z-index: 1; position: relative;">
+                                        <div class="c-touchable-content">
+                                            <div class="manufactor">
+                                                <div class="manufactor-logo">
+                                                    <div class="c-img-wrapper c-gap-top-zero c-gap-bottom-zero">
+                                                        <div
+                                                            class="c-img c-img-item c-img-s c-img-type-round c-img-radius-tl c-img-radius-tr c-img-radius-bl c-img-radius-br">
+
+                                                            <!---->
+                                                            {if condition = "isset($logo.logo)"}
+                                                            <img src="{$logo.logo}" class="shop-head-con-info-logo">
+                                                            {/if}
+                                                            <!---->
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="manufactor-desc">
+                                                    <div class="manufactor-name">
+                                                        <a href="/aindex/{$uid}/">
+                                                            {$data.name}
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="sp-section">
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="c-touchable-expand"
+                                            style="top: -0.15rem; right: -0.17rem; bottom: -0.15rem; left: -0.17rem;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-bottom detail-btn">
+                            <div class="c-touchable c-touchable-no manufactor-btn-wrapper">
+                                <button class="c-btn"
+                                    onclick="window.location.href='/cconDesc/{$uid}/';"><span>全部产品</span></button>
+                            </div>
+                            <div class="c-touchable c-touchable-no manufactor-btn-wrapper">
+                                <button class="c-btn c-btn-blue"
+                                    onclick="window.location.href='/aindex/{$uid}/'"><span>进入店铺</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+
+                    <!---->
+                    <div class="detail-section details-section hook-item" id="details">
+                        <div>
+                            <div class="title-no-link">
+                                <h2>产品详情</h2>
+                            </div>
+                            <div class="detail-content">
+                                <div class="info-detail info-detail-rich" style="overflow: hidden;">
+                                    <div class="rich-text no-p-margin">
+                                        <div>
+                                            {$goodslist.content}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="detail-bottom">-->
+                        <!--<div class="info-more">-->
+                        <!--<div class="c-touchable c-touchable-no">-->
+                        <!--<div class="c-touchable-content">-->
+
+                        <!--<p class="warns">-->
+                        <!--<span>供应分类：<a href="javascript:;" class="warns-url">机加工</a></span>-->
+                        <!--<i class="c-icon">&#59188;</i>-->
+                        <!--</p>-->
+
+                        <!--</div>-->
+                        <!--<div class="c-touchable-expand" style="top: -0.155rem; right: -0.17rem; bottom: -0.15rem; left: -0.17rem;"></div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                    </div>
+                    <!---->
+
+                    <!--recommend-->
+                    <div class="detail-section hook-item">
+                        <div class="title-no-link">
+                            <h2>为您推荐</h2>
+                        </div>
+                        <div class="detail-content">
+                            <div class="swiper-recommend">
+                                <div class="recommend-list swiper-wrapper">
+                                    <div class="product-list recommend-item swiper-slide">
+                                        <!--为您推荐商品开始-->
+                                        <div class="c-row">
+
+                                            {foreach $goodsshop as $k => $v}
+                                            <div class="c-span4">
+
+                                                <div class="product-item product-item-menu">
+
+                                                    <a href="/fdetail/{$v.id}/">
+                                                        <div class="img-wrap">
+                                                            <div role="img"
+                                                                class="c-img-wrapper list-img c-gap-top-zero c-gap-bottom-zero">
+                                                                <div class="c-img c-img-item c-img-s r-img"
+                                                                    style="background:url({$v.images});">
+                                                                    <img src={$v.images} alt="" class="c-img-img">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="list-content">
+                                                            <h3><span class="highlight">{$v.title}</span></h3>
+                                                            <p class="price" style="font-size: 15px;">
+                                                                <span><i>￥</i>{$v.money}</span>元
+                                                            </p>
+                                                        </div>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                            {/foreach}
+                                        </div>
+                                        <div class="c-row">
+                                            {foreach $goodsshop as $k => $v}
+
+                                            <div class="c-span4">
+                                                <div class="product-item product-item-menu">
+                                                    <a href="/fdetail/{$v.id}/">
+                                                        <div class="img-wrap">
+                                                            <div role="img"
+                                                                class="c-img-wrapper list-img c-gap-top-zero c-gap-bottom-zero">
+                                                                <div class="c-img c-img-item c-img-s r-img"
+                                                                    style="background:url({$v.images});">
+                                                                    <img src="{$v.images}" alt="{$v.title}"
+                                                                        class="c-img-img">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="list-content">
+                                                            <h3><span class="highlight">{$v.title}</span></h3>
+                                                            <p class="price" style="font-size: 15px;">
+                                                                <span><i>￥</i>{$v.money}</span>元
+                                                            </p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+
+
+                                            </div>
+                                            {/foreach}
+
+                                        </div>
+
+
+                                        <!--为您推荐商品结束-->
+                                        <!--                                    &lt;!&ndash;第二行推荐商品开始&ndash;&gt;-->
+                                        <!--                                    <div class="c-row">-->
+
+                                        <!--                                        <div class="c-span4">-->
+                                        <!--                                            <div class="product-item product-item-menu">-->
+                                        <!--                                                <a href="javascript:;">-->
+                                        <!--                                                    <div class="img-wrap">-->
+                                        <!--                                                        <div role="img" class="c-img-wrapper list-img c-gap-top-zero c-gap-bottom-zero">-->
+                                        <!--                                                            <div class="c-img c-img-item c-img-s r-img" style="background:url(http://img1.qianyuwang.com/ashx/thumb.ashx?imgpath=/img/33241/80b210c47c2aad48eb75b95c9df116c.jpg&w=164&h=164);">-->
+                                        <!--                                                                <img src="/static/picture/thumb-img3324150b210c47c2aad48eb.jpg" alt="铣床生产商出售 机床加工 数控车加工 家铨机械" class="c-img-img">-->
+                                        <!--                                                            </div>-->
+                                        <!--                                                        </div>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                    <div class="list-content">-->
+                                        <!--                                                        <h3><span class="highlight">铣床生产商出售 机床加工 数控车加工 家铨机械</span></h3>-->
+                                        <!--                                                        <p class="price"><span><i>￥</i>10.00</span></p>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </a>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
+
+
+                                        <!--                                    </div>-->
+                                        <!--第二行推荐商品结束-->
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!----->
+
+                </div>
+                <!--detail-section-->
+
+                <!--ad-->
+
+                <!--ad end-->
+
+                <!--hint-->
+                <div id="wx" hidden>
+                    <div class="fade"></div>
+                    <div class="succ-pop">
+                        <div class="image">
+                            <img src="https://imagepicture.oss-cn-hangzhou.aliyuncs.com/files/af5969bd3276b2d81e3dd555ee8aed3a.png"
+                                class="wechat_success_logo">
+                        </div>
+                        <h3 class="title">
+                            复制成功
+                        </h3>
+                        <h6 class="titlec">
+                            <!--微信号：<input value="{$data.account}" id="biao1" style="background:none;outline:none;border:0px;">-->
+                            微信号：<span id="biao1">{$data.account}</span>
+                        </h6>
+                        <h6 class="titlec">
+                            添加微信好友,详细了解产品
+                        </h6>
+                        <div class="know" id="know">知道了</div>
+                    </div>
+                </div>
+                <div id="showTel" hidden>
+                    <div class="fade"></div>
+                    <div class="succ-pop" style="height: 286px;">
+                        <div class="image">
+                            <img src="https://imagepicture.oss-cn-hangzhou.aliyuncs.com/files/af5969bd3276b2d81e3dd555ee8aed3a.png"
+                                class="wechat_success_logo">
+                        </div>
+                        <h3 class="title">
+                            {$data.name}
+                        </h3>
+                        <h6 class="titlec" style="margin: 0px auto;">
+                            手机号：<span id="biao1"><a href="tel://{$data.account}"
+                                    id="callTels">{$data.account}</a></span>
+                        </h6>
+                        <h6 class="titlec">
+                            拨打电话,详细了解产品
+                        </h6>
+                        <div class="" id=""
+                            style="margin: 12px auto;width: 190px; height: 38px;background-color: rgb(26,173,25); color: white; border-radius: 10px;text-align: center;line-height: 38px;"
+                            onclick="$('#showTel').hide();">知道了</div>
+                        <div class="call" id="call" onclick="call()"
+                            style="margin: 12px auto;width: 190px; height: 38px;background-color: rgb(26,173,25); color: white; border-radius: 10px;text-align: center;line-height: 38px;">
+                            拨打</div>
+                    </div>
+                </div>
+                <!-- <div class="hint"><h3>找产品版权所有  vip.zhaochanpin.com</h3></div> -->
+                <!--hint end-->
+                <style>
+                    .consult-item {
+                        line-height: .52rem !important;
+                    }
+                </style>
+                <!--bottom-->
+                <div class="stiky-bottom sbgx">
+                    <div class="consult-wrapper">
+                        <div class="consult-item-wrapper">
+                            <div class="consult-item">
+                                <a href="/aindex/{$uid}/">
+                                    <p>店铺首页</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="consult-item-wrapper">
+                            <div class="consult-item">
+                                <a href="javascript:;" id="weixin" onclick="copyUrl2()">
+                                    <p>微信</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <input type="hidden" value="{$goodslist.uid}" id="uid">
+
+
+                    </div>
+                    <div class="btns">
+                        <div class="btn-wrapper">
+                            <button class="c-btn c-gap-top-small c-gap-bottom-small c-btn-touchable btn-xunjia"
+                                onclick="window.location.href='/m/index/ask?gid={$goods_id}&uid={$uid}'">询价</button>
+                        </div>
+                    </div>
+                    <div class="btns">
+                        <div class="btn-wrapper">
+                            <a href="/dcontact/{$data.uid}">
+                                <button class="c-btn c-gap-top-small c-gap-bottom-small c-btn-touchable btn-xunjia"
+                                   >电话联系</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--过来的底部悬浮-->
+                <!--bottom end-->
+            </div>
+
+            <button class="qy-top"><i class="fa-up c-icon" title="返回顶部">↑</i></button>
+
+        </div>
+    </div>
+
+
+    <script src="/static/js/classie.js"></script>
+    <script src="/static/js/modalEffects.js"></script>
+    <script src="/static/js/modernizr.custom.js"></script>
+    <script src="/static/js/jquery.dlmenu.js"></script>
+    <!--<script src="/static/js/swiper.min.js"></script>-->
+    <script src="/static/js/clipboard.js"></script>
+    <script>
+        //提前声明一下
+        function loadLib(url) {
+            let script = document.createElement("script");
+            script.async = false;
+            script.src = url;
+            document.body.appendChild(script);
+        }
+        loadLib('/static/js/all.js')
+        $(document).ready(function () {
+
+
+
+
+
+            $(".index-logo-c").click(function () {
+                $(".index-logo").hide();
+            });
+
+            $(".content-toggle").click(function () {
+                $(".info-detail").css({ "height": "auto", "overflow": "auto" });
+                $(".content-toggle").hide();
+            });
+        });
+
+        // $(".top-bar").fixedScroll({
+        //     navEls: $(".c-color-gray-a"),
+        //     hookEls: $('.hook-item'),
+        //     hookOffset: 44
+        // });
+
+        $(document).ready(function ($) {
+
+            var offset = 300,
+                offset_opacity = 1200,
+                scroll_top_duration = 700,
+                $back_to_top = $('.qy-top');
+
+            $(window).scroll(function () {
+                ($(this).scrollTop() > offset) ? $back_to_top.addClass('qy-is-visible') : $back_to_top.removeClass('qy-is-visible qy-fade-out');
+                if ($(this).scrollTop() > offset_opacity) {
+                    $back_to_top.addClass('qy-fade-out');
+                }
+            });
+
+            $back_to_top.on('click', function (event) {
+                event.preventDefault();
+                $('body,html').animate({
+                    scrollTop: 0,
+                }, scroll_top_duration
+                );
+            });
+
+        });
+        $(function () {
+            $('#dl-menu').dlmenu();
+        });
+
+
+        function img_callback(data) {
+            for (i = 0; i < data.length; i++) {
+                var imgstr = "<div class=\"swiper-slide\">";
+                imgstr += "<p class=\"swiper-img\" style=\"background-image: url(&quot;" + data[i].picUrl + "&quot;);\">";
+                imgstr += "</p></div>";
+                $("#imgs").append(imgstr);
+            }
+            var swiper = new Swiper('.swiper-container', {
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            });
+        }
+
+
+        function copy() {
+            var text = document.getElementById("biao1").innerText;
+            var input = document.createElement('input');
+            input.setAttribute('id', 'copyInput');
+            input.setAttribute('value', text);
+            document.getElementsByTagName('body')[0].appendChild(input);
+            document.getElementById('copyInput').select();
+            if (document.execCommand('copy')) {
+            }
+            document.getElementById('copyInput').remove();
+        }
+        function copyUrl2() {
+            $('#wx').show()
+        }
+        $(function () {
+
+
+            $('#know').click(function () {
+                copy()
+                $('#wx').hide()
+
+                // $('#wurl')[0].click()
+            })
+
+        });
+        function showTel() {
+            $('#showTel').show()
+        }
+        function call() {
+            $('#callTels')[0].click();
+        }
+    </script>
+    {if condition="!empty($admins['sqC'])"}
+    {$admins['sqC']}
+    {else/}
+    <script>
+        console.log(1)
+        loadLib('/static/js/sq.js')
+        $(window).scroll(function () {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            if (scrollTop + windowHeight == scrollHeight) {
+                $('.sbgx').css('bottom', '60px');
+            } else {
+                $('.sbgx').css('bottom', '0px');
+            }
+        });
+    </script>
+    {/if}
+    <div style="text-align: center;">
+        <a href="{$baseUrl}">{$baseName}</a>
+        <span>平台故障投诉：4001331235</span>
+    </div>
+</body>
+
+</html>

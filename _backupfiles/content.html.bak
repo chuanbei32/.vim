@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>{$goodsInfo.goods_name}-{$base.company}</title>
+	{include file="bdhmt"}
+	<meta name="referrer" content="no-referrer" />
+	<meta name="keywords" content="{$goodsInfo.goods_name},{$base.company}">
+	<meta name="description" content="{$goodsInfo.des}">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="template" content="homepage-cdx003" />
+	<meta name="viewport"
+		content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-title" content="{$base.company}" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="msapplication-TileColor" content="#007AFF">
+	<!--link rel="stylesheet" type="text/css" href="__WEB__/css/jquery.mobile.custom.structure.min.css"///-->
+	<link rel="stylesheet" type="text/css" href="__WEB__/css/swiper.css" />
+	<link rel="stylesheet" type="text/css" href="__WEB__/css/mobile.css" />
+	<script type="text/javascript" src="__WEB__/js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="__WEB__/js/common.js"></script>
+	<script type="text/javascript" src="__WEB__/js/TouchSlide.js"></script>
+</head>
+
+<body style="background:#fff;">
+	<div style="text-align: center;">
+		<img src="{$logos}" style="height: 40px;">
+
+
+	</div>
+	<div data-role="page">
+		<div class="ui-toast"></div>
+		<div class="ui-mask"></div>
+		<div class="ui-sheet"></div>
+		<div id="head-bar">
+			<div class="head-bar">
+				<div class="head-bar-back">
+					<a target="_blank" href="{:url('index/index',array('adminId'=>$base['admin_id']))}"><img
+							src="__WEB__/image/icon-back.png" width="24" height="24" /><span>返回</span></a>
+				</div>
+				<div class="head-bar-title">供应产品</div>
+				<div class="head-bar-right">
+					<a href="#"><img src="__WEB__/image/icon-action.png" width="24" height="24"
+							onClick="show_top_nav()" /></a>
+				</div>
+			</div>
+			<div class="head-bar-fix"></div>
+		</div>
+		<div class="menu-nav-n" style="display:none;">
+			<ul class="f5">
+				<li class="menu_on"><a target="_blank" href="/gs{$base.admin_id}/">网站首页</a></li>
+				<li class="menu_li"><a target="_blank" href="/gs{$base.admin_id}/about.html">公司介绍</a></li>
+				<li class="menu_li"><a target="_blank" href="/gs{$base.admin_id}/goods.html">供应产品</a></li>
+				<li class="menu_li"><a target="_blank" href="/gs{$base.admin_id}/article.html">新闻中心</a></li>
+
+				<li class="menu_li"><a target="_blank" href="/gs{$base.admin_id}/contact.html">联系方式</a></li>
+			</ul>
+		</div>
+		<div class="main">
+			<div class="title"><strong>{$goodsInfo.goods_name}</strong></div>
+			<div class="info">{$goodsInfo.time|date="Y-m-d",###}&nbsp;&nbsp;浏览:<span id="hits">{$goodsInfo.click}</span>
+			</div>
+			{if condition="$photo == 'no'"}
+			<div class="album">
+				<div id="album"><img src="__UPLOADS__/goods/{$goodsInfo.thumb}" id="photo" style="width:100%;" /></div>
+			</div>
+			{else /}
+			<link rel="stylesheet" type="text/css" href="__WEB__/css/css.css" />
+			<div id="slides" class="slider-focus">
+				<div class="bd">
+					<div class="tempWrap" style="overflow:hidden; position:relative;">
+						<ul
+							style="width: 3200px; position: relative; overflow: hidden; padding: 0px; margin: 0px; transition: 0ms; -webkit-transition: 0ms; -webkit-transform: translate(-640px, 0px) translateZ(0px);">
+							{volist name='$photo' id='vo' }
+							<li style="display: table-cell; vertical-align: top; width: 640px;"><img
+									src="__UPLOADS__/photos/{$vo.img_src}"></li>
+							{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="hd">
+					<ul>
+						{volist name='$photo' id='vo'}
+						<li class="on">{$key+1}</li>
+						{/volist}
+					</ul>
+				</div>
+			</div>
+			{/if}
+			<span class="album_c" id="dot_0" style="display:none;" onClick="album_show(0);">&nbsp;</span>
+			<span class="album_o" id="dot_1" style="display:none;" onClick="album_show(1);">&nbsp;</span>
+			<span class="album_o" id="dot_2" style="display:none;" onClick="album_show(2);">&nbsp;</span>
+		</div>
+	</div>
+
+	<div class="content" style="background:#fff;margin-top:0;">
+		<span style="color:#000;font-size:19px;display:block;margin-bottom:8px;">{$goodsInfo.goods_name}</span>
+		<span style="color:#ef1f1f;font-size:19px;display:block;margin-bottom:8px;">{if condition="$goodsInfo.shop_price
+			== 0"}面谈{elseif condition="$goodsInfo.shop_price == -1"}面议{elseif
+			condition="$goodsInfo.shop_price"}￥{$goodsInfo.shop_price}元{else /}暂无{/if}<span
+				style="color:#999;font-size:12px;">{$goodsInfo.quantityNumber}{$goodsInfo.unit}起批</span></span>
+		<span style="color:#999;font-size:14px;display:block;margin-bottom:3px;">{$goodsInfo.province} {$goodsInfo.city}
+			{$goodsInfo.district}</span>
+		<div style="border-bottom: 1px solid #eee;line-height:0;">&nbsp;&nbsp;</div>
+		{if condition="$goodsInfo.meta"}
+		<span style="color:#000;font-size:16px;display:block;margin:10px 0;">产品参数 <span
+				style="color:#999;font-size:14px;">{$goodsInfo.meta}</span></span>
+		{/if}
+		<div style="border-bottom: 8px solid #eee;line-height:1;">&nbsp;&nbsp;</div>
+		<style>
+			.c-touchable-feedback-content {
+				height: 70px;
+				width: 100%;
+			}
+
+			.c-touchable-feedback-content .d1 {
+				float: left;
+				width: 70px;
+				height: 70px;
+			}
+
+			.c-touchable-feedback-content .d2 {
+				float: left;
+				width: 70%;
+				height: 40px;
+				line-height: 100%;
+				font-size: 16px;
+				padding-top: 30px;
+			}
+
+			.c-touchable-feedback-content .d2 a {
+				font-size: 16px;
+				color: rgb(51, 51, 51);
+			}
+		</style>
+		<div class="c-touchable-feedback-content" style="height:120px;">
+			<div style="height:40px;;width:100%;">
+				<div class="d1" style="padding-top:13px;">{if condition="$base.logo"}<img
+						src="__UPLOADS__/logos/{$base.logo}" style="width:70px;height:40px;" align="right">{/if}</div>
+				<div class="d2">&nbsp;<a target="_blank"
+						href="{:url('index/index',array('adminId'=>$base['admin_id']))}">{$base.company}</a></div>
+			</div>
+			<div style="border-bottom: 1px solid #eee;line-height:1;margin-top:0px;">&nbsp;&nbsp;</div>
+			<div style="height:48px;padding-top:12px">
+				<div
+					style="width:120px;height:30px;display:inline-block;float:left;margin-right:5px;margin-left:-310px;">
+					<!-- <img  src="__UPLOADS__/oems/{$oemInfo.logo}" border="0"  > -->
+				</div>
+				<span style="width:90px;height:30px;display:inline-block;float:right;"><img
+						src="/static/index/picture/dagou.png" style="width:16px;height:16px;"><em
+						data-v-c7e0e2e0="">开店入驻</em></span>
+				<span style="width:90px;height:30px;display:inline-block;float:right;"><img
+						src="/static/index/picture/dagou.png" style="width:16px;height:16px;"><em
+						data-v-c7e0e2e0="">会员权益</em></span>
+			</div>
+		</div>
+
+		<div style="border-bottom: 8px solid #eee;line-height:1;height:2px;">&nbsp;&nbsp;</div>
+		<p style="font-size:16px;color:#000;">产品详情</p>
+		<style type="text/css" media="all">
+			content * {
+				width: 100% !important;
+			}
+		</style>
+		<div id="content">
+			{$goodsInfo['content']}
+		</div>
+		<p
+			style="text-indent: 0px; margin: 0px; padding: 0px; font-family: &quot;Microsoft Yahei&quot;, Helvetica, Tahoma, sans-serif; font-size: 16px;">
+			产品样图（仅供参考）</p>
+		<div>&nbsp;</div>
+	</div>
+	<!-- <div class="f_l">
+            平台故障投诉电话：4001681911
+        </div><br>技术支持：{$oemInfo.name}</p> -->
+
+	</div>
+	</div>
+	<div class="contact-us">&nbsp;&nbsp;</div>
+	<!--
+{// include file="blue/web/common/web_footer"}
+-->
+	<div class="com-bar" style="z-index:0;">
+		<ul>
+			<li class="link btn-back"><a target="_blank"
+					href="{:url('index/index',array('adminId'=>$base['admin_id']))}"><i></i>首页</a></li>
+			<li class="link btn-sell"><a
+					href="{:url('index/xunjia',array('adminId'=>$base['admin_id'],'goodsId'=>$goodsInfo['id']))}"><i></i>立即询价</a>
+			</li>
+
+			<li class="link btn-tel">{if condition="$base['mobile'] != null"}<a
+								href="tel:{$base['mobile']}"><i></i>联系电话</a>{else /}<a href="/gs{$admin_id}/contact.html"><i></i>联系电话</a>{/if}</li>
+					<!--href="/gs{$admin_id}/contact.html"><i></i>联系电话</a>{else /}<a href="/gs{$admin_id}/contact.html"><i></i>联系电话</a>{/if}</li>-->
+		</ul>
+	</div>
+	<!--<div class="float-tel">{if condition="$base['mobile'] != null"}<a href="tel:{$base['mobile']}">电话咨询</a>{else /}<a-->
+	<div class="float-tel">{if condition="$base['mobile'] != null"}<a href="tel:{$base['mobile']}">电话咨询</a>{else /}<a
+			href="/gs{$admin_id}/contact.html"><i></i>电话咨询</a>{/if}</div>
+	{if condition="$base.swt != '' "}{$base.swt}{/if}
+
+
+	<div style="text-align: center;">
+		<a href="http://www.zhaochanpin.com" one-link-mark="yes">{$webName}</a>
+		<span>平台故障投诉：4001681911</span>
+	</div>
+
+	<script type="text/javascript" charset="utf-8">
+
+		$(window).scroll(function () {
+			var scrollTop = $(this).scrollTop();
+			var scrollHeight = $(document).height();
+			var windowHeight = $(this).height();
+			if (scrollTop + windowHeight == scrollHeight) {
+				$('.head-bar').css('top', '0px');
+				$('.com-bar').css('bottom', '60px');
+
+			} else if (scrollTop <= 0) {
+				$('.head-bar').css('top', '40px');
+				$('.com-bar').css('bottom', '0px');
+
+			} else {
+				$('.head-bar').css('top', '0px');
+				$('.com-bar').css('bottom', '0px');
+			}
+		});
+
+	</script>
+	<script type="text/javascript" src="__WEB__/js/index.js"></script>
+	<script language="JavaScript" type="text/javascript">
+		function show_top_nav() {
+			if ($(".menu-nav-n").is(":visible")) { $(".menu-nav-n").slideUp(); } else { $(".menu-nav-n").slideDown(); }
+		}
+	</script>
+	<script language="JavaScript" type="text/javascript">
+		loadLib('/static/index/js/webtj.js')
+	</script>
+</body>
+
+</html>

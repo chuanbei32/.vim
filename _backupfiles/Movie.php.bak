@@ -1,0 +1,375 @@
+<?php
+
+namespace app\common\model;
+
+use app\api\validate\Token;
+use app\common\controller\ModelBase;
+use think\Db;
+use function foo\func;
+
+class Movie extends ModelBase
+{
+    protected $pk = 'id';
+    protected $createTime = 'create_time';
+    protected $updateTime = 'update_time';
+
+    public function movieLanDatas()
+    {
+        return $this->hasOne(MovieLaunch::class, 'movie_id', 'id');
+    }
+
+    public function movieComDatas()
+    {
+        return $this->hasMany(UserComment::class, 'movie_id', 'id');
+    }
+
+    public function movieAddressDatas()
+    {
+        return $this->hasMany(MovieVedioAddress::class, 'movie_id', 'id');
+    }
+
+    public function movieHistoryDatas()
+    {
+        return $this->hasMany(UserMovieHistory::class, 'movie_id', 'id');
+    }
+
+    /**
+     * [导入电影信息]
+     *
+     * @param integer $douban_id [豆瓣电影标识]
+     * @param array $data [入参集合]
+     *
+     * @return array
+     */
+    public function outMovieInformation($data, $douban_id)
+    {
+        $result = [
+            'title' => $data['title'],
+            'original_title' => $data['original_title'][0],
+            'imageurl' => $data['imageurl'],
+            'pubdate' => json_encode($data['pubdates']),
+            'summary' => $data['summary'],
+            'subtype' => $this->getSubtypeArr($data['subtype']),
+            //            'subtype' => 1,
+            'douban_id' => $douban_id,
+            'genre' => json_encode($data['genres']),
+            'rating' => $data['average'],
+            'info' => implode(' ', $data['casts']) . '_' . implode(' ', $data['actor']) . '_' . implode(' ', $data['directors']),
+        ];
+        // print_r($result);die;
+        return app('app\common\model\Movie')->allowField(true)->save($result);
+    }
+
+    public static function getSubtypeArr($subtype)
+    {
+        return ['movie' => 1, 'tv' => 2, '1' => 'movie', '2' => 'tv'][$subtype];
+    }
+
+    /**
+     * [电影列表]
+     *
+     * @param integer $page [页码]
+     * @param array $where [查询条件]
+     *
+     * @return array
+     */
+    public function getMovieList($page, $pageSize, $where = [], $whereOr = [], $isPlay = 0)
+    {
+        $query = $this->alias('movie')
+            ->join('cool_movie_launch lan', 'movie.id=lan.movie_id', 'left');
+        if ($isPlay) {
+            $subsql = Db::table('cool_movie_vedio_address')
+                ->group('movie_id')
+                ->buildSql();
+            $query->join([$subsql => 'add'], 'movie.id=add.movie_id', 'left');
+        }
+        $movieData = $query->field('movie.id,movie.title,movie.info,movie.original_title,movie.imageurl,movie.rating,movie.genre,movie.subtype,movie.pubdate,movie.hits,lan.version,lan.date,movie.award_nomination')
+            ->where($where)
+            ->whereOr($whereOr)
+            ->order('lan.date desc')
+            //->fetchSql(true)
+            ->page($page, $pageSize)
+            ->select();
+        //halt($movieData);
+        try {
+            $userInfo = getUserData(false);
+            $movieCollectList = UserCollect::where('movie_id', $movieData['id'])->where('user_id', $userInfo['user_id'])->field('movie_id')->select();
+            if (!$movieCollectList->isEmpty()) {
+                $movieCollectList = array_column($movieCollectList->toArray(), 'movie_id');
+            } else {
+                $movieCollectList = [];
+            }
+        } catch (\Exception $e) {
+            $userInfo = [];
+            $movieCollectList = [];
+        }
+
+        $result = [];
+        if ($movieData) {
+            foreach ($movieData as $key => &$movieVal) {
+                $genre = json_decode($movieVal['genre'], true);
+                //				if (is_array($genre)) {
+                //					$genre = implode(' ',$genre);
+                //				}
+                $info = explode('_', $movieVal['info']);
+                $result[$key]['id'] = $movieVal['id'];
+                $result[$key]['title'] = $movieVal['title'];
+                $result[$key]['originalTitle'] = $movieVal['original_title'];
+                $result[$key]['castDirector'] = $info[0] . '/' . $info[2];
+                $result[$key]['country'] = $info[1];
+                $result[$key]['date'] = date('Y-m-d', $movieVal['date']);
+                $result[$key]['imageurl'] = $movieVal['imageurl'];
+                $result[$key]['rating'] = floatval($movieVal['rating']);
+                $result[$key]['hits'] = $movieVal['hits'];
+                $result[$key]['genre'] = $genre;
+                $result[$key]['subtype'] = self::getSubtypeArr($movieVal['subtype']);
+                $result[$key]['version'] = $movieVal['version'];
+                $result[$key]['award_nomination'] = $movieVal['award_nomination'];
+                $result[$key]['commentCount'] = $movieVal->movie_com_datas->count();
+                $result[$key]['is_collect'] = in_array($movieVal['id'], $movieCollectList) ? 1 : 0;
+                $result[$key]['countdown'] = ($t = $movieVal['date']) > time() ? (int)(abs(time() - $t) / 86400) : (int)(abs($t - time()) < 86400 ? 0 : -1);
+                $result[$key]['is_play'] = MovieVedioAddress::where('movie_id', $movieVal['id'])->value('id') ? 1 : 0;
+                $result[$key]['history'] = (int)(function () use ($movieVal, $userInfo) {
+                    if (empty($userInfo)) {
+                        return 0;
+                    }
+                    foreach ($movieVal->movie_history_datas as $item) {
+                        if ($userInfo['user_id'] == $item['user_id']) {
+                            return $item['timeline'];
+                        }
+                    }
+                    return 0;
+                })();
+            }
+
+            return ['code' => 0, 'msg' => 'SUCCESS', 'data' => $result];
+        }
+
+        return ['code' => 1, 'msg' => '暂无数据', 'data' => $result];
+    }
+
+    /**
+     * [电影详情]
+     *
+     * @param integer $id [电影id]
+     *
+     * @return array
+     */
+    public function getMovieInformation($id)
+    {
+        $movieData = $this->where(['id' => $id])->find();
+        if ($movieData) {
+            //			$movieData = $movieData->toArray();
+            $movieData = $movieData;
+            $info = explode('_', $movieData['info']);
+            $genre = json_decode($movieData['genre'], true);
+            //			if (is_array($genre)) {
+            //				$genre = implode(' ',$genre);
+            //			}
+            //查询线上数据
+            $launch = app('app\common\model\MovieLaunch')->field('id,version,date')->where(['movie_id' => $id])->select()->toArray();
+            if ($launch) {
+                foreach ($launch as &$lVal) {
+                    $lVal['date'] = date('Y-m-d', $lVal['date']);
+                }
+            }
+
+            try {
+                $userInfo = getUserData(false);
+                $isCollect = (int)(UserCollect::where('movie_id', $movieData['id'])->where('user_id', $userInfo['user_id'])->limit(1)->count('collect_id') ? 1 : 2);
+            } catch (\Exception $e) {
+                $isCollect = 0;
+            }
+
+            $result = [
+                'id' => $movieData['id'],
+                'title' => $movieData['title'],
+                'originalTitle' => $movieData['original_title'],
+                'cast' => $info[0],
+                'director' => $info[2],
+                'country' => $info[1],
+                'summary' => $movieData['summary'],
+                'pubdate' => false === preg_match('/[\d]{4}-[\d]{2}-[\d]{2}$/', $movieData['pubdate'])
+                    ? date('Y-m-d', $movieData['pubdate'])
+                    : json_decode($movieData['pubdate'], true),
+                'imageurl' => $movieData['imageurl'],
+                'rating' => $movieData['rating'],
+                'self_rating' => $movieData['self_rating'],
+                'genre' => $genre,
+                'subtype' => self::getSubtypeArr($movieData['subtype']),
+                'launches' => $launch,
+                'commentCount' => $movieData->movie_com_datas->count(),
+                'is_collect' => $isCollect,
+                'countdown' => ($t = strtotime($launch[0]['date'])) > time() ? (int)(abs(time() - $t) / 86400) : 0,
+                'prevueAddress' => $movieData['prevue_address']
+            ];
+
+            //查询评论信息
+            $result['comment_list'] = [];
+            $commentData = app('app\common\model\UserComment')->getMovieCommentList(['page' => 1, 'movie_id' => $id]);
+            if ($commentData['code'] == 200) {
+                $result['comment_list'] = $commentData['object'];
+            }
+
+            $t = $movieData->movie_address_datas->visible(['id', 'title', 'vedio_url']) ?? [];
+            $result['playAddress'] = empty($t) ? [] : $t->toArray();
+            if (!empty($result['prevueAddress'])) {
+                $t = [
+                    'title' => '预告片',
+                    'vedio_url' => $result['prevueAddress']
+                ];
+                array_unshift($result['playAddress'], $t);
+            }
+
+            // 增加点击次数
+            $res = $this->where('id', $id)->setInc('hits');
+            return ['code' => 0, 'msg' => 'SUCCESS', 'data' => $result];
+        }
+
+        return ['code' => 1, 'msg' => '无效的影视信息', 'data' => []];
+    }
+
+    /**
+     * [后台电影列表]
+     *
+     * @param array $where [查询条件]
+     * @param integer $pageSize [展示条数]
+     *
+     * @return array
+     */
+    public function getMovieInfoList($where, $pageSize)
+    {
+        $movieData = $this->field('id,title,original_title,rating,imageurl,douban_id,pubdate,subtype,is_hot,is_hot_index')
+                ->where($where)->order('is_hot desc')->order('id desc')->paginate($pageSize, false, ['query' => $where]);
+
+        if ($movieData) {
+            $page = $movieData->render();
+
+            $data = $movieData->toArray()['data'];
+
+            foreach ($data as &$movieVal) {
+                $movieVal['subtype'] = $this->getSubtypeArr($movieVal['subtype']);
+                $movieVal['pubdate'] = json_decode($movieVal['pubdate'], true);
+            }
+
+            return ['data' => $data, 'page' => $page];
+        }
+
+        return ['data' => [], 'page' => ''];
+    }
+
+    /**
+     * 导入豆瓣信息
+     * @author chuanbei32
+     * @param $data
+     * @param $postData
+     * @return array
+     * @throws \think\exception\PDOException
+     */
+    public function adminOutMovieInformation($data, $postData)
+    {
+        Db::startTrans();
+        try {
+            $result = [
+                'title' => $data['title'],
+                'original_title' => $data['original_title'][0] ?? '',
+                'imageurl' => $data['imageurl'],
+                'pubdate' => json_encode($data['pubdates']),
+                'summary' => $data['summary'],
+                'subtype' => $this->getSubtypeArr($data['subtype']),
+                'douban_id' => $data['douban_id'],
+                'genre' => json_encode($data['genres']),
+                'rating' => $data['average'],
+                'info' => implode(' ', $data['casts']) . '_' . implode(' ', array_column($data['actor'], 'name')) . '_' . implode(' ', $data['directors']),
+            ];
+
+            $res = self::create($result, true);
+            if ($res->isEmpty()) {
+                throw new \Exception();
+            }
+            // 写入版本信息
+            $data = [];
+            foreach ($postData['version'] as $key => $value) {
+                $data[] = [
+                    'movie_id' => $res->id,
+                    'version' => $value,
+                    'date' => strtotime($postData['time'][$key]),
+                ];
+            }
+            $res = (new MovieLaunch())->saveAll($data);
+            if ($res->isEmpty()) {
+                throw new \Exception();
+            }
+
+            Db::commit();
+
+            return ['code' => 200, 'msg' => '导入成功'];
+        } catch (Exception $e) {
+            Db::rollback();
+
+            return ['code' => 400, 'msg' => '导入失败'];
+        }
+    }
+
+    //编辑模特信息
+    public function setMovieInfo($data)
+    {
+        Db::startTrans();
+        try {
+            $data['info'] = $data['casts'] . '_' . $data['city'] . '_' . $data['director'];
+            //修改电影信息
+            $this->allowField(true)->save($data, ['id' => $data['id']]);
+
+            //修改电影版本信息
+            app('app\common\model\MovieLaunch')->where(['movie_id' => $data['id']])->delete();
+
+            if (isset($data['version']) && $data['version']) {
+                foreach ($data['version'] as $key => $val) {
+                    $time = $data['time'][$key];
+                    if ($time) {
+                        $time = strtotime($data['time'][$key]);
+                    }
+
+                    if (empty($time) && empty($val)) {
+
+                    } elseif (empty($time) || empty($val)) {
+                        Db::rollback();
+                        return ['code' => 400, 'msg' => '请输入上线时间或正确填写时间格式'];
+                    } else {
+                        app('app\common\model\MovieLaunch')->insert(['movie_id' => $data['id'], 'version' => $val, 'date' => $time]);
+                    }
+                }
+            }
+
+            //处理播放地址
+            app('app\common\model\MovieVedioAddress')->where('movie_id', $data['id'])->delete();
+            if (isset($data['vedio_url']) && $data['vedio_url']) {
+                foreach ($data['vedio_url'] as $key => $val) {
+                    $title = $data['vedio_title'][$key];
+
+                    if (empty($title) && empty($val)) {
+                        //Db::rollback();
+                        //return ['code' => 400, 'msg' => '播放地址不能为空'];
+                    } elseif (empty($title) || empty($val)) {
+                        Db::rollback();
+                        return ['code' => 400, 'msg' => '播放地址不能为空'];
+                    } else {
+                        //if (isset($data['vedio_id'][$key]) && $data['vedio_id'][$key]) {
+                            //app('app\common\model\MovieVedioAddress')->where(['id' => $data['vedio_id'][$key]])->update(['vedio_url' => $val, 'title' => $title, 'update_time' => time()]);
+                        //} else {
+                            app('app\common\model\MovieVedioAddress')->insert(['movie_id' => $data['id'], 'vedio_url' => $val, 'title' => $title, 'create_time' => time()]);
+                        //}
+                    }
+                }
+            }
+
+            Db::commit();
+
+            return ['code' => 200, 'msg' => '修改成功'];
+        } catch (Exception $e) {
+            Db::rollback();
+
+            return ['code' => 400, 'msg' => '修改失败'];
+        }
+    }
+}
