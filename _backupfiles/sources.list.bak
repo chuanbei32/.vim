@@ -1,5 +1,0 @@
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ sid main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ sid main contrib non-free
-
-deb http://repo.percona.com/apt VERSION main
-deb-src http://repo.percona.com/apt VERSION main
