@@ -3,25 +3,23 @@
 	let mapleader="\<space>"
 
 	" noremap! {{
-		
+
+		noremap! <C-s> <cmd>write<CR>
+		noremap! <Leader>sh <cmd>shell<CR>
+		noremap! <Leader>tm <cmd>terminal<CR>
+
 	" }}
 
+
 	" noremap {{
-		
-		noremap <m-h> b
-		noremap <m-l> w
 
-		noremap <m-j> gj
-		noremap <m-k> gk
-
-		noremap <m-y> d$
+		noremap <C-s> <cmd>write<CR>
+		noremap <Leader>sh <cmd>shell<CR>
+		noremap <Leader>tm <cmd>terminal<CR>
 
 	" }}
 
 	" nnoremap {{
-
-		nnoremap <Leader>sh <cmd>shell<CR>
-		nnoremap <Leader>tm <cmd>terminal<CR>
 
 		nnoremap k gk
 		nnoremap gk k
@@ -33,23 +31,14 @@
 		noremap <C-k> <up>
 		noremap <C-l> <right>
 
-		nnoremap zl z4l
-		nnoremap zh z4h
-		nnoremap LB 0 
-		nnoremap LE $ 
-		nnoremap <Leader>p "+p 
 		nnoremap <Leader>q :q<CR> 
+		nnoremap <Leader>Q :qa!<CR> 
 		nnoremap <Leader>W :w<CR> 
 		nnoremap <Leader>WQ :wa<CR>:q<CR> 
-		nnoremap <Leader>Q :qa!<CR> 
-		nnoremap <Leader>M % 
 		nnoremap <CR> za
 		nnoremap <S-Return> zMzv
 		nnoremap gh g^
 		nnoremap gl g$
-		nnoremap <C-s> <cmd>write<CR>
-		nnoremap <Leader>w <cmd>write<CR>
-		nnoremap <BS> %
 
 		" nnoremap <Leader>ts <cmd>setlocal spell!<CR>
 		" nnoremap <Leader>tn <cmd>setlocal nonumber!<CR>
@@ -57,51 +46,6 @@
 		" nnoremap <Leader>th <cmd>nohlsearch<CR>
 
 	" }}
-
-
-	" vnoremap {{
-		
-		vnoremap <Leader>y "+y 
-		
-	" }}
-
-
-	" onoremap {{
-		
-	" }}
-
-
-	" inoremap {{
-
-		inoremap <c-a> <home>
-		inoremap <c-e> <end>
-		inoremap <c-d> <del>
-
-		inoremap <C-h> <left>
-		inoremap <C-j> <down>
-		inoremap <C-k> <up>
-		inoremap <C-l> <right>
-
-		inoremap <m-h> <c-left>
-		inoremap <m-l> <c-right>
-
-		inoremap <m-j> <c-\><c-o>gj
-		inoremap <m-k> <c-\><c-o>gk
-
-		inoremap <m-y> <c-\><c-o>d$
-		inoremap <S-Return> <C-o>o
-
-		" inoremap ( ()<Esc>i
-		" inoremap [ []<Esc>i
-		" inoremap { {}<Esc>i 
-			
-	" }}
-
-
-	" nnoremap {{
-		
-	" }}
-
 
 	" cnoremap {{
 
@@ -116,35 +60,54 @@
 		cnoremap <c-d> <del>
 		cnoremap <c-_> <c-k>
 
-		cnoremap <m-h> <c-left>
-		cnoremap <m-l> <c-right>
+		cnoremap <a-h> <c-left>
+		cnoremap <a-l> <c-right>
 
-		cnoremap <C-s> <cmd>write<CR>
-		cnoreabbrev qw wq
-		cnoreabbrev Wq wq
-		cnoreabbrev WQ wq
-		cnoreabbrev Qa qa
-		cnoreabbrev Bd bd
-		cnoreabbrev bD bd
+		cnoremap qw wq
+		cnoremap Wq wq
+		cnoremap WQ wq
+		cnoremap Qa qa
+		cnoremap Bd bd
+		cnoremap bD bd
 
 	" }}
 
-	" tnoremap {{
+	" inoremap {{
 
+		inoremap <c-a> <home>
+		inoremap <c-e> <end>
+		inoremap <c-d> <del>
+
+		inoremap <C-h> <left>
+		inoremap <C-j> <down>
+		inoremap <C-k> <up>
+		inoremap <C-l> <right>
+
+		inoremap <a-h> <c-left>
+		inoremap <a-l> <c-right>
+
+		inoremap <a-j> <c-\><c-o>gj
+		inoremap <a-k> <c-\><c-o>gk
+		inoremap <a-y> <c-\><c-o>d$
+
+		inoremap <S-Return> <C-o>o
+
+		" inoremap ( ()<Esc>i
+		" inoremap [ []<Esc>i
+		" inoremap { {}<Esc>i
+			
 	" }}
 
 	" xnoremap {{
 
 		xnoremap < <gv
 		xnoremap > >gv|
-		xnoremap <BS> %
-		xnoremap <C-s> <cmd>write<CR>
 		xnoremap j gj
 		xnoremap k gk
 
 	" }}
 
-	" Window {{ 
+	" Window {{
 
 		nnoremap <Leader>wc <C-W>c " 
 		nnoremap <Leader>wl <C-W>l " 跳转至右方的窗口
@@ -290,4 +253,4 @@
 
 	" }}
 
-" {
+" }
