@@ -25,9 +25,6 @@
 [submodule "pack/vendor/start/fugitive"]
 	path = pack/vendor/start/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "pack/vendor/start/emmet"]
-	path = pack/vendor/start/emmet
-	url = https://github.com/mattn/emmet-vim.git
 [submodule "pack/vendor/start/css-color"]
 	path = pack/vendor/start/css-color
 	url = https://github.com/ap/vim-css-color.git
@@ -67,9 +64,6 @@
 [submodule "pack/vendor/start/vimspector"]
 	path = pack/vendor/start/vimspector
 	url = https://github.com/puremourning/vimspector.git
-[submodule "pack/vendor/start/delimitMate"]
-	path = pack/vendor/start/delimitMate
-	url = https://github.com/Raimondi/delimitMate.git
 [submodule "pack/vendor/start/vim-startify"]
 	path = pack/vendor/start/vim-startify
 	url = https://github.com/mhinz/vim-startify.git
@@ -95,9 +89,6 @@
 [submodule "pack/vendor/start/gtags"]
 	path = pack/vendor/start/gtags
 	url = https://github.com/vim-scripts/gtags.vim.git
-[submodule "pack/vendor/start/colorizer"]
-	path = pack/vendor/start/colorizer
-	url = https://github.com/lilydjwg/colorizer.git
 [submodule "pack/vendor/opt/vim-gruvbox8"]
 	path = pack/vendor/opt/vim-gruvbox8
 	url = https://github.com/lifepillar/vim-gruvbox8.git
@@ -209,9 +200,6 @@
 [submodule "pack/vendor/opt/one"]
 	path = pack/vendor/opt/one
 	url = https://github.com/rakr/vim-one.git
-[submodule "pack/vendor/start/goyo"]
-	path = pack/vendor/start/goyo
-	url = https://github.com/junegunn/goyo.vim.git
 [submodule "pack/vendor/opt/jellybeans"]
 	path = pack/vendor/opt/jellybeans
 	url = https://github.com/nanotech/jellybeans.vim.git
@@ -239,3 +227,15 @@
 [submodule "pack/vendor/start/asyncrun"]
 	path = pack/vendor/start/asyncrun
 	url = https://github.com/skywind3000/asyncrun.vim.git
+[submodule "pack/vendor/start/accelerated-jk"]
+	path = pack/vendor/start/accelerated-jk
+	url = https://github.com/rhysd/accelerated-jk.git
+[submodule "pack/vendor/start/vim-conflicted"]
+	path = pack/vendor/start/vim-conflicted
+	url = https://github.com/christoomey/vim-conflicted.git
+[submodule "pack/vendor/vim-dirvish"]
+	path = pack/vendor/vim-dirvish
+	url = https://github.com/justinmk/vim-dirvish.git
+[submodule "pack/vendor/start/vim-illuminate"]
+	path = pack/vendor/start/vim-illuminate
+	url = https://github.com/RRethy/vim-illuminate.git

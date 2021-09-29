@@ -278,18 +278,29 @@
 
 "}
 
-" delimitMate { 
-
-    let g:delimitMate_expand_cr = 1
-
-" }
-
 " git-messenger {
     
     let g:git_messenger_close_on_cursor_moved=0
 
     nmap <Leader>gmo :GitMessenger<CR>
     nmap <Leader>gmc :GitMessengerClose<CR>
+
+" }
+
+" nerdcommenter {
+    
+    let g:NERDSpaceDelims = 1
+    let g:NERDDefaultAlign = 'left'
+    let g:NERDTrimTrailingWhitespace = 1
+    let g:NERDToggleCheckAllLines = 1
+
+    let g:NERDCustomDelimiters = { 
+        \ 'php': { 'left': '/*','right': '*/' },
+        \ 'html': { 'left': '<!--','right': '-->' },
+        \ 'py': { 'left': '#' },'sh': { 'left': '#' },
+        \ 'css': { 'left': '/*','right': '*/' },
+        \ 'js': { 'left': '/*','right': '*/' },
+        \}
 
 " }
 

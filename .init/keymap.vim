@@ -1,8 +1,119 @@
 " {
 	
-	let mapleader=" " " <Leader>
+	let mapleader="\<space>"
 
-	nmap <space> <leader> 
+	nnoremap <space> <leader> 
+
+	nnoremap <Leader>sh <cmd>shell<CR>
+	nnoremap <Leader>tm <cmd>terminal<CR>
+	
+	nnoremap <silent> <leader>noh <cmd>noh<cr>
+	inoremap <C-z> <C-x><C-o>
+
+	nnoremap ]w <cmd>WhitespaceNext<CR>
+	nnoremap [w <cmd>WhitespacePrev<CR>
+
+	inoremap <c-a> <home>
+	inoremap <c-e> <end>
+	inoremap <c-d> <del>
+	inoremap <c-_> <c-k>
+
+	nnoremap <Up>    <cmd>resize +1<CR>
+	nnoremap <Down>  <cmd>resize -1<CR>
+	nnoremap <Left>  <cmd>vertical resize +1<CR>
+	nnoremap <Right> <cmd>vertical resize -1<CR>
+
+	nnoremap k gk
+	nnoremap gk k
+	nnoremap j gj
+	nnoremap gj j
+
+	nmap ]q <cmd>cnext<CR>
+	nmap [q <cmd>cprev<CR>
+	nmap ]a <cmd>lnext<CR>
+	nmap [a <cmd>lprev<CR>
+
+	noremap <C-h> <left>
+	noremap <C-j> <down>
+	noremap <C-k> <up>
+	noremap <C-l> <right>
+
+	inoremap <C-h> <left>
+	inoremap <C-j> <down>
+	inoremap <C-k> <up>
+	inoremap <C-l> <right>
+
+	cnoremap <c-h> <left>
+	cnoremap <c-j> <down>
+	cnoremap <c-k> <up>
+	cnoremap <c-l> <right>
+	cnoremap <c-a> <home>
+	cnoremap <c-e> <end>
+	cnoremap <c-f> <c-d>
+	cnoremap <c-b> <left>
+	cnoremap <c-d> <del>
+	cnoremap <c-_> <c-k>
+
+	noremap <m-h> b
+	noremap <m-l> w
+	inoremap <m-h> <c-left>
+	inoremap <m-l> <c-right>
+
+	noremap <m-j> gj
+	noremap <m-k> gk
+	inoremap <m-j> <c-\><c-o>gj
+	inoremap <m-k> <c-\><c-o>gk
+
+	cnoremap <m-h> <c-left>
+	cnoremap <m-l> <c-right>
+
+	noremap <m-y> d$
+	inoremap <m-y> <c-\><c-o>d$
+
+	inoremap <S-Return> <C-o>o
+
+	nnoremap zl z4l
+	nnoremap zh z4h
+
+	nnoremap LB 0 
+	nnoremap LE $ 
+	vnoremap <Leader>y "+y 
+	nnoremap <Leader>p "+p 
+	nnoremap <Leader>q :q<CR> 
+	nnoremap <Leader>W :w<CR> 
+	nnoremap <Leader>WQ :wa<CR>:q<CR> 
+	nnoremap <Leader>Q :qa!<CR> 
+	nnoremap <Leader>M % 
+	nnoremap <CR> za
+	nnoremap <S-Return> zMzv
+	xnoremap j gj
+	xnoremap k gk
+	nnoremap gh g^
+	nnoremap gl g$
+
+	xnoremap < <gv
+	xnoremap > >gv|
+
+	nmap <BS> %
+	xmap <BS> %
+
+	nnoremap <Leader>w <cmd>write<CR>
+	nnoremap <C-s> <cmd>write<CR>
+	xnoremap <C-s> <cmd>write<CR>
+	cnoremap <C-s> <cmd>write<CR>
+
+	cnoreabbrev qw wq
+	cnoreabbrev Wq wq
+	cnoreabbrev WQ wq
+	cnoreabbrev Qa qa
+	cnoreabbrev Bd bd
+	cnoreabbrev bD bd
+
+
+	nmap <Leader>ts <cmd>setlocal spell!<CR>
+	nmap <Leader>tn <cmd>setlocal nonumber!<CR>
+	nmap <Leader>tl <cmd>setlocal nolist!<CR>
+	nmap <Leader>th <cmd>nohlsearch<CR>
 
 	" Window {{ 
 
@@ -29,6 +140,8 @@
 		tnoremap <m-J> <c-_>j
 		tnoremap <m-K> <c-_>k
 		tnoremap <m-q> <c-\><c-n>
+
+		nnoremap <C-x> <C-w>x
 
 	"}}
 
@@ -95,6 +208,18 @@
 		noremap <silent> <leader>tp :tabprev<cr>
 		noremap <silent> <leader>to :tabonly<cr>
 
+		nnoremap <A-j>     <cmd>tabnext<CR>
+		nnoremap <A-k>     <cmd>tabprevious<CR>
+		nnoremap <A-[>     <cmd>tabprevious<CR>
+		nnoremap <A-]>     <cmd>tabnext<CR>
+		nnoremap <C-Tab>   <cmd>tabnext<CR>
+		nnoremap <C-S-Tab> <cmd>tabprevious<CR>
+		nnoremap <C-S-j>   <cmd>tabnext<CR>
+		nnoremap <C-S-k>   <cmd>tabprevious<CR>
+
+		nnoremap <A-{> <cmd>-tabmove<CR>
+		nnoremap <A-}> <cmd>+tabmove<CR>
+
 		" 左移 tab
 		function! Tab_MoveLeft()
 			let l:tabnr = tabpagenr() - 2
@@ -116,105 +241,15 @@
 		noremap <silent><m-left> :call Tab_MoveLeft()<cr>
 		noremap <silent><m-right> :call Tab_MoveRight()<cr>
 
-		nmap <tab> V>
-		nmap <s-tab> V<
-		vmap <tab> >gv
-		vmap <s-tab> <gv
+		nnoremap <tab> V>
+		nnoremap <s-tab> V<
+		vnoremap <tab> >gv
+		vnoremap <s-tab> <gv
 
 	"}}
 
 	" session {{
 
 	" }}
-
-	nnoremap <Leader>sh :shell<CR>
-
-	nnoremap <Leader>term :terminal<CR>
-
-	map <silent> <leader>noh :noh<cr>
-
-	inoremap <C-z> <C-x><C-o>
-
-	inoremap <c-a> <home>
-	inoremap <c-e> <end>
-	inoremap <c-d> <del>
-	inoremap <c-_> <c-k>
-
-	" map <Left> <Nop>
-	" map <Right> <Nop>
-	" map <Up> <Nop>
-	" map <Down> <Nop>
-
-	nnoremap k gk
-	nnoremap gk k
-	nnoremap j gj
-	nnoremap gj j
-
-	noremap <C-h> <left>
-	noremap <C-j> <down>
-	noremap <C-k> <up>
-	noremap <C-l> <right>
-
-	inoremap <C-h> <left>
-	inoremap <C-j> <down>
-	inoremap <C-k> <up>
-	inoremap <C-l> <right>
-
-	cnoremap <c-h> <left>
-	cnoremap <c-j> <down>
-	cnoremap <c-k> <up>
-	cnoremap <c-l> <right>
-	cnoremap <c-a> <home>
-	cnoremap <c-e> <end>
-	cnoremap <c-f> <c-d>
-	cnoremap <c-b> <left>
-	cnoremap <c-d> <del>
-	cnoremap <c-_> <c-k>
-
-	noremap <m-h> b
-	noremap <m-l> w
-	inoremap <m-h> <c-left>
-	inoremap <m-l> <c-right>
-
-	noremap <m-j> gj
-	noremap <m-k> gk
-	inoremap <m-j> <c-\><c-o>gj
-	inoremap <m-k> <c-\><c-o>gk
-
-	cnoremap <m-h> <c-left>
-	cnoremap <m-l> <c-right>
-
-	noremap <m-y> d$
-	inoremap <m-y> <c-\><c-o>d$
-
-	nmap LB 0 " 定义快捷键到行首
-
-	nmap LE $ " 定义快捷键到行尾
-
-	vnoremap <Leader>y "+y " 设置快捷键将选中文本块复制至系统剪贴板
-
-	nmap <Leader>p "+p " 设置快捷键将系统剪贴板内容粘贴至 vim
-
-	nmap <Leader>q :q<CR> " 定义快捷键关闭当前分割窗口
-
-	nmap <Leader>W :w<CR> " 定义快捷键保存当前窗口内容
-
-	nmap <Leader>WQ :wa<CR>:q<CR> " 定义快捷键保存所有窗口内容并退出 vim
-
-	nmap <Leader>Q :qa!<CR> " 不做任何保存，直接退出 vim
-
-	nmap <Leader>M % " 定义快捷键在结对符之间跳转
-
-	nmap <Leader><Leader> V
-	xmap <Leader><Leader> <Esc>
-
-	nnoremap <CR> za
-
-	xnoremap j gj
-	xnoremap k gk
-
-	nnoremap gh g^
-	nnoremap gl g$
-
 
 " {
