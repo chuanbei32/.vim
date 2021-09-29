@@ -2,118 +2,147 @@
 	
 	let mapleader="\<space>"
 
-	nnoremap <space> <leader> 
+	" noremap! {{
+		
+	" }}
 
-	nnoremap <Leader>sh <cmd>shell<CR>
-	nnoremap <Leader>tm <cmd>terminal<CR>
-	
-	nnoremap <silent> <leader>noh <cmd>noh<cr>
-	inoremap <C-z> <C-x><C-o>
+	" noremap {{
+		
+		noremap <m-h> b
+		noremap <m-l> w
 
-	nnoremap ]w <cmd>WhitespaceNext<CR>
-	nnoremap [w <cmd>WhitespacePrev<CR>
+		noremap <m-j> gj
+		noremap <m-k> gk
 
-	inoremap <c-a> <home>
-	inoremap <c-e> <end>
-	inoremap <c-d> <del>
-	inoremap <c-_> <c-k>
+		noremap <m-y> d$
 
-	nnoremap <Up>    <cmd>resize +1<CR>
-	nnoremap <Down>  <cmd>resize -1<CR>
-	nnoremap <Left>  <cmd>vertical resize +1<CR>
-	nnoremap <Right> <cmd>vertical resize -1<CR>
+	" }}
 
-	nnoremap k gk
-	nnoremap gk k
-	nnoremap j gj
-	nnoremap gj j
+	" nnoremap {{
 
-	nmap ]q <cmd>cnext<CR>
-	nmap [q <cmd>cprev<CR>
-	nmap ]a <cmd>lnext<CR>
-	nmap [a <cmd>lprev<CR>
+		nnoremap <Leader>sh <cmd>shell<CR>
+		nnoremap <Leader>tm <cmd>terminal<CR>
 
-	noremap <C-h> <left>
-	noremap <C-j> <down>
-	noremap <C-k> <up>
-	noremap <C-l> <right>
+		nnoremap k gk
+		nnoremap gk k
+		nnoremap j gj
+		nnoremap gj j
 
-	inoremap <C-h> <left>
-	inoremap <C-j> <down>
-	inoremap <C-k> <up>
-	inoremap <C-l> <right>
+		noremap <C-h> <left>
+		noremap <C-j> <down>
+		noremap <C-k> <up>
+		noremap <C-l> <right>
 
-	cnoremap <c-h> <left>
-	cnoremap <c-j> <down>
-	cnoremap <c-k> <up>
-	cnoremap <c-l> <right>
-	cnoremap <c-a> <home>
-	cnoremap <c-e> <end>
-	cnoremap <c-f> <c-d>
-	cnoremap <c-b> <left>
-	cnoremap <c-d> <del>
-	cnoremap <c-_> <c-k>
+		nnoremap zl z4l
+		nnoremap zh z4h
+		nnoremap LB 0 
+		nnoremap LE $ 
+		nnoremap <Leader>p "+p 
+		nnoremap <Leader>q :q<CR> 
+		nnoremap <Leader>W :w<CR> 
+		nnoremap <Leader>WQ :wa<CR>:q<CR> 
+		nnoremap <Leader>Q :qa!<CR> 
+		nnoremap <Leader>M % 
+		nnoremap <CR> za
+		nnoremap <S-Return> zMzv
+		nnoremap gh g^
+		nnoremap gl g$
+		nnoremap <C-s> <cmd>write<CR>
+		nnoremap <Leader>w <cmd>write<CR>
+		nnoremap <BS> %
 
-	noremap <m-h> b
-	noremap <m-l> w
-	inoremap <m-h> <c-left>
-	inoremap <m-l> <c-right>
+		" nnoremap <Leader>ts <cmd>setlocal spell!<CR>
+		" nnoremap <Leader>tn <cmd>setlocal nonumber!<CR>
+		" nnoremap <Leader>tl <cmd>setlocal nolist!<CR>
+		" nnoremap <Leader>th <cmd>nohlsearch<CR>
 
-	noremap <m-j> gj
-	noremap <m-k> gk
-	inoremap <m-j> <c-\><c-o>gj
-	inoremap <m-k> <c-\><c-o>gk
-
-	cnoremap <m-h> <c-left>
-	cnoremap <m-l> <c-right>
-
-	noremap <m-y> d$
-	inoremap <m-y> <c-\><c-o>d$
-
-	inoremap <S-Return> <C-o>o
-
-	nnoremap zl z4l
-	nnoremap zh z4h
-
-	nnoremap LB 0 
-	nnoremap LE $ 
-	vnoremap <Leader>y "+y 
-	nnoremap <Leader>p "+p 
-	nnoremap <Leader>q :q<CR> 
-	nnoremap <Leader>W :w<CR> 
-	nnoremap <Leader>WQ :wa<CR>:q<CR> 
-	nnoremap <Leader>Q :qa!<CR> 
-	nnoremap <Leader>M % 
-	nnoremap <CR> za
-	nnoremap <S-Return> zMzv
-	xnoremap j gj
-	xnoremap k gk
-	nnoremap gh g^
-	nnoremap gl g$
-
-	xnoremap < <gv
-	xnoremap > >gv|
-
-	nmap <BS> %
-	xmap <BS> %
-
-	nnoremap <Leader>w <cmd>write<CR>
-	nnoremap <C-s> <cmd>write<CR>
-	xnoremap <C-s> <cmd>write<CR>
-	cnoremap <C-s> <cmd>write<CR>
-
-	cnoreabbrev qw wq
-	cnoreabbrev Wq wq
-	cnoreabbrev WQ wq
-	cnoreabbrev Qa qa
-	cnoreabbrev Bd bd
-	cnoreabbrev bD bd
+	" }}
 
 
-	nmap <Leader>ts <cmd>setlocal spell!<CR>
-	nmap <Leader>tn <cmd>setlocal nonumber!<CR>
-	nmap <Leader>tl <cmd>setlocal nolist!<CR>
-	nmap <Leader>th <cmd>nohlsearch<CR>
+	" vnoremap {{
+		
+		vnoremap <Leader>y "+y 
+		
+	" }}
+
+
+	" onoremap {{
+		
+	" }}
+
+
+	" inoremap {{
+
+		inoremap <c-a> <home>
+		inoremap <c-e> <end>
+		inoremap <c-d> <del>
+
+		inoremap <C-h> <left>
+		inoremap <C-j> <down>
+		inoremap <C-k> <up>
+		inoremap <C-l> <right>
+
+		inoremap <m-h> <c-left>
+		inoremap <m-l> <c-right>
+
+		inoremap <m-j> <c-\><c-o>gj
+		inoremap <m-k> <c-\><c-o>gk
+
+		inoremap <m-y> <c-\><c-o>d$
+		inoremap <S-Return> <C-o>o
+
+		" inoremap ( ()<Esc>i
+		" inoremap [ []<Esc>i
+		" inoremap { {}<Esc>i 
+			
+	" }}
+
+
+	" nnoremap {{
+		
+	" }}
+
+
+	" cnoremap {{
+
+		cnoremap <c-h> <left>
+		cnoremap <c-j> <down>
+		cnoremap <c-k> <up>
+		cnoremap <c-l> <right>
+		cnoremap <c-a> <home>
+		cnoremap <c-e> <end>
+		cnoremap <c-f> <c-d>
+		cnoremap <c-b> <left>
+		cnoremap <c-d> <del>
+		cnoremap <c-_> <c-k>
+
+		cnoremap <m-h> <c-left>
+		cnoremap <m-l> <c-right>
+
+		cnoremap <C-s> <cmd>write<CR>
+		cnoreabbrev qw wq
+		cnoreabbrev Wq wq
+		cnoreabbrev WQ wq
+		cnoreabbrev Qa qa
+		cnoreabbrev Bd bd
+		cnoreabbrev bD bd
+
+	" }}
+
+	" tnoremap {{
+
+	" }}
+
+	" xnoremap {{
+
+		xnoremap < <gv
+		xnoremap > >gv|
+		xnoremap <BS> %
+		xnoremap <C-s> <cmd>write<CR>
+		xnoremap j gj
+		xnoremap k gk
+
+	" }}
 
 	" Window {{ 
 
@@ -249,6 +278,15 @@
 	"}}
 
 	" session {{
+
+	" }}
+
+	" quickfix {{
+
+		nmap ]q <cmd>cnext<CR>
+		nmap [q <cmd>cprev<CR>
+		nmap ]a <cmd>lnext<CR>
+		nmap [a <cmd>lprev<CR>
 
 	" }}
 

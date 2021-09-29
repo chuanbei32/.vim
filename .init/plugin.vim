@@ -1,20 +1,37 @@
 " coc {
     
     let g:coc_global_extensions = [ 
-        \ 'coc-json', 'coc-xml', 'coc-yaml', 'coc-vetur', 'coc-toml', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-svg', 'coc-sql', 
-        \ 'coc-sh', 'coc-highlight', 'coc-cssmodules', 'coc-discord-rpc', 'coc-emmet', 'coc-graphql', 'coc-html-css-support',
-        \ '@yaegassy/coc-nginx', 'coc-perl']
+        \ 'coc-json', 
+        \ 'coc-xml', 
+        \ 'coc-yaml', 
+        \ 'coc-vetur', 
+        \ 'coc-toml', 
+        \ 'coc-html', 
+        \ 'coc-css', 
+        \ 'coc-tsserver', 
+        \ 'coc-svg', 
+        \ 'coc-sql', 
+        \ 'coc-sh', 
+        \ 'coc-highlight', 
+        \ 'coc-cssmodules', 
+        \ 'coc-discord-rpc', 
+        \ 'coc-emmet', 
+        \ 'coc-graphql', 
+        \ 'coc-html-css-support',
+        \ '@yaegassy/coc-nginx', 
+        \ 'coc-perl'
+    \]
+
+    function! s:check_back_space() abort
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
 
     inoremap <silent><expr> <TAB>
         \ pumvisible() ? "\<C-n>" :
         \ <SID>check_back_space() ? "\<TAB>" :
         \ coc#refresh()
 
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-    
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
     " phpactor {{
@@ -36,7 +53,7 @@
 
 " ultisnips {
 
-    let g:UltiSnipsExpandTrigger="<Leader>us"
+    let g:UltiSnipsExpandTrigger="<Leader>\us"
     let g:UltiSnipsSnippetDirectories=["__ultisnips"]
 
 " }
@@ -68,7 +85,7 @@
         \ 'stdin': 1,
         \ 'args': ['--standard=PSR12', '-'],
         \ 'valid_exit_codes': [0, 1],
-        \ }
+    \ } 
 
     let g:neoformat_enabled_php = ['phpcbf']
 
@@ -80,8 +97,8 @@
 
     let g:neoformat_basic_format_trim = 1
 
-    nnoremap <leader>nf :Neoformat<CR>
-    nnoremap <leader>nfv :Neoformat!<Space>
+    nnoremap <leader>\nf :Neoformat<CR>
+    nnoremap <leader>\nfv :Neoformat!<Space>
 
 " }
 
@@ -170,11 +187,11 @@
     nmap <Leader>f <Nop>
     nmap <Leader>b <Nop>
     
-    nmap <Leader>ff :Leaderf file<CR>
-    nmap <Leader>fb :Leaderf buffer<CR>
-    nmap <Leader>fg :Leaderf rg<CR>
-    nmap <Leader>fm :Leaderf mru<CR>
-    nmap <Leader>ft :Leaderf tag<CR>
+    nmap <Leader>\ff :Leaderf file<CR>
+    nmap <Leader>\fb :Leaderf buffer<CR>
+    nmap <Leader>\fg :Leaderf rg<CR>
+    nmap <Leader>\fm :Leaderf mru<CR>
+    nmap <Leader>\ft :Leaderf tag<CR>
 
 " }
 
@@ -182,14 +199,14 @@
 
     let g:mundo_auto_preview = 1
 
-    nmap <Leader>mun :MundoToggle<CR>
+    nmap <Leader>\mun :MundoToggle<CR>
 " }
 
 " tagbar {
 
     let g:tagbar_width = 30
 
-    nmap <leader>tb :TagbarToggle<CR>
+    nmap <leader>\tb :TagbarToggle<CR>
 
     " autocmd VimEnter * :TagbarToggle
 
@@ -207,7 +224,7 @@
     let g:NERDTreeDirArrowExpandable = '+'
     let g:NERDTreeDirArrowCollapsible = '-'
 
-    nnoremap <leader>nt :NERDTreeToggle<CR>
+    nnoremap <leader>\nt :NERDTreeToggle<CR>
 
     " autocmd vimenter * NERDTree
 
@@ -282,8 +299,8 @@
     
     let g:git_messenger_close_on_cursor_moved=0
 
-    nmap <Leader>gmo :GitMessenger<CR>
-    nmap <Leader>gmc :GitMessengerClose<CR>
+    nmap <Leader>\gmo :GitMessenger<CR>
+    nmap <Leader>\gmc :GitMessengerClose<CR>
 
 " }
 
@@ -300,7 +317,7 @@
         \ 'py': { 'left': '#' },'sh': { 'left': '#' },
         \ 'css': { 'left': '/*','right': '*/' },
         \ 'js': { 'left': '/*','right': '*/' },
-        \}
+    \ }
 
 " }
 
