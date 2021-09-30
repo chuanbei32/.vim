@@ -1,5 +1,7 @@
 " {
 	
+	autocmd! bufwritepost .vimrc source ~/.vimrc
+	
 	autocmd BufReadPost *
 		\ if line("'\"") > 1 && line("'\"") <= line("$") |
 		\	 exe "normal! g`\"" |
@@ -8,8 +10,6 @@
 	autocmd BufEnter * silent! :lcd%:p:h
 	
 	autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE " transparent bg
-
-	autocmd! bufwritepost .vimrc source %
 
 	" 插入模式下用绝对行号, 普通模式下用相对
 	autocmd InsertEnter * :set norelativenumber number

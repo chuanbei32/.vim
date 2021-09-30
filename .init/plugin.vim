@@ -312,11 +312,16 @@
     let g:NERDToggleCheckAllLines = 1
 
     let g:NERDCustomDelimiters = { 
-        \ 'php': { 'left': '/*','right': '*/' },
         \ 'html': { 'left': '<!--','right': '-->' },
-        \ 'py': { 'left': '#' },'sh': { 'left': '#' },
         \ 'css': { 'left': '/*','right': '*/' },
-        \ 'js': { 'left': '/*','right': '*/' },
+        \ 'js': { 'left': '//' },
+        \ 'ts': { 'left': '//' },
+        \ 'php': { 'left': '//' },
+        \ 'py': { 'left': '#' },
+        \ 'sh': { 'left': '#' },
+        \ 'go': { 'left': '//' },
+        \ 'lua': { 'left': '--' },
+        \ 'c': { 'left': '#' },
     \ }
 
 " }

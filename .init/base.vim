@@ -1,22 +1,3 @@
-" variable {
-	
-	let g:is_win = has('win32') || has('win64')
-
-	let g:is_linux = has('unix') && !has('macunix')
-
-	let g:is_mac = has('macunix')
-
-" }
-
-" function {
-
-" }
-
-" path {
-
-
-" }
-
 " {
 
 	"" 基础设置 {{
@@ -38,6 +19,9 @@
 		set cindent " 打开 C/C++ 语言缩进优化
 
 		set winaltkeys=no " Windows 禁用 ALT 操作菜单（使得 ALT 可以用到 Vim里）
+
+		set whichwrap+=b,s,<,>,[,] "设置移动命令在行首或者行尾时依然有效
+		set whichwrap+=<,>,h,l "设置移动命令在行首或者行尾时依然有效
 
 		set nowrap " 禁止折行
 		" set wrap " 开启折行
@@ -82,6 +66,8 @@
 		set wildmenu " 命令行模式智能补全
 
 		set lazyredraw " 延迟绘制（提升性能）
+
+		set virtualedit=onemore " 设置光标可以到最后一个字面后
 
 		set autowrite " 自动保存
 
@@ -262,9 +248,9 @@
 
 	set selectmode=mouse,key
 
-	set novisualbell
+	set novisualbell " 不让vim发出讨厌的滴滴声
 
-	set noerrorbells
+	set noerrorbells " 不让vim发出讨厌的滴滴声
 
 	set tm=500
 
@@ -274,7 +260,7 @@
 
 	set sidescroll=1
 
-	set shortmess+=c
+	set shortmess+=c " 启动的时候不显示那个援助索马里儿童的提示
 
 	set ttyfast
 
@@ -297,8 +283,6 @@
 	set cmdheight=1
 
 	" set textwidth=85
-
-	set whichwrap+=<,>,h,l
 
 	set diffopt+=vertical
 "}
