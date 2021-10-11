@@ -209,7 +209,7 @@
 
     nmap <leader>\tb :TagbarToggle<CR>
 
-    " autocmd VimEnter * :TagbarToggle
+    autocmd VimEnter * :TagbarToggle
 
 " }
 
@@ -227,7 +227,7 @@
 
     nnoremap <leader>\nt :NERDTreeToggle<CR>
 
-    " autocmd vimenter * NERDTree
+    autocmd vimenter * NERDTreeToggle
 
     " autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
@@ -375,7 +375,7 @@
     
     nmap j <Plug>(accelerated_jk_gj)
     nmap k <Plug>(accelerated_jk_gk)
-    
+
 " }
 
 

@@ -64,9 +64,6 @@
 [submodule "pack/vendor/start/vimspector"]
 	path = pack/vendor/start/vimspector
 	url = https://github.com/puremourning/vimspector.git
-[submodule "pack/vendor/start/vim-startify"]
-	path = pack/vendor/start/vim-startify
-	url = https://github.com/mhinz/vim-startify.git
 [submodule "pack/vendor/start/indentLine"]
 	path = pack/vendor/start/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
