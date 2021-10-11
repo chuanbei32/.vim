@@ -10,19 +10,19 @@
 
 		set helplang=cn " 帮助系统设置为中文
 
-		set backspace=eol,start,indent " 设置 Backspace 键模式
+		set backspace=indent,eol,start " 设置 Backspace 键模式
 
 		set winaltkeys=no " Windows 禁用 ALT 操作菜单（使得 ALT 可以用到 Vim里）
 
 		set whichwrap+=b,s,<,>,[,] "设置移动命令在行首或者行尾时依然有效
 		set whichwrap+=<,>,h,l "设置移动命令在行首或者行尾时依然有效
 
-		set nowrap " 禁止折行
-		" set wrap " 开启折行
+		" set nowrap " 禁止折行
+		set wrap " 开启折行
 
 		set ttimeout " " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
 
-		set ttimeoutlen=10 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
+		set ttimeoutlen=-1 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
 
 		set ruler " 显示光标当前位置
 
@@ -78,6 +78,8 @@
 		set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
 
 		set list
+
+		set ambiwidth=double
 
 		set listchars=tab:\|\ ,trail:.,extends:>,precedes:< " 设置分隔符可见
 
@@ -157,7 +159,7 @@
 
 		set fileencodings=utf-8,gbk,gb18030,ucs-bom,big5,euc-jp,latin1 " 打开文件时自动尝试下面顺序的编码
 			
-		set termencoding=utf-8
+		set termencoding=utf-8 " 只影响普通模式 (非图形界面) 下的 Vim
 
 	" }}
 
@@ -230,6 +232,8 @@
 
 		set cindent " 打开 C/C++ 语言缩进优化
 
+		set copyindent
+
 	" }}
 
 	set t_RS=
@@ -238,7 +242,7 @@
 
 	set t_ut=
 
-	" set t_ti= t_te=
+	set t_ti= t_te= " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
 
 	set updatetime=300
 
@@ -250,13 +254,13 @@
 
 	" set modifiable " 设置文件可被修改
 
-	set switchbuf+=usetab,newtab
+	set switchbuf+=usetab,newtab,useopen
 
 	set smarttab
 
 	set selection=inclusive
 
-	set selectmode=mouse,key
+	set selectmode+=mouse,key
 
 	set tm=500
 
@@ -266,7 +270,7 @@
 
 	set sidescroll=1
 
-	set shortmess+=c " 启动的时候不显示那个援助索马里儿童的提示
+	set shortmess+=atI " 启动的时候不显示那个援助索马里儿童的提示
 
 	set ttyfast
 
@@ -276,19 +280,22 @@
 
 	set wildchar=<TAB>
 
-	set copyindent
-
 	set wmw=0
 
 	set wmh=0
 
 	set path+=**
 
-	set clipboard=unnamed
+	set clipboard+=unnamed
 
 	set cmdheight=1
 
 	" set textwidth=85
 
 	set diffopt+=vertical
+
+	set gdefault
+
+	language messages zh_CN.utf-8
+	
 "}

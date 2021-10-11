@@ -248,3 +248,9 @@
 [submodule "pack/vendor/opt/tender"]
 	path = pack/vendor/opt/tender
 	url = https://github.com/jacoborus/tender.vim.git
+[submodule "pack/vendor/start/delimitMate"]
+	path = pack/vendor/start/delimitMate
+	url = https://github.com/Raimondi/delimitMate.git
+[submodule "pack/vendor/start/rainbow"]
+	path = pack/vendor/start/rainbow
+	url = https://github.com/luochen1990/rainbow.git
