@@ -12,12 +12,6 @@
 
 		set backspace=eol,start,indent " 设置 Backspace 键模式
 
-		set autoindent " 自动缩进
-
-		set smartindent " 智能自动缩进
-
-		set cindent " 打开 C/C++ 语言缩进优化
-
 		set winaltkeys=no " Windows 禁用 ALT 操作菜单（使得 ALT 可以用到 Vim里）
 
 		set whichwrap+=b,s,<,>,[,] "设置移动命令在行首或者行尾时依然有效
@@ -38,6 +32,8 @@
 		
 		set shiftwidth=4 " 设置格式化时制表符占用空格数
 
+		set autochdir " 当前目录随着被编辑文件的改变而改变
+
 		set softtabstop=4 " 让 vim 把连续数量的空格视为一个制表符
 
 		" set mouse+=a " 开启鼠标模式
@@ -49,6 +45,14 @@
 
 		set visualbell " 错误时不发出声音, 只显示在屏幕上
 
+		set novisualbell " 不让vim发出讨厌的滴滴声
+
+		set noerrorbells " 不让vim发出讨厌的滴滴声
+
+		set belloff=all
+
+		set t_vb=
+
 		set noeb " 去掉输入错误时的提示声音
 
 		set confirm " 在处理未保存或只读文件的时候，弹出确认
@@ -59,7 +63,7 @@
 
 		set showmatch " 高亮显示匹配的括号
 
-		set matchtime=2 " 显示括号匹配的时间
+		set matchtime=1 " 显示括号匹配的时间
 
 		set display=lastline " 显示最后一行
 
@@ -72,6 +76,8 @@
 		set autowrite " 自动保存
 
 		set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
+
+		set list
 
 		set listchars=tab:\|\ ,trail:.,extends:>,precedes:< " 设置分隔符可见
 
@@ -160,7 +166,7 @@
 		set backup " 允许备份
 
 		" set writebackup " 保存时备份
-		set nowritebackup " 
+		set nowritebackup " 没保存时备份
 
 		set backupext=.bak " 备份文件扩展名
 
@@ -218,6 +224,12 @@
 
 		filetype plugin indent on " 根据侦测到的不同类型加载对应的插件
 
+		set autoindent " 自动缩进
+
+		set smartindent " 智能自动缩进
+
+		set cindent " 打开 C/C++ 语言缩进优化
+
 	" }}
 
 	set t_RS=
@@ -227,8 +239,6 @@
 	set t_ut=
 
 	" set t_ti= t_te=
-
-	set t_vb=
 
 	set updatetime=300
 
@@ -247,10 +257,6 @@
 	set selection=inclusive
 
 	set selectmode=mouse,key
-
-	set novisualbell " 不让vim发出讨厌的滴滴声
-
-	set noerrorbells " 不让vim发出讨厌的滴滴声
 
 	set tm=500
 

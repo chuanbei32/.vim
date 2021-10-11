@@ -29,7 +29,9 @@
 
     " set tabline=
 
-    " set termguicolors
+    if (has("termguicolors"))
+        " set termguicolors
+    endif
 
     set background=dark
 

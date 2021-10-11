@@ -176,9 +176,6 @@
 [submodule "pack/vendor/opt/nord"]
 	path = pack/vendor/opt/nord
 	url = https://github.com/arcticicestudio/nord-vim.git
-[submodule "pack/vendor/start/SimpylFold"]
-	path = pack/vendor/start/SimpylFold
-	url = https://github.com/tmhedberg/SimpylFold.git
 [submodule "pack/vendor/start/vim-argwrap"]
 	path = pack/vendor/start/vim-argwrap
 	url = https://github.com/FooSoft/vim-argwrap.git
@@ -233,12 +230,24 @@
 [submodule "pack/vendor/start/vim-conflicted"]
 	path = pack/vendor/start/vim-conflicted
 	url = https://github.com/christoomey/vim-conflicted.git
-[submodule "pack/vendor/vim-dirvish"]
-	path = pack/vendor/vim-dirvish
-	url = https://github.com/justinmk/vim-dirvish.git
 [submodule "pack/vendor/start/vim-illuminate"]
 	path = pack/vendor/start/vim-illuminate
 	url = https://github.com/RRethy/vim-illuminate.git
 [submodule "pack/vendor/start/vimade"]
 	path = pack/vendor/start/vimade
 	url = https://github.com/TaDaa/vimade.git
+[submodule "pack/vendor/start/neovide"]
+	path = pack/vendor/start/neovide
+	url = https://github.com/neovide/neovide.git
+[submodule "pack/vendor/start/vim-dirvish"]
+	path = pack/vendor/start/vim-dirvish
+	url = https://github.com/justinmk/vim-dirvish.git
+[submodule "pack/vendor/start/DoxygenToolkit"]
+	path = pack/vendor/start/DoxygenToolkit
+	url = https://github.com/vim-scripts/DoxygenToolkit.vim.git
+[submodule "pack/vendor/start/ZoomWin"]
+	path = pack/vendor/start/ZoomWin
+	url = https://github.com/vim-scripts/ZoomWin.git
+[submodule "pack/vendor/opt/tender"]
+	path = pack/vendor/opt/tender
+	url = https://github.com/jacoborus/tender.vim.git
