@@ -4,6 +4,8 @@
 
     set title
 
+    set lazyredraw " 延迟绘制
+
     set laststatus=2 " 总是显示状态栏
 
     " set statusline=  " 状态栏设置
@@ -29,9 +31,7 @@
 
     " set tabline=
 
-    if (has("termguicolors"))
-        " set termguicolors
-    endif
+    " set termguicolors
 
     set background=dark
 

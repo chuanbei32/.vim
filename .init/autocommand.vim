@@ -9,7 +9,7 @@
 
 	autocmd BufEnter * silent! :lcd%:p:h
 	
-	autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE " transparent bg
+	" autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE " transparent bg
 
 	" 插入模式下用绝对行号, 普通模式下用相对
 	autocmd InsertEnter * :set norelativenumber number

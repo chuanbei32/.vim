@@ -91,8 +91,11 @@
 		nnoremap <Leader>WQ :wa<CR>:q<CR> 
 		nnoremap <CR> za
 		nnoremap <S-Return> zMzv
+
 		nnoremap gh g^
+		nnoremap gH ^
 		nnoremap gl g$
+		nnoremap gL g_
 
 		" nnoremap <Leader>ts <cmd>setlocal spell!<CR>
 		" nnoremap <Leader>tn <cmd>setlocal nonumber!<CR>
@@ -158,6 +161,8 @@
 
 		inoremap , ,<Space>
 		inoremap = <Space>=<Space>
+
+		inoremap jk <Esc>
 
 	" }}
 

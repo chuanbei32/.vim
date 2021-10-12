@@ -1,94 +1,65 @@
 " {
 
 	"" 基础设置 {{
-	
-		set runtimepath+=~/.vim/__ultisnips
 
 		set nocompatible " 禁用 vi 兼容模式
 
+		set helplang=cn " 帮助系统设置为中文
+
 		set viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo " 设置 viminfo, 必须放在 nocompatible 之后
 
-		set helplang=cn " 帮助系统设置为中文
+		set tags=./.tags;,.tags,tags " 设置 tags：当前文件所在目录往上向根目录搜索直到碰到 .tags 文件或者 Vim 当前目录包含 .tags 文件
+
+		set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
+		
+		set confirm " 在处理未保存或只读文件的时候，弹出确认
+
+		set wildmenu " 命令行模式智能补全
+
+		set autoread " 文件在 Vim 之外修改过，自动重新读入
+		set autowrite " 自动保存
+		set autochdir " 当前目录随着被编辑文件的改变而改变
+
+		set history=10000 " 历史命令最大记录数
+
+		set display=lastline " 尽可能多地显示窗口中的最后一行内容
 
 		set backspace=indent,eol,start " 设置 Backspace 键模式
 
-		set winaltkeys=no " Windows 禁用 ALT 操作菜单（使得 ALT 可以用到 Vim里）
-
-		set whichwrap+=b,s,<,>,[,] "设置移动命令在行首或者行尾时依然有效
-		set whichwrap+=<,>,h,l "设置移动命令在行首或者行尾时依然有效
+		" set whichwrap+=b,s,h,l,<,>,[,] "设置移动命令在行首或者行尾时依然有效
 
 		" set nowrap " 禁止折行
 		set wrap " 开启折行
 
-		set ttimeout " " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
-
-		set ttimeoutlen=-1 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
-
-		set ruler " 显示光标当前位置
-
-		set expandtab " 将制表符扩展为空格
-
-		set tabstop=4 " 设置编辑时制表符占用空格数
-		
-		set shiftwidth=4 " 设置格式化时制表符占用空格数
-
-		set autochdir " 当前目录随着被编辑文件的改变而改变
-
-		set softtabstop=4 " 让 vim 把连续数量的空格视为一个制表符
+		set ttimeout " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
+		set ttimeoutlen=10 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
 
 		" set mouse+=a " 开启鼠标模式
 		" set mousehide " 编辑模式隐藏鼠标
 
+		set ruler " 显示光标当前位置
 		set cursorline " 高亮显示当前行
-
 		" set cursorcolumn " 高亮显示当前列
 
-		set visualbell " 错误时不发出声音, 只显示在屏幕上
-
-		set novisualbell " 不让vim发出讨厌的滴滴声
-
-		set noerrorbells " 不让vim发出讨厌的滴滴声
-
-		set belloff=all
-
-		set t_vb=
-
-		set noeb " 去掉输入错误时的提示声音
-
-		set confirm " 在处理未保存或只读文件的时候，弹出确认
-
-		set autoread " 文件在 Vim 之外修改过，自动重新读入
-
-		set history=10000 " 历史命令最大记录数
-
 		set showmatch " 高亮显示匹配的括号
-
 		set matchtime=1 " 显示括号匹配的时间
 
-		set display=lastline " 显示最后一行
-
-		set wildmenu " 命令行模式智能补全
-
-		set lazyredraw " 延迟绘制（提升性能）
+		set visualbell " 错误时不发出声音, 只显示在屏幕上
+		set noerrorbells " 去掉输入错误时的提示声音
+		set novisualbell " 不发出滴滴声
+		set belloff=all " 不发出滴滴声
+		set vb " 不发出滴滴声
+		set t_vb= " 不发出滴滴声
+		set noeb " 不发出滴滴声
 
 		set virtualedit=onemore " 设置光标可以到最后一个字面后
-
-		set autowrite " 自动保存
-
-		set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
-
-		set list
 
 		set ambiwidth=double
 
 		set listchars=tab:\|\ ,trail:.,extends:>,precedes:< " 设置分隔符可见
 
-		set tags=./.tags;,.tags,tags " 设置 tags：当前文件所在目录往上向根目录搜索直到碰到 .tags 文件或者 Vim 当前目录包含 .tags 文件
-
 		" set formatoptions -=o " 如遇 Unicode 值大于 255 的文本，不必等到空格再折行
-		set formatoptions +=m
-
-		set formatoptions +=B " 合并两行中文时，不在中间加空格
+		set formatoptions +=m,B
 		
 		set fileformats=unix,dos,mac " 文件换行符，默认使用 unix 换行符
 
@@ -234,6 +205,14 @@
 
 		set copyindent
 
+		set expandtab " 将制表符扩展为空格
+
+		set tabstop=4 " 设置编辑时制表符占用空格数
+		
+		set shiftwidth=4 " 设置格式化时制表符占用空格数
+
+		set softtabstop=4 " 让 vim 把连续数量的空格视为一个制表符
+
 	" }}
 
 	set t_RS=
@@ -242,7 +221,7 @@
 
 	set t_ut=
 
-	set t_ti= t_te= " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
+	" set t_ti= t_te= " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
 
 	set updatetime=300
 
@@ -296,6 +275,6 @@
 
 	set gdefault
 
-	language messages zh_CN.utf-8
-	
+	set iskeyword+=_,$,@,%,#,-
+
 "}
