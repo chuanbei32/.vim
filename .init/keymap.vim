@@ -72,18 +72,15 @@
 
 	" nnoremap {{
 
-		nnoremap ;s :%s/\<<C-R>=expand("<cword>")<CR>\>/
-		nnoremap ;g :vimgrep <C-R>=expand("<cword>")<CR>
+		nnoremap <Leader>\v <C-v>
+
+		nnoremap <Leader>;s :%s/\<<C-R>=expand("<cword>")<CR>\>/
+		nnoremap <Leader>;g :vimgrep <C-R>=expand("<cword>")<CR>
 
 		nnoremap k gk
 		nnoremap gk k
 		nnoremap j gj
 		nnoremap gj j
-
-		noremap <C-h> <left>
-		noremap <C-j> <down>
-		noremap <C-k> <up>
-		noremap <C-l> <right>
 
 		nnoremap <Leader>q :q<CR> 
 		nnoremap <Leader>Q :qa!<CR> 
@@ -96,11 +93,6 @@
 		nnoremap gH ^
 		nnoremap gl g$
 		nnoremap gL g_
-
-		" nnoremap <Leader>ts <cmd>setlocal spell!<CR>
-		" nnoremap <Leader>tn <cmd>setlocal nonumber!<CR>
-		" nnoremap <Leader>tl <cmd>setlocal nolist!<CR>
-		" nnoremap <Leader>th <cmd>nohlsearch<CR>
 
 	" }}
 
@@ -159,9 +151,6 @@
 		inoremap " ""<Left>
 		inoremap ` ``<Left>
 
-		inoremap , ,<Space>
-		inoremap = <Space>=<Space>
-
 		inoremap jk <Esc>
 
 	" }}
@@ -177,8 +166,8 @@
 
 	" vnoremap {{
 
-		vnoremap <silent> ;c :s/^/\/\//<CR>:noh<CR>
-		vnoremap <silent> ;u :s/\/\///<CR>:noh<CR>
+		vnoremap <silent> <Leader>;c :s/^/\/\//<CR>:noh<CR>
+		vnoremap <silent> <Leader>;u :s/\/\///<CR>:noh<CR>
 		
 	" }} 
 

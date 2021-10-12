@@ -10,11 +10,9 @@
 
 		set tags=./.tags;,.tags,tags " 设置 tags：当前文件所在目录往上向根目录搜索直到碰到 .tags 文件或者 Vim 当前目录包含 .tags 文件
 
-		set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
+		" set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
 		
 		set confirm " 在处理未保存或只读文件的时候，弹出确认
-
-		set wildmenu " 命令行模式智能补全
 
 		set autoread " 文件在 Vim 之外修改过，自动重新读入
 		set autowrite " 自动保存
@@ -32,7 +30,7 @@
 		set wrap " 开启折行
 
 		set ttimeout " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
-		set ttimeoutlen=10 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
+		set ttimeoutlen=-1 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
 
 		" set mouse+=a " 开启鼠标模式
 		" set mousehide " 编辑模式隐藏鼠标
@@ -44,17 +42,16 @@
 		set showmatch " 高亮显示匹配的括号
 		set matchtime=1 " 显示括号匹配的时间
 
-		set visualbell " 错误时不发出声音, 只显示在屏幕上
-		set noerrorbells " 去掉输入错误时的提示声音
+		set belloff=all
+
+		set t_vb= 
+
+		set visualbell 
 		set novisualbell " 不发出滴滴声
-		set belloff=all " 不发出滴滴声
-		set vb " 不发出滴滴声
-		set t_vb= " 不发出滴滴声
-		set noeb " 不发出滴滴声
+		set errorbells 
+		set noerrorbells " 不发出滴滴声
 
 		set virtualedit=onemore " 设置光标可以到最后一个字面后
-
-		set ambiwidth=double
 
 		set listchars=tab:\|\ ,trail:.,extends:>,precedes:< " 设置分隔符可见
 
@@ -96,13 +93,15 @@
 
 	" 补全设置 {{
 
+		set wildmenu " 命令行模式智能补全
+
 		set wildmode=list:longest,full " 命令行补全
 
 		set complete=.,w,b,u,t
 
 		set completeopt=longest,menu,menuone
 
-		set omnifunc=ale#completion#OmniFunc " Omni 补全设置
+		" set omnifunc=ale#completion#OmniFunc 
 
 	" }}
 
@@ -211,7 +210,7 @@
 		
 		set shiftwidth=4 " 设置格式化时制表符占用空格数
 
-		set softtabstop=4 " 让 vim 把连续数量的空格视为一个制表符
+		set softtabstop=4 " 把连续数量的空格视为一个制表符
 
 	" }}
 

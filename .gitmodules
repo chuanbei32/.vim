@@ -13,9 +13,6 @@
 [submodule "pack/vendor/start/vim-gitgutter"]
 	path = pack/vendor/start/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "pack/vendor/start/nerdtree-git-plugin"]
-	path = pack/vendor/start/nerdtree-git-plugin
-	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
 [submodule "pack/vendor/start/vim-polyglot"]
 	path = pack/vendor/start/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot
@@ -107,18 +104,12 @@
 [submodule "pack/vendor/start/vim-expand-region"]
 	path = pack/vendor/start/vim-expand-region
 	url = https://github.com/terryma/vim-expand-region.git
-[submodule "pack/vendor/start/vim-devicons"]
-	path = pack/vendor/start/vim-devicons
-	url = https://github.com/ryanoasis/vim-devicons.git
 [submodule "pack/vendor/start/vim-nerdtree-syntax-highlight"]
 	path = pack/vendor/start/vim-nerdtree-syntax-highlight
 	url = https://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git
 [submodule "pack/vendor/start/vim-quickhl"]
 	path = pack/vendor/start/vim-quickhl
 	url = https://github.com/t9md/vim-quickhl.git
-[submodule "pack/vendor/start/clever-f"]
-	path = pack/vendor/start/clever-f
-	url = https://github.com/rhysd/clever-f.vim.git
 [submodule "pack/vendor/start/ctrlsf"]
 	path = pack/vendor/start/ctrlsf
 	url = https://github.com/dyng/ctrlsf.vim.git
@@ -236,3 +227,6 @@
 [submodule "pack/vendor/start/vim-startify"]
 	path = pack/vendor/start/vim-startify
 	url = https://github.com/mhinz/vim-startify.git
+[submodule "pack/vendor/start/nerdtree-git-plugin"]
+	path = pack/vendor/start/nerdtree-git-plugin
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git

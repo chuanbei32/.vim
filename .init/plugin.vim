@@ -240,22 +240,22 @@
 
 " NERDTree-git-plugin {
 
-    " let g:NERDTreeGitStatusIndicatorMapCustom = {
-        " \ "Modified"  : "✹",
-        " \ "Staged"    : "✚",
-        " \ "Untracked" : "✭",
-        " \ "Renamed"   : "➜",
-        " \ "Unmerged"  : "═",
-        " \ "Deleted"   : "✖",
-        " \ "Dirty"     : "✗",
-        " \ "Clean"     : "✔︎",
-        " \ 'Ignored'   : '☒',
-        " \ "Unknown"   : "?"
-        " \ }
+    let g:NERDTreeGitStatusIndicatorMapCustom = {
+        \ "Modified"  : "✹",
+        \ "Staged"    : "✚",
+        \ "Untracked" : "✭",
+        \ "Renamed"   : "➜",
+        \ "Unmerged"  : "═",
+        \ "Deleted"   : "✖",
+        \ "Dirty"     : "✗",
+        \ "Clean"     : "✔︎",
+        \ 'Ignored'   : '☒',
+        \ "Unknown"   : "?"
+        \ }
 
     let g:NERDTreeGitStatusUseNerdFonts = 1
     let g:NERDTreeGitStatusShowIgnored = 1
-    let g:NERDTreeGitStatusConcealBrackets = 1
+    let g:NERDTreeGitStatusConcealBrackets = 0
     let g:NERDTreeGitStatusShowClean = 1
     let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
 
@@ -286,19 +286,19 @@
    
 "}
 
-" vim-devicons {
-
-    let g:webdevicons_conceal_nerdtree_brackets = 0
-
-    let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-
-    let g:WebDevIconsNerdTreeGitPluginForceVAlign = 0
-
-    let g:WebDevIconsUnicodeGlyphDoubleWidth  = 1
-
-    let g:WebDevIconsUnicodeDecorateFileNodes = 1
-
-"}
+" " vim-devicons {
+" 
+"     let g:webdevicons_conceal_nerdtree_brackets = 1
+" 
+"     let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+" 
+"     let g:WebDevIconsNerdTreeGitPluginForceVAlign = 0
+" 
+"     let g:WebDevIconsUnicodeGlyphDoubleWidth  = 1
+" 
+"     let g:WebDevIconsUnicodeDecorateFileNodes = 1
+" 
+" " }
 
 " git-messenger {
     
@@ -385,6 +385,18 @@
     let g:rainbow_active = 1
 
 " }
+
+" sneak {
+
+    " let g:sneak#label = 1
+    
+" }
+
+" easymotion {
+
+    
+" }
+
 
 
 
