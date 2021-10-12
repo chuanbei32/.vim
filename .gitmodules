@@ -128,12 +128,6 @@
 [submodule "pack/vendor/start/dsf"]
 	path = pack/vendor/start/dsf
 	url = https://github.com/AndrewRadev/dsf.vim.git
-[submodule "pack/vendor/opt/seoul256"]
-	path = pack/vendor/opt/seoul256
-	url = https://github.com/junegunn/seoul256.vim.git
-[submodule "pack/vendor/opt/pencil"]
-	path = pack/vendor/opt/pencil
-	url = https://github.com/preservim/vim-colors-pencil.git
 [submodule "pack/vendor/start/MatchTagAlways"]
 	path = pack/vendor/start/MatchTagAlways
 	url = https://github.com/Valloric/MatchTagAlways.git
@@ -170,9 +164,6 @@
 [submodule "pack/vendor/start/vimnx"]
 	path = pack/vendor/start/vimnx
 	url = https://github.com/preservim/vimux.git
-[submodule "pack/vendor/opt/nord"]
-	path = pack/vendor/opt/nord
-	url = https://github.com/arcticicestudio/nord-vim.git
 [submodule "pack/vendor/start/vim-argwrap"]
 	path = pack/vendor/start/vim-argwrap
 	url = https://github.com/FooSoft/vim-argwrap.git
@@ -191,18 +182,9 @@
 [submodule "pack/vendor/start/vim-easy-align"]
 	path = pack/vendor/start/vim-easy-align
 	url = https://github.com/junegunn/vim-easy-align.git
-[submodule "pack/vendor/opt/one"]
-	path = pack/vendor/opt/one
-	url = https://github.com/rakr/vim-one.git
-[submodule "pack/vendor/opt/jellybeans"]
-	path = pack/vendor/opt/jellybeans
-	url = https://github.com/nanotech/jellybeans.vim.git
 [submodule "pack/vendor/opt/gruvbox"]
 	path = pack/vendor/opt/gruvbox
 	url = https://github.com/morhetz/gruvbox.git
-[submodule "pack/vendor/opt/onedark"]
-	path = pack/vendor/opt/onedark
-	url = https://github.com/joshdick/onedark.vim.git
 [submodule "pack/vendor/start/vim-choosewin"]
 	path = pack/vendor/start/vim-choosewin
 	url = https://github.com/t9md/vim-choosewin.git
@@ -233,15 +215,9 @@
 [submodule "pack/vendor/start/vimade"]
 	path = pack/vendor/start/vimade
 	url = https://github.com/TaDaa/vimade.git
-[submodule "pack/vendor/start/vim-dirvish"]
-	path = pack/vendor/start/vim-dirvish
-	url = https://github.com/justinmk/vim-dirvish.git
 [submodule "pack/vendor/start/DoxygenToolkit"]
 	path = pack/vendor/start/DoxygenToolkit
 	url = https://github.com/vim-scripts/DoxygenToolkit.vim.git
-[submodule "pack/vendor/opt/tender"]
-	path = pack/vendor/opt/tender
-	url = https://github.com/jacoborus/tender.vim.git
 [submodule "pack/vendor/start/delimitMate"]
 	path = pack/vendor/start/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git
