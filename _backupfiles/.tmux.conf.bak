@@ -1449,4 +1449,8 @@ run 'cut -c3- ~/.tmux.conf | sh -s _apply_configuration'
 # set -g mouse on
 # set -g default-terminal screen-256color
 # set-option -ga terminal-overrides ",*256col*:Tc"
-setw -g mode-keys vim
+setw -g mode-keys vi
+
+run-shell /iwork/project/.tmux/plugins/plugins/tmux-resurrect/resurrect.tmux
+run-shell /iwork/project/.tmux/plugins/plugins/tmux-continuum/continuum.tmux
+
