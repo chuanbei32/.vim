@@ -8,7 +8,7 @@
 
 		set viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo " 设置 viminfo, 必须放在 nocompatible 之后
 
-		set tags=./.tags;,.tags,tags " 设置 tags：当前文件所在目录往上向根目录搜索直到碰到 .tags 文件或者 Vim 当前目录包含 .tags 文件
+		set tags=./.tags;,.tags,tags " 设置 tags 当前文件所在目录往上向根目录搜索直到碰到 .tags 文件或者 Vim 当前目录包含 .tags 文件
 
 		" set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
 		

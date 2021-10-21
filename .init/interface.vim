@@ -37,23 +37,6 @@
 
     colorscheme gruvbox
 
-    " highlight {{ 
-
-        highlight CursorLine cterm=NONE ctermbg=241 ctermfg=green guibg=NONE guifg=NONE
-
-        " highlight CursorColumn cterm=NONE ctermbg=241 ctermfg=green guibg=NONE guifg=NONE
-
-        highlight MatchParen ctermbg=Yellow guibg=lightblue
-
-    " }}
-
-    "seoul256 {{{
-
-        let g:seoul256_background = 233
-        let g:seoul256_light_background = 256
-
-    "}}}
-
     "gruvbox {{{
 
         let g:gruvbox_termcolors=16

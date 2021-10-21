@@ -176,9 +176,6 @@
 [submodule "pack/vendor/start/rainbow_levels"]
 	path = pack/vendor/start/rainbow_levels
 	url = https://github.com/thiagoalessio/rainbow_levels.vim.git
-[submodule "pack/vendor/start/close-buffers"]
-	path = pack/vendor/start/close-buffers
-	url = https://github.com/Asheq/close-buffers.vim.git
 [submodule "pack/vendor/start/asyncrun"]
 	path = pack/vendor/start/asyncrun
 	url = https://github.com/skywind3000/asyncrun.vim.git

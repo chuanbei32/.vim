@@ -46,8 +46,13 @@
 " }
 
 
+" asynctasks {
+    
+" }
+
 " asyncrun {
     
+    let g:asyncrun_open = 8
 
 " }
 
@@ -224,7 +229,7 @@
     let g:Lf_UseMemoryCache = 0
 
     nmap <Leader>f <Nop>
-    nmap <Leader>b <Nop>
+    " nmap <Leader>b <Nop>
     
     nmap <Leader>\ff :Leaderf file<CR>
     nmap <Leader>\fb :Leaderf buffer<CR>
@@ -399,13 +404,19 @@
 
 " trailing-whitespace {
 
-    nmap <Leader>tr <Cmd>FixWhitespace<Cr>
+    nmap <Leader>\cw <Cmd>FixWhitespace<Cr>
     
 " }
 
 " smoothie {
 
     let g:smoothie_enabled=0
+
+" }
+
+" CtrlSF {
+
+    nmap <Leader><Leader>s :CtrlSF<space>
 
 " }
 
