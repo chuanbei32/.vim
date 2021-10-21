@@ -191,9 +191,6 @@
 [submodule "pack/vendor/start/vim-illuminate"]
 	path = pack/vendor/start/vim-illuminate
 	url = https://github.com/RRethy/vim-illuminate.git
-[submodule "pack/vendor/start/vimade"]
-	path = pack/vendor/start/vimade
-	url = https://github.com/TaDaa/vimade.git
 [submodule "pack/vendor/start/DoxygenToolkit"]
 	path = pack/vendor/start/DoxygenToolkit
 	url = https://github.com/vim-scripts/DoxygenToolkit.vim.git
@@ -218,3 +215,21 @@
 [submodule "pack/vendor/start/nerdtree-git-plugin"]
 	path = pack/vendor/start/nerdtree-git-plugin
 	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
+[submodule "pack/vendor/start/vim-trailing-whitespace"]
+	path = pack/vendor/start/vim-trailing-whitespace
+	url = https://github.com/bronson/vim-trailing-whitespace.git
+[submodule "pack/vendor/start/tcomment_vim"]
+	path = pack/vendor/start/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim.git
+[submodule "pack/vendor/start/vim-smoothie"]
+	path = pack/vendor/start/vim-smoothie
+	url = https://github.com/psliwka/vim-smoothie.git
+[submodule "pack/vendor/start/asynctasks"]
+	path = pack/vendor/start/asynctasks
+	url = https://github.com/skywind3000/asynctasks.vim.git
+[submodule "pack/vendor/start/vim-terminal-help"]
+	path = pack/vendor/start/vim-terminal-help
+	url = https://github.com/skywind3000/vim-terminal-help.git
+[submodule "pack/vendor/start/vim-closetag"]
+	path = pack/vendor/start/vim-closetag
+	url = https://github.com/alvan/vim-closetag.git

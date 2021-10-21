@@ -30,7 +30,7 @@
 		set wrap " 开启折行
 
 		set ttimeout " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
-		set ttimeoutlen=-1 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
+		set ttimeoutlen=10 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
 
 		" set mouse+=a " 开启鼠标模式
 		" set mousehide " 编辑模式隐藏鼠标

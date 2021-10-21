@@ -165,6 +165,42 @@
 
 " }
 
+" DoxygenToolkit {
+    
+    let g:DoxygenToolkit_briefTag_funcName = "yes"
+    let g:DoxygenToolkit_briefTag_pre = "@brief "
+    let g:DoxygenToolkit_briefTag_post = ""
+
+    let g:DoxygenToolkit_templateParamTag_pre = "@tparam "
+    let g:DoxygenToolkit_templateParamTag_post  = ""
+
+    let g:DoxygenToolkit_paramTag_pre = "@param "
+    let g:DoxygenToolkit_paramTag_post = ""
+
+    let g:DoxygenToolkit_throwTag_pre = "@throw "
+    let g:DoxygenToolkit_throwTag_post = ""
+
+    let g:DoxygenToolkit_returnTag = "@return "
+
+    let g:DoxygenToolkit_fileTag = "@file "
+
+    let g:DoxygenToolkit_dateTag = "@date "
+
+    let g:DoxygenToolkit_authorTag = "@author "
+
+    let g:DoxygenToolkit_versionTag = "@version "
+    let g:DoxygenToolkit_versionString = "1.0.0"
+
+    let g:DoxygenToolkit_blockTag = "@name "
+
+    let g:DoxygenToolkit_classTag = "@class "
+
+    let g:DoxygenToolkit_authorName = "chuanbei32"
+
+    let g:doxygen_enhanced_color = 1
+
+" }
+
 " leaderF {
 
     " let g:Lf_WorkingDirectoryMode = 'Ac'
@@ -240,24 +276,24 @@
 
 " NERDTree-git-plugin {
 
-    let g:NERDTreeGitStatusIndicatorMapCustom = {
-        \ "Modified"  : "✹",
-        \ "Staged"    : "✚",
-        \ "Untracked" : "✭",
-        \ "Renamed"   : "➜",
-        \ "Unmerged"  : "═",
-        \ "Deleted"   : "✖",
-        \ "Dirty"     : "✗",
-        \ "Clean"     : "✔︎",
-        \ 'Ignored'   : '☒',
-        \ "Unknown"   : "?"
-        \ }
-
     let g:NERDTreeGitStatusUseNerdFonts = 1
     let g:NERDTreeGitStatusShowIgnored = 1
     let g:NERDTreeGitStatusConcealBrackets = 0
     let g:NERDTreeGitStatusShowClean = 1
     let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
+
+    let g:NERDTreeGitStatusIndicatorMapCustom = {
+        \ 'Modified'  :'✹',
+        \ 'Staged'    :'✚',
+        \ 'Untracked' :'✭',
+        \ 'Renamed'   :'➜',
+        \ 'Unmerged'  :'═',
+        \ 'Deleted'   :'✖',
+        \ 'Dirty'     :'✗',
+        \ 'Ignored'   :'☒',
+        \ 'Clean'     :'✔︎',
+        \ 'Unknown'   :'?',
+        \ }
 
 " }
 
@@ -337,42 +373,6 @@
 
 " }
 
-" DoxygenToolkit {
-    
-    let g:DoxygenToolkit_briefTag_funcName = "yes"
-    let g:DoxygenToolkit_briefTag_pre = "@brief "
-    let g:DoxygenToolkit_briefTag_post = ""
-
-    let g:DoxygenToolkit_templateParamTag_pre = "@tparam "
-    let g:DoxygenToolkit_templateParamTag_post  = ""
-
-    let g:DoxygenToolkit_paramTag_pre = "@param "
-    let g:DoxygenToolkit_paramTag_post = ""
-
-    let g:DoxygenToolkit_throwTag_pre = "@throw "
-    let g:DoxygenToolkit_throwTag_post = ""
-
-    let g:DoxygenToolkit_returnTag = "@return "
-
-    let g:DoxygenToolkit_fileTag = "@file "
-
-    let g:DoxygenToolkit_dateTag = "@date "
-
-    let g:DoxygenToolkit_authorTag = "@author "
-
-    let g:DoxygenToolkit_versionTag = "@version "
-    let g:DoxygenToolkit_versionString = "1.0.0"
-
-    let g:DoxygenToolkit_blockTag = "@name "
-
-    let g:DoxygenToolkit_classTag = "@class "
-
-    let g:DoxygenToolkit_authorName = "chuanbei32"
-
-    let g:doxygen_enhanced_color = 1
-
-" }
-
 " accelerated-jk {
     
     nmap j <Plug>(accelerated_jk_gj)
@@ -388,7 +388,7 @@
 
 " sneak {
 
-    " let g:sneak#label = 1
+    let g:sneak#label = 1
     
 " }
 
@@ -396,6 +396,23 @@
 
     
 " }
+
+" trailing-whitespace {
+
+    nmap <Leader>tr <Cmd>FixWhitespace<Cr>
+    
+" }
+
+" smoothie {
+
+    let g:smoothie_enabled=0
+
+" }
+
+
+
+
+
 
 
 

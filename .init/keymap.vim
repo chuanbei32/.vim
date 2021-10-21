@@ -57,16 +57,11 @@
 		endfunction
 
 		" 添加或更新头
-		noremap fg :call TitleDet()<cr>
-
-		noremap <Leader>sh <cmd>shell<CR>
-		noremap <Leader>tm <cmd>terminal<CR>
-
-		noremap 9 $ " 通过9跳转到行末尾, 0默认跳转到行首
+		noremap <Leader>\fg :call TitleDet()<cr>
 
 		noremap <C-s> <cmd>write<CR>
-		noremap <Leader>sh <cmd>shell<CR>
-		noremap <Leader>tm <cmd>terminal<CR>
+		noremap <Leader>\sh <cmd>shell<CR>
+		noremap <Leader>\tm <cmd>terminal<CR>
 
 	" }}
 
@@ -217,14 +212,6 @@
 
 	" Tab {{	
 
-		nnoremap <buffer> <Leader>tab :tabs<CR>
-		nnoremap <buffer> <Leader>tn :tabnew<Space>
-		" nnoremap <buffer> <Leader>tc :tabclose<CR>
-		nnoremap <buffer> <Leader>tn :tabn<CR>
-		nnoremap <buffer> <Leader>tp :tabp<CR>
-		nnoremap <buffer> <Leader>tf :tabfirst<CR>
-		nnoremap <buffer> <Leader>tl :tablast<CR>
-
 		noremap <silent><leader>1 1gt<cr>
 		noremap <silent><leader>2 2gt<cr>
 		noremap <silent><leader>3 3gt<cr>
@@ -258,7 +245,7 @@
 		inoremap <silent><m-9> <ESC>:tabn 9<cr>
 		inoremap <silent><m-0> <ESC>:tabn 10<cr>
 
-		" noremap <silent> <leader>tc :tabnew<cr>
+		noremap <silent> <leader>tc :tabnew<cr>
 		noremap <silent> <leader>tq :tabclose<cr>
 		noremap <silent> <leader>tn :tabnext<cr>
 		noremap <silent> <leader>tp :tabprev<cr>
@@ -294,8 +281,6 @@
 
 		noremap <silent><leader>tl :call Tab_MoveLeft()<cr>
 		noremap <silent><leader>tr :call Tab_MoveRight()<cr>
-		noremap <silent><m-left> :call Tab_MoveLeft()<cr>
-		noremap <silent><m-right> :call Tab_MoveRight()<cr>
 
 		nnoremap <tab> V>
 		nnoremap <s-tab> V<
@@ -313,10 +298,10 @@
 
 	" quickfix {{
 
-		nmap ]q <cmd>cnext<CR>
-		nmap [q <cmd>cprev<CR>
-		nmap ]a <cmd>lnext<CR>
-		nmap [a <cmd>lprev<CR>
+		noremap ]q <cmd>cnext<CR>
+		noremap [q <cmd>cprev<CR>
+		noremap ]a <cmd>lnext<CR>
+		noremap [a <cmd>lprev<CR>
 
 	" }}
 
