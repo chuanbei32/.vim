@@ -14,7 +14,6 @@
         \ 'coc-sh', 
         \ 'coc-highlight', 
         \ 'coc-cssmodules', 
-        \ 'coc-discord-rpc', 
         \ 'coc-emmet', 
         \ 'coc-graphql', 
         \ 'coc-html-css-support',
@@ -35,13 +34,13 @@
 
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-    " phpactor {{
-
-        let g:phpactorPhpBin = "/usr/local/iwork/php/8.0/bin/php"
+"    " phpactor {{
+"
+"        let g:phpactorPhpBin = "/usr/local/iwork/php/8.0/bin/php"
         autocmd FileType php set iskeyword+=$
         autocmd FileType php setlocal omnifunc=phpactor#Complete
-            
-    " }}
+            "
+"    " }}
 
 " }
 
@@ -306,7 +305,7 @@
 
     let g:airline_theme='gruvbox'
 
-"}
+" }
 
 " vim-airline {
 
@@ -325,7 +324,7 @@
 
     " let g:airline_statusline_ontop = 1
    
-"}
+" }
 
 " " vim-devicons {
 " 
@@ -420,9 +419,11 @@
 
 " }
 
+" vim-choosewin {
+    
+    nmap  -  <Plug>(choosewin)
 
-
-
+" }
 
 
 

@@ -183,8 +183,6 @@
 
 		nnoremap <Leader>ba :badd<space>
 
-		" nnoremap <Leader>bl <cmd>blast<cr>
-		" nnoremap <Leader>bf <cmd>bfirst<cr>
 		nnoremap <Leader>bn <cmd>bnext<cr>
 		nnoremap <Leader>bp <cmd>bprevious<cr>
 
@@ -196,7 +194,8 @@
 	" Tab {{
 
 		noremap <silent> <leader>to <cmd>tabnew<cr>
-		noremap <silent> <leader>ts <cmd>tabs<cr>
+		noremap <silent> <leader>tl <cmd>tabs<cr>
+		
 		noremap <silent> <leader>tn <cmd>tabnext<cr>
 		noremap <silent> <leader>tp <cmd>tabprev<cr>
 

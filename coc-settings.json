@@ -1,13 +1,10 @@
 {    
     "languageserver": {    
         "php": {
-            "command": "php8.0",
-            "args": [
-                "/iwork/project/.vim/pack/vendor/start/phpactor/bin/phpactor", 
-                "language-server"
-            ],
-            "trace.server": "verbose",
-            "filetypes": ["php"]
+           "command": "/iwork/project/.vim/__lsp/psalm/vendor/bin/psalm-language-server",
+    "filetypes": ["php"],
+    "rootPatterns": ["/iwork/project/.vim/__lsp/psalm/psalm.xml", "/iwork/project/.vim/__lsp/psalm/psalm.xml.dist"],
+    "requireRootPattern": true
         },
         "python": {
             "command": "python3",

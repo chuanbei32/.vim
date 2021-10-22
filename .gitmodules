@@ -49,9 +49,6 @@
 [submodule "pack/vendor/start/vim-markdown"]
 	path = pack/vendor/start/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
-[submodule "pack/vendor/start/vim-translator"]
-	path = pack/vendor/start/vim-translator
-	url = https://github.com/voldikss/vim-translator.git
 [submodule "pack/vendor/start/vim-snippets"]
 	path = pack/vendor/start/vim-snippets
 	url = https://github.com/honza/vim-snippets.git
@@ -86,9 +83,6 @@
 [submodule "pack/vendor/opt/vim-gruvbox8"]
 	path = pack/vendor/opt/vim-gruvbox8
 	url = https://github.com/lifepillar/vim-gruvbox8.git
-[submodule "pack/vendor/start/phpactor"]
-	path = pack/vendor/start/phpactor
-	url = https://github.com/phpactor/phpactor.git
 [submodule "pack/vendor/start/vim-gutentags"]
 	path = pack/vendor/start/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags.git
@@ -104,9 +98,6 @@
 [submodule "pack/vendor/start/vim-nerdtree-syntax-highlight"]
 	path = pack/vendor/start/vim-nerdtree-syntax-highlight
 	url = https://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git
-[submodule "pack/vendor/start/vim-quickhl"]
-	path = pack/vendor/start/vim-quickhl
-	url = https://github.com/t9md/vim-quickhl.git
 [submodule "pack/vendor/start/ctrlsf"]
 	path = pack/vendor/start/ctrlsf
 	url = https://github.com/dyng/ctrlsf.vim.git
@@ -122,18 +113,12 @@
 [submodule "pack/vendor/start/tagalong"]
 	path = pack/vendor/start/tagalong
 	url = https://github.com/AndrewRadev/tagalong.vim.git
-[submodule "pack/vendor/start/undoquit"]
-	path = pack/vendor/start/undoquit
-	url = https://github.com/AndrewRadev/undoquit.vim.git
 [submodule "pack/vendor/start/gv"]
 	path = pack/vendor/start/gv
 	url = https://github.com/junegunn/gv.vim.git
 [submodule "pack/vendor/start/vim-unimpaired"]
 	path = pack/vendor/start/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "pack/vendor/start/vim-rooter"]
-	path = pack/vendor/start/vim-rooter
-	url = https://github.com/airblade/vim-rooter.git
 [submodule "pack/vendor/start/git-messenger"]
 	path = pack/vendor/start/git-messenger
 	url = https://github.com/rhysd/git-messenger.vim.git
@@ -146,9 +131,6 @@
 [submodule "pack/vendor/start/vim-test"]
 	path = pack/vendor/start/vim-test
 	url = https://github.com/vim-test/vim-test.git
-[submodule "pack/vendor/start/vimnx"]
-	path = pack/vendor/start/vimnx
-	url = https://github.com/preservim/vimux.git
 [submodule "pack/vendor/start/vim-argwrap"]
 	path = pack/vendor/start/vim-argwrap
 	url = https://github.com/FooSoft/vim-argwrap.git
@@ -218,15 +200,15 @@
 [submodule "pack/vendor/start/tcomment_vim"]
 	path = pack/vendor/start/tcomment_vim
 	url = https://github.com/tomtom/tcomment_vim.git
-[submodule "pack/vendor/start/vim-smoothie"]
-	path = pack/vendor/start/vim-smoothie
-	url = https://github.com/psliwka/vim-smoothie.git
 [submodule "pack/vendor/start/asynctasks"]
 	path = pack/vendor/start/asynctasks
 	url = https://github.com/skywind3000/asynctasks.vim.git
-[submodule "pack/vendor/start/vim-terminal-help"]
-	path = pack/vendor/start/vim-terminal-help
-	url = https://github.com/skywind3000/vim-terminal-help.git
 [submodule "pack/vendor/start/vim-closetag"]
 	path = pack/vendor/start/vim-closetag
 	url = https://github.com/alvan/vim-closetag.git
+[submodule "pack/vendor/start/vim-rooter"]
+	path = pack/vendor/start/vim-rooter
+	url = https://github.com/airblade/vim-rooter.git
+[submodule "__lsp/phpactor"]
+	path = __lsp/phpactor
+	url = https://github.com/phpactor/phpactor.git
