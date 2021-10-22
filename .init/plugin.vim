@@ -34,14 +34,6 @@
 
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-"    " phpactor {{
-"
-"        let g:phpactorPhpBin = "/usr/local/iwork/php/8.0/bin/php"
-        autocmd FileType php set iskeyword+=$
-        autocmd FileType php setlocal omnifunc=phpactor#Complete
-            "
-"    " }}
-
 " }
 
 
@@ -377,13 +369,6 @@
 
 " }
 
-" accelerated-jk {
-    
-    nmap j <Plug>(accelerated_jk_gj)
-    nmap k <Plug>(accelerated_jk_gk)
-
-" }
-
 " rainbow {
 
     let g:rainbow_active = 1
@@ -422,6 +407,12 @@
 " vim-choosewin {
     
     nmap  -  <Plug>(choosewin)
+
+" }
+
+" delimitMate {
+    
+    let g:delimitMate_expand_cr = 1
 
 " }
 

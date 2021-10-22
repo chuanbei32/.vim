@@ -1,10 +1,12 @@
 {    
     "languageserver": {    
         "php": {
-           "command": "/iwork/project/.vim/__lsp/psalm/vendor/bin/psalm-language-server",
-    "filetypes": ["php"],
-    "rootPatterns": ["/iwork/project/.vim/__lsp/psalm/psalm.xml", "/iwork/project/.vim/__lsp/psalm/psalm.xml.dist"],
-    "requireRootPattern": true
+            "command": "intelephense",
+            "args": ["--stdio"],
+            "filetypes": ["php"],
+            "initializationOptions": {
+                "storagePath": "/tmp/intelephense"
+            }
         },
         "python": {
             "command": "python3",

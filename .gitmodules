@@ -161,9 +161,6 @@
 [submodule "pack/vendor/start/asyncrun"]
 	path = pack/vendor/start/asyncrun
 	url = https://github.com/skywind3000/asyncrun.vim.git
-[submodule "pack/vendor/start/accelerated-jk"]
-	path = pack/vendor/start/accelerated-jk
-	url = https://github.com/rhysd/accelerated-jk.git
 [submodule "pack/vendor/start/vim-conflicted"]
 	path = pack/vendor/start/vim-conflicted
 	url = https://github.com/christoomey/vim-conflicted.git

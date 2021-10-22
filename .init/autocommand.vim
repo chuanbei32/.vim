@@ -28,6 +28,7 @@
 		
 			" 插入模式下用绝对行号
 			autocmd InsertEnter * :set norelativenumber number
+			autocmd InsertEnter * 	let mapleader="\\"
 
 		" }}}
 

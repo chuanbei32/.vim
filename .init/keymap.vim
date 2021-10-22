@@ -1,8 +1,9 @@
 " {
 	
-	let mapleader="\<space>"
+	" let mapleader="\<space>"
 
 	" noremap! {{
+
 
 	" }}
 
@@ -22,11 +23,9 @@
 		nnoremap <Leader>;s :%s/\<<C-R>=expand("<cword>")<CR>\>/
 		nnoremap <Leader>;g :vimgrep <C-R>=expand("<cword>")<CR>
 
-		" nnoremap k gk
-		nnoremap k <Plug>(accelerated_jk_gk)
+		nnoremap k gk
 		nnoremap gk k
-		" nnoremap j gj
-		nnoremap j <Plug>(accelerated_jk_gj)
+		nnoremap j gj
 		nnoremap gj j
 
 		nnoremap <Leader>\q :q<CR> 
@@ -195,7 +194,7 @@
 
 		noremap <silent> <leader>to <cmd>tabnew<cr>
 		noremap <silent> <leader>tl <cmd>tabs<cr>
-		
+
 		noremap <silent> <leader>tn <cmd>tabnext<cr>
 		noremap <silent> <leader>tp <cmd>tabprev<cr>
 
