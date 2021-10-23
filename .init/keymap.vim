@@ -2,11 +2,6 @@
 	
 	" let mapleader="\<space>"
 
-	" noremap! {{
-
-
-	" }}
-
 	" noremap {{
 
 		noremap <Leader>\sh <cmd>shell<CR>
@@ -16,24 +11,17 @@
 
 	" nnoremap {{
 
-		nnoremap <Leader><Esc> <cmd>nohlsearch<cr>
+		nnoremap <esc><esc> <cmd>nohlsearch<cr>
 
 		nnoremap Q <Nop>
 
 		nnoremap <Leader>;s :%s/\<<C-R>=expand("<cword>")<CR>\>/
-		nnoremap <Leader>;g :vimgrep <C-R>=expand("<cword>")<CR>
+		nnoremap <Leader>;g :Leaderf rg -e <C-R>=expand("<cword>")<CR>
 
 		nnoremap k gk
 		nnoremap gk k
 		nnoremap j gj
 		nnoremap gj j
-
-		nnoremap <Leader>\q :q<CR> 
-		nnoremap <Leader>\Q :qa!<CR> 
-		nnoremap <Leader>\W :w<CR> 
-		nnoremap <Leader>\WQ :wa<CR>:q<CR> 
-		nnoremap <CR> za
-		nnoremap <S-Return> zMzv
 
 		nnoremap gh g^
 		nnoremap gH ^
@@ -53,8 +41,10 @@
 		cnoremap <c-j> <down>
 		cnoremap <c-k> <up>
 		cnoremap <c-l> <right>
+
 		cnoremap <c-a> <home>
 		cnoremap <c-e> <end>
+
 		cnoremap <c-f> <c-d>
 		cnoremap <c-b> <left>
 		cnoremap <c-d> <del>
@@ -73,8 +63,6 @@
 	" }}
 
 	" inoremap {{
-
-		inoremap <C-s> <cmd>write<CR>
 
 		inoremap <c-a> <home>
 		inoremap <c-e> <end>
@@ -125,6 +113,16 @@
 		
 	" }} 
 
+
+	" d {{
+
+	" }}
+
+	" f {{
+
+
+	" }}
+
 	" Window {{
 
 		nnoremap <leader>wrp :resize<space>+
@@ -137,8 +135,10 @@
 
 		nnoremap <leader>wre <c-w>=
 
-		nnoremap <leader>wsp :split<space>
-		nnoremap <leader>wvsp :vsplit<space>
+		" nnoremap <leader>wsp :split<space>
+		nnoremap <leader>ws <c-w>s
+		" nnoremap <leader>wvsp :vsplit<space>
+		nnoremap <leader>wv <c-w>v
 
 		nnoremap <leader>wn <cmd>new<cr>
 		nnoremap <leader>wvn <cmd>vnew<cr>
@@ -175,6 +175,8 @@
 	"}}
 
 	" Buffer {{
+
+		nnoremap <Leader>b <nop>
 
 		nnoremap <Leader>bl <cmd>buffers<cr>
 

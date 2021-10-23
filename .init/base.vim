@@ -192,9 +192,9 @@
 
 		filetype on " 开启文件类型侦测
 
-		filetype indent on " 自适应不同语言的智能缩进
+		" filetype indent on " 自适应不同语言的智能缩进
 
-		filetype plugin indent on " 根据侦测到的不同类型加载对应的插件
+		" filetype plugin indent on " 根据侦测到的不同类型加载对应的插件
 
 		set autoindent " 自动缩进
 

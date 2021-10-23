@@ -36,27 +36,6 @@
 
 " }
 
-
-" asynctasks {
-    
-" }
-
-" asyncrun {
-    
-    let g:asyncrun_open = 8
-
-" }
-
-
-" ultisnips {
-    
-    set runtimepath+=~/.vim/__ultisnips
-
-    let g:UltiSnipsExpandTrigger="<Leader>\us"
-    let g:UltiSnipsSnippetDirectories=["__ultisnips"]
-
-" }
-
 " ale {
 
     let g:ale_disable_lsp = 1
@@ -161,6 +140,29 @@
 
 " }
 
+
+" test {
+    
+" }
+
+" asynctasks {
+    
+" }
+
+" asyncrun {
+    
+    let g:asyncrun_open = 8
+
+" }
+" ultisnips {
+    
+    set runtimepath+=~/.vim/__ultisnips
+
+    let g:UltiSnipsExpandTrigger="<Leader>\us"
+    let g:UltiSnipsSnippetDirectories=["__ultisnips"]
+
+" }
+
 " DoxygenToolkit {
     
     let g:DoxygenToolkit_briefTag_funcName = "yes"
@@ -195,6 +197,10 @@
 
     let g:doxygen_enhanced_color = 1
 
+    nmap <leader>da <cmd>DoxAuthor<cr>
+    nmap <leader>dd <cmd>Dox<cr>
+    nmap <leader>dc <cmd>DoxLic<cr>
+
 " }
 
 " leaderF {
@@ -219,14 +225,14 @@
     let g:Lf_UseCache = 0
     let g:Lf_UseMemoryCache = 0
 
-    nmap <Leader>f <Nop>
-    " nmap <Leader>b <Nop>
-    
-    nmap <Leader>\ff :Leaderf file<CR>
-    nmap <Leader>\fb :Leaderf buffer<CR>
-    nmap <Leader>\fg :Leaderf rg<CR>
-    nmap <Leader>\fm :Leaderf mru<CR>
-    nmap <Leader>\ft :Leaderf tag<CR>
+    nmap <Leader>f <nop>
+
+    nmap <leader>ffe :Leaderf file<cr>
+    nmap <leader>ffn :Leaderf function<cr>
+    nmap <leader>fb :Leaderf buffer<cr>
+    nmap <leader>fg :Leaderf rg -e<space>
+    nmap <leader>fm :Leaderf mru<cr>
+    nmap <leader>ft :Leaderf tag<cr>
 
 " }
 
@@ -234,63 +240,17 @@
 
     let g:mundo_auto_preview = 1
 
-    nmap <Leader>\mun :MundoToggle<CR>
+    nmap <leader>un :MundoToggle<cr>
+
 " }
 
 " tagbar {
 
-    let g:tagbar_width = 30
+    let g:tagbar_width = 35
 
-    nmap <leader>\tb :TagbarToggle<CR>
+    nmap <leader>tb :TagbarToggle<cr>
 
     " autocmd VimEnter * :TagbarToggle
-
-" }
-
-" NERDTree {
-
-    let NERDTreeShowBookmarks=1
-    let NERDTreeShowHidden = 1
-    let g:NERDTreeWinSize=30
-
-    " let NERDTreeDirArrowExpandable = "▶"
-    " let NERDTreeDirArrowCollapsible = "▼"
-
-    let g:NERDTreeDirArrowExpandable = '+'
-    let g:NERDTreeDirArrowCollapsible = '-'
-
-    nnoremap <leader>\nt :NERDTreeToggle<CR>
-
-    " autocmd vimenter * NERDTreeToggle
-
-    " autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
-
-    " autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-        \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-
-" }
-
-" NERDTree-git-plugin {
-
-    let g:NERDTreeGitStatusUseNerdFonts = 1
-    let g:NERDTreeGitStatusShowIgnored = 1
-    let g:NERDTreeGitStatusConcealBrackets = 0
-    let g:NERDTreeGitStatusShowClean = 1
-    let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
-
-    let g:NERDTreeGitStatusIndicatorMapCustom = {
-        \ 'Modified'  :'✹',
-        \ 'Staged'    :'✚',
-        \ 'Untracked' :'✭',
-        \ 'Renamed'   :'➜',
-        \ 'Unmerged'  :'═',
-        \ 'Deleted'   :'✖',
-        \ 'Dirty'     :'✗',
-        \ 'Ignored'   :'☒',
-        \ 'Clean'     :'✔︎',
-        \ 'Unknown'   :'?',
-        \ }
-
 " }
 
 " vim-airline-themes {
@@ -318,26 +278,12 @@
    
 " }
 
-" " vim-devicons {
-" 
-"     let g:webdevicons_conceal_nerdtree_brackets = 1
-" 
-"     let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-" 
-"     let g:WebDevIconsNerdTreeGitPluginForceVAlign = 0
-" 
-"     let g:WebDevIconsUnicodeGlyphDoubleWidth  = 1
-" 
-"     let g:WebDevIconsUnicodeDecorateFileNodes = 1
-" 
-" " }
-
 " git-messenger {
     
     let g:git_messenger_close_on_cursor_moved=0
 
-    nmap <Leader>\gmo :GitMessenger<CR>
-    nmap <Leader>\gmc :GitMessengerClose<CR>
+    nmap <Leader>gmo :GitMessenger<CR>
+    nmap <Leader>gmc :GitMessengerClose<CR>
 
 " }
 
@@ -377,7 +323,7 @@
 
 " sneak {
 
-    let g:sneak#label = 1
+    " let g:sneak#label = 1
     
 " }
 
@@ -388,7 +334,7 @@
 
 " trailing-whitespace {
 
-    nmap <Leader>\cw <Cmd>FixWhitespace<Cr>
+    nmap <leader>\cw <cmd>FixWhitespace<cr>
     
 " }
 
@@ -400,13 +346,13 @@
 
 " CtrlSF {
 
-    nmap <Leader><Leader>s :CtrlSF<space>
+    nmap <Leader>\sf :CtrlSF<space>
 
 " }
 
 " vim-choosewin {
     
-    nmap  -  <Plug>(choosewin)
+    nmap - <Plug>(choosewin)
 
 " }
 
@@ -415,8 +361,5 @@
     let g:delimitMate_expand_cr = 1
 
 " }
-
-
-
 
 
