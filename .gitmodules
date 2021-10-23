@@ -200,3 +200,6 @@
 [submodule "pack/vendor/start/vim-projectionist"]
 	path = pack/vendor/start/vim-projectionist
 	url = https://github.com/tpope/vim-projectionist.git
+[submodule "pack/vendor/start/vim-which-key"]
+	path = pack/vendor/start/vim-which-key
+	url = https://github.com/liuchengxu/vim-which-key.git

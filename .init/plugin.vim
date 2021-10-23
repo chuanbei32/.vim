@@ -345,8 +345,17 @@
 " }
 
 " CtrlSF {
+    
+    let g:ctrlsf_auto_focus = {
+        \ "at": "start"
+        \ }
 
-    nmap <Leader>\sf :CtrlSF<space>
+    let g:ctrlsf_auto_preview = 1
+
+    let g:ctrlsf_default_view_mode = 'compact'
+
+    nmap <Leader>\sfg :CtrlSF<space>
+    nmap <Leader>\sfr :CtrlSF -R -I<space>
 
 " }
 
