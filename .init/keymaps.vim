@@ -13,33 +13,21 @@
 
 	xnoremap < <gv
 	xnoremap > >gv|
-
 	noremap < <cmd>tabpre<cr>
 	noremap > <cmd>tabnex<cr>
 
 	nnoremap <tab> V>
 	vnoremap <tab> >gv
-
 	nnoremap <s-tab> V<
 	vnoremap <s-tab> <gv
 
-    inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
+    inoremap <silent><expr> <tab>
+        \ pumvisible() ? "\<c-n>" :
+        \ <sid>check_back_space() ? "\<tab>" :
         \ coc#refresh()
-
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<c-h>"
 
 	nnoremap <esc><esc> <cmd>nohlsearch<cr>
-
-	vnoremap <leader>cc :s/^/\/\//<cr>:noh<cr>
-	vnoremap <leader>cu :s/\/\///<cr>:noh<cr>
-
-	nnoremap <leader>sc :%s/\<<c-r>=expand("<cword>")<cr>\>/
-	nnoremap <leader>rg :Leaderf rg -e <c-r>=expand("<cword>")<cr>
-
-	noremap <leader>sh <cmd>shell<cr>
-	noremap <leader>tm <cmd>terminal<cr>
 
 	" a - z {{
 
@@ -196,6 +184,8 @@
 		" }}}
 		" r R {{{
 
+			nnoremap <leader>rg :Leaderf rg -e <c-r>=expand("<cword>")<cr>
+
 			" rainbow_levels {{{{
 
 		        nmap <leader>rt :RainbowLevelsToggle<cr>
@@ -204,6 +194,9 @@
 
 		" }}}
 		" s S {{{
+
+			noremap <leader>sh <cmd>shell<cr>
+			nnoremap <leader>sc :%s/\<<c-r>=expand("<cword>")<cr>\>/
 
 			" CtrlSF {{{{
 
@@ -214,6 +207,8 @@
 
 		" }}}
 		" t T {{{
+
+			noremap <leader>tm <cmd>terminal<cr>
 
 			" tab {{{{
 

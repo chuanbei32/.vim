@@ -33,13 +33,14 @@
 
 		set ttimeout " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
 		set ttimeoutlen=500 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
+		set timeoutlen=500
 
 		" set mouse+=a " 开启鼠标模式
 		" set mousehide " 编辑模式隐藏鼠标
 
 		set ruler " 显示光标当前位置
 		set cursorline " 高亮显示当前行
-		" set cursorcolumn " 高亮显示当前列
+		set cursorcolumn " 高亮显示当前列
 
 		set showmatch " 高亮显示匹配的括号
 		set matchtime=1 " 显示括号匹配的时间
@@ -53,7 +54,7 @@
 		set errorbells 
 		set noerrorbells " 不发出滴滴声
 
-		set virtualedit=onemore " 设置光标可以到最后一个字面后
+		set virtualedit=block,onemore " 设置光标可以到最后一个字面后
 
 		set listchars=tab:\|\ ,trail:.,extends:>,precedes:< " 设置分隔符可见
 
@@ -182,7 +183,7 @@
 		" syntax    使用语法定义折叠
 		" diff      对没有更改的文本进行折叠
 		" marker    使用标记进行折叠, 默认标记是 {{{ 和 }}}
-		set foldmethod=indent  " 代码折叠默认使用缩进
+		set foldmethod=syntax  " 代码折叠默认使用缩进
 		
 		set foldlevelstart=1
 

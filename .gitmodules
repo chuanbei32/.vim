@@ -52,9 +52,6 @@
 [submodule "pack/vendor/start/vim-signature"]
 	path = pack/vendor/start/vim-signature
 	url = https://github.com/kshenoy/vim-signature.git
-[submodule "pack/vendor/start/vim-repeat"]
-	path = pack/vendor/start/vim-repeat
-	url = https://github.com/tpope/vim-repeat.git
 [submodule "pack/vendor/start/vim-surround"]
 	path = pack/vendor/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
