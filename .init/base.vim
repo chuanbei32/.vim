@@ -10,6 +10,8 @@
 
 		set tags=./.tags;,.tags,tags " 设置 tags 当前文件所在目录往上向根目录搜索直到碰到 .tags 文件或者 Vim 当前目录包含 .tags 文件
 
+        set runtimepath+=~/.vim/__ultisnips
+
 		" set errorformat +=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误格式
 		
 		set confirm " 在处理未保存或只读文件的时候，弹出确认
@@ -30,7 +32,7 @@
 		set wrap " 开启折行
 
 		set ttimeout " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
-		set ttimeoutlen=10 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
+		set ttimeoutlen=500 " 默认按下Esc后, 需要等待1秒才生效, 设置Esc超时时间为 10ms, 尽快生效
 
 		" set mouse+=a " 开启鼠标模式
 		" set mousehide " 编辑模式隐藏鼠标
@@ -244,6 +246,9 @@
 
 	set linebreak
 
+	" set breakat-=_
+	" set nolinebreak
+
 	set sidescrolloff=7
 
 	set sidescroll=1
@@ -275,5 +280,7 @@
 	set gdefault
 
 	set iskeyword+=_,$,@,%,#,-
+
+	set termwinkey=<c-_>
 
 "}

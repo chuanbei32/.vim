@@ -3,13 +3,12 @@
     let g:config_file_list = [
         \ 'variable.vim',
         \ 'function.vim',
-        \ 'base.vim',
         \ 'command.vim',
         \ 'autocommand.vim',
-        \ 'keymap.vim',
-        \ 'plugin.vim',
+        \ 'base.vim',
         \ 'interface.vim',
-        \ ]
+        \ 'keymap.vim',
+        \ ] 
 
     let g:vim_config_root = expand('<sfile>:p:h')
 
