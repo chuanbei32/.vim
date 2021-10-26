@@ -155,9 +155,6 @@
 [submodule "pack/vendor/start/vim-trailing-whitespace"]
 	path = pack/vendor/start/vim-trailing-whitespace
 	url = https://github.com/bronson/vim-trailing-whitespace.git
-[submodule "pack/vendor/start/tcomment_vim"]
-	path = pack/vendor/start/tcomment_vim
-	url = https://github.com/tomtom/tcomment_vim.git
 [submodule "pack/vendor/start/asynctasks"]
 	path = pack/vendor/start/asynctasks
 	url = https://github.com/skywind3000/asynctasks.vim.git
@@ -194,3 +191,6 @@
 [submodule "pack/vendor/start/vim-devicons"]
 	path = pack/vendor/start/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule "pack/vendor/start/vim-commentary"]
+	path = pack/vendor/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
