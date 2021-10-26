@@ -23,7 +23,7 @@
 
 	set 
 		\ runtimepath+=~/.vim/__ultisnips
-		\ backup backupext=.bak backupdir=~/.vim/_backupfiles updatetime=0
+		\ backup backupext=.bak backupdir=~/.vim/_backupfiles updatetime=300
 		\ swapfile directory=~/.vim/_swapfiles
 		\ undofile undodir=~/.vim/_undofiles
 		\ viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
@@ -88,12 +88,12 @@
 		\ " 模式行
 
 	set
-		\ t_Co=256 t_RB=
+		\ t_Co=256 t_RB= t_SH= t_RS= t_ut=
 		\ 
 		\ " 终端
 
 	set
-		\ ruler display+=lastline noshowmode redrawtime=2000
+		\ ruler display+=lastline noshowmode 
 		\
 		\ list listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 		\
