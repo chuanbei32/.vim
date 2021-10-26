@@ -16,8 +16,6 @@
 	vnoremap <s-tab> <gv
 	inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
-	nnoremap <esc><esc> <cmd>nohlsearch<cr>
-
 	" a - z {{
 
 		" a A {{{
@@ -33,7 +31,7 @@
 		" b B {{{
 
 			" buffer {{{{
-			
+
 				" nnoremap <leader>ba :badd<space>
 				nnoremap <leader>bx <c-^>
 				nnoremap <leader>bl <cmd>buffers<cr>
@@ -153,6 +151,8 @@
 		" l L
 		" m M
 		" n N {{{
+
+			nnoremap <leader>nh <cmd>nohlsearch<cr>
 
 			" neoformat {{{{
 
