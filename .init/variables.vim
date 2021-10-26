@@ -102,6 +102,7 @@
     " ultisnips {{
         
         let g:UltiSnipsExpandTrigger="<leader>us"
+
         let g:UltiSnipsSnippetDirectories=[
             \ "__ultisnips"
             \ ]
@@ -253,13 +254,6 @@
         
     " }}
 
-    " delimitMate {{
-        
-        let g:delimitMate_expand_cr = 1
-
-    " }}
-
-
     " rainbow_levels {{
 
     " }}
@@ -282,5 +276,14 @@
         let g:git_messenger_always_into_popup = 1
 
     " }}
+
+    " gruvbox {{
+
+        let g:gruvbox_termcolors=16
+        
+    " }}
+
+    xmap ga <plug>(easyalign)
+    nmap ga <Plug>(EasyAlign)
 
 " }

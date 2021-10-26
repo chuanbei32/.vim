@@ -143,9 +143,6 @@
 [submodule "pack/vendor/start/DoxygenToolkit"]
 	path = pack/vendor/start/DoxygenToolkit
 	url = https://github.com/vim-scripts/DoxygenToolkit.vim.git
-[submodule "pack/vendor/start/delimitMate"]
-	path = pack/vendor/start/delimitMate
-	url = https://github.com/Raimondi/delimitMate.git
 [submodule "pack/vendor/start/rainbow"]
 	path = pack/vendor/start/rainbow
 	url = https://github.com/luochen1990/rainbow.git
@@ -191,3 +188,9 @@
 [submodule "pack/vendor/start/vim-repeat"]
 	path = pack/vendor/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule "pack/vendor/start/auto-pairs"]
+	path = pack/vendor/start/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "pack/vendor/start/vim-devicons"]
+	path = pack/vendor/start/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git

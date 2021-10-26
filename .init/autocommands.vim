@@ -1,10 +1,5 @@
 " {
 
-	" template {{{
-		
-
-	" }}}	
-
 	" Event {{
 
 		" BufWritePost 把整个缓冲区写回到文件后 {{{
@@ -34,6 +29,9 @@
 			" 普通模式下开启折行
 			autocmd InsertLeave * :set wrap
 
+			" 普通模式下关闭粘贴模式
+			autocmd InsertLeave * :set nopaste
+
 		" }}}
 
 		" InsertEnter 刚开始插入模式之前, 也适用于替换模式和虚拟替换模式 {{{
@@ -43,6 +41,9 @@
 
 			" 插入模式下关闭折行
 			autocmd InsertEnter * :set nowrap
+
+			" 插入模式下开启粘贴模式
+			" autocmd InsertEnter * :set paste
 
 		" }}}
 

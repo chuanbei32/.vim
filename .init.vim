@@ -5,7 +5,6 @@
         \ 'functions.vim',
         \ 'commands.vim',
         \ 'autocommands.vim',
-        \ 'interfaces.vim',
         \ 'sets.vim',
         \ 'keymaps.vim',
         \ ] 

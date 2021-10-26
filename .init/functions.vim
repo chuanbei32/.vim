@@ -1,11 +1,5 @@
 " {
 
-    " 
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-	
 	" 
 	function! g:MkNonExDir(file, buf)
 		if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
