@@ -194,3 +194,6 @@
 [submodule "pack/vendor/start/vim-commentary"]
 	path = pack/vendor/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "pack/vendor/start/vim-context-commentstring"]
+	path = pack/vendor/start/vim-context-commentstring
+	url = https://github.com/suy/vim-context-commentstring.git

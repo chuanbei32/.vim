@@ -2,7 +2,7 @@
 
     set nocompatible 
 
-	filetype on
+	filetype plugin on
 
 	syntax on
 	
@@ -93,7 +93,7 @@
 		\ " 终端
 
 	set
-		\ ruler display+=lastline noshowmode 
+		\ background=dark ruler display+=lastline noshowmode 
 		\
 		\ list listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 		\
@@ -107,13 +107,13 @@
 		\
 		\ backspace=indent,eol,start
 		\
-		\ selection=inclusive selectmode+=mouse,key shortmess-=S shortmess+=F clipboard+=unnamed diffopt+=vertical gdefault
+		\ selection=inclusive selectmode+=mouse,key shortmess+=S clipboard+=unnamed diffopt+=vertical gdefault
 		\
 		\ iskeyword+=_,$,@,%,#,-
 		\
 		\ expandtab tabstop=4 softtabstop=4 smarttab viewoptions-=options nolangremap langnoremap shiftround
 		\
-		\ background=dark synmaxcol=0 nrformats-=octal sessionoptions-=options sessionoptions-=curdir sessionoptions+=globals
+		\ synmaxcol=0 nrformats-=octal sessionoptions-=options sessionoptions-=curdir sessionoptions+=globals
 		\ 
 		\ " 其他
 

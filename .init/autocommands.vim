@@ -54,6 +54,11 @@
 
 	" }}
 
+	" Autocmd {{
+
+
+	" }}
+
 	" Augroup {{
 
 		" 如果文件不存在保存文件时自动创建所需的父级目录
@@ -66,6 +71,13 @@
 	    augroup MyVimspectorUICustomistaion
 	        autocmd!
 	        autocmd User VimspectorUICreated call g:CustomiseUI()
+	    augroup END
+
+	    augroup Commentary
+	        autocmd!
+    		autocmd FileType php setlocal commentstring=//\ %s
+    		autocmd FileType js setlocal commentstring=//\ %s
+    		autocmd FileType ts setlocal commentstring=//\ %s
 	    augroup END
 
 	" }}
