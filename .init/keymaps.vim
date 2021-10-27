@@ -36,10 +36,6 @@
 	nnoremap <leader>nh <cmd>nohlsearch<cr>
 	inoremap <leader>sp <cmd>set paste<cr>
 
-	nnoremap <leader>sr :%s/\<<c-r>=expand("<cword>")<cr>\>/
-
-	nnoremap <leader>rg <cmd>Leaderf rg -e <c-r>=expand("<cword>")<cr>
-
 	" ctrl {{
 
 	" }}
