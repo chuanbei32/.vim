@@ -1,11 +1,11 @@
 " {
 
-    set nocompatible 
+    set nocompatible
 
 	filetype plugin on
 
 	syntax on
-	
+
 	colorscheme gruvbox
 
 	silent! call mkdir(expand('~/.vim/_backupfiles'), "p", 0755)
@@ -21,13 +21,13 @@
 
 	scriptencoding utf-8
 
-	set 
+	set
 		\ runtimepath+=~/.vim/__ultisnips
 		\ backup backupext=.bak backupdir=~/.vim/_backupfiles updatetime=300
 		\ swapfile directory=~/.vim/_swapfiles
 		\ undofile undodir=~/.vim/_undofiles
 		\ viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
-		\ tags=./.tags;,.tags,tags 
+		\ tags=./.tags;,.tags,tags
 		\ 
 		\ " 路径
 
@@ -70,13 +70,13 @@
 		\ number wrap virtualedit=block,onemore cursorline sidescrolloff=7 sidescroll=1 linebreak
 		\ 
 		\ " 行
-	
+
 	set
 		\ 
 		\ relativenumber colorcolumn=80,120,180 scrolloff=1 scrolljump=1 signcolumn=yes
 		\ 
 		\ " 列
-	
+
 	set
 		\ ttimeout ttimeoutlen=10 timeoutlen=500 notimeout
 		\ 
@@ -93,7 +93,7 @@
 		\ " 终端
 
 	set
-		\ background=dark ruler display+=lastline noshowmode 
+		\ background=dark ruler display+=lastline noshowmode
 		\
 		\ list listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 		\

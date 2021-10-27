@@ -19,9 +19,6 @@
 [submodule "pack/vendor/start/ctags"]
 	path = pack/vendor/start/ctags
 	url = https://github.com/vim-scripts/ctags.vim.git
-[submodule "pack/vendor/start/tagbar"]
-	path = pack/vendor/start/tagbar
-	url = https://github.com/preservim/tagbar.git
 [submodule "pack/vendor/start/vim-easymotion"]
 	path = pack/vendor/start/vim-easymotion
 	url = https://github.com/easymotion/vim-easymotion.git

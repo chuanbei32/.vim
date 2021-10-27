@@ -283,7 +283,13 @@
         
     " }}
 
-    xmap ga <plug>(easyalign)
-    nmap ga <Plug>(EasyAlign)
+    " vim-easy-align {{
+
+        xmap ga <plug>(easyalign)
+        nmap ga <Plug>(EasyAlign)
+
+    " }}
+
+
 
 " }
