@@ -1,4 +1,4 @@
-" init { 
+" { 
 
     let g:config_file_list = [
         \ 'variables.vim',

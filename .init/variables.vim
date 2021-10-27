@@ -213,6 +213,12 @@
 
         let g:indentLine_enabled = 1
 
+        " let g:indentLine_setColors = 0
+        " let g:indentLine_defaultGroup = 'SpecialKey'
+        let g:indentLine_color_term = 239
+
+        let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
     " }}
 
     " rainbow {{
@@ -229,7 +235,7 @@
 
     " easymotion {{
 
-        
+
     " }}
 
     " smoothie {{
@@ -289,6 +295,13 @@
         nmap ga <Plug>(EasyAlign)
 
     " }}
+
+    " clever-f {{{
+
+        let g:clever_f_ignore_case  = 1
+        let g:clever_f_mark_direct = 1
+
+    " }}}
 
 
 
