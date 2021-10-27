@@ -191,3 +191,6 @@
 [submodule "pack/vendor/start/vim-context-commentstring"]
 	path = pack/vendor/start/vim-context-commentstring
 	url = https://github.com/suy/vim-context-commentstring.git
+[submodule "pack/vendor/start/tagbar"]
+	path = pack/vendor/start/tagbar
+	url = https://github.com/preservim/tagbar.git
