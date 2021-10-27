@@ -146,9 +146,6 @@
 [submodule "pack/vendor/start/rainbow"]
 	path = pack/vendor/start/rainbow
 	url = https://github.com/luochen1990/rainbow.git
-[submodule "pack/vendor/start/vim-sneak"]
-	path = pack/vendor/start/vim-sneak
-	url = https://github.com/justinmk/vim-sneak.git
 [submodule "pack/vendor/start/targets"]
 	path = pack/vendor/start/targets
 	url = https://github.com/wellle/targets.vim.git
