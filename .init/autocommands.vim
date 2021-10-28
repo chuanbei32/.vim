@@ -13,7 +13,7 @@
 		" VimEnter 完成所有的初始化步骤后 {{{
 
 			" 修改背景色为透明
-			autocmd VimEnter * hi Normal guibg=NONE ctermbg=NONE " transparent bg
+			" autocmd VimEnter * highlight Normal guibg=NONE ctermbg=NONE 
 
 			" 自动开启 tagbar 插件
     		autocmd VimEnter * :TagbarToggle

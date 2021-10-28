@@ -22,9 +22,13 @@
 
 	nnoremap j gj
 	xnoremap j gj
+	nnoremap <down> gj
+	xnoremap <down> gj
 
 	nnoremap k gk
 	xnoremap k gk
+	nnoremap <up> gk
+	xnoremap <up> gk
 
 	nnoremap gh g^
 	nnoremap gH ^
@@ -224,13 +228,13 @@
 
 		" leaderF {{{
 
-		    nnoremap <leader>\fe <cmd>Leaderf file<cr>
-		    nnoremap <leader>\fn <cmd>Leaderf function<cr>
+		    nnoremap <leader>\lfe <cmd>Leaderf file<cr>
+		    nnoremap <leader>\lfn <cmd>Leaderf function<cr>
 
-		    nnoremap <leader>\fb <cmd>Leaderf buffer<cr>
-		    nnoremap <leader>\fg :Leaderf rg -e<space>
-		    nnoremap <leader>\fm <cmd>Leaderf mru<cr>
-		    nnoremap <leader>\ft <cmd>Leaderf tag<cr>
+		    nnoremap <leader>\lfb <cmd>Leaderf buffer<cr>
+		    nnoremap <leader>\lfg :Leaderf rg -e<space>
+		    nnoremap <leader>\lfm <cmd>Leaderf mru<cr>
+		    nnoremap <leader>\lft <cmd>Leaderf tag<cr>
 
 	    " }}}
 
@@ -280,7 +284,7 @@
 
 		" easymotion {{{
 
-	        noremap ; <Plug>(easymotion-prefix)
+	        " noremap ; <Plug>(easymotion-prefix)
 
 		" }}}
 

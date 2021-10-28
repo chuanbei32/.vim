@@ -1,16 +1,31 @@
 " {
-
     set nocompatible
 
 	filetype plugin on
 
 	syntax on
 
-	colorscheme gruvbox
+	packadd! gruvbox-material
 
+	colorscheme gruvbox-material
+
+	set backup backupext=.bak backupdir=~/.vim/_backupfiles updatetime=300
 	silent! call mkdir(expand('~/.vim/_backupfiles'), "p", 0755)
+
+	set swapfile directory=~/.vim/_swapfiles
 	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
-	silent! call mkdir(expand('~/.vim/_undofiles'), "p", 0755)
+
+	set undofile undodir=~/.vim/_undofiles
+	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
+	
+	set
+		\ runtimepath+=~/.vim/__ultisnips
+		\
+		\ viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
+		\
+		\ tags=./.tags;,.tags,tags
+		\
+		\ " 路径
 
 	set
 		\ encoding=utf-8 fileencoding=utf-8 termencoding=utf-8 makeencoding=utf-8 printencoding=utf-8
@@ -20,16 +35,6 @@
 		\ " 编码
 
 	scriptencoding utf-8
-
-	set
-		\ runtimepath+=~/.vim/__ultisnips
-		\ backup backupext=.bak backupdir=~/.vim/_backupfiles updatetime=300
-		\ swapfile directory=~/.vim/_swapfiles
-		\ undofile undodir=~/.vim/_undofiles
-		\ viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
-		\ tags=./.tags;,.tags,tags
-		\ 
-		\ " 路径
 
 	set
 		\ visualbell novisualbell errorbells noerrorbells belloff=all

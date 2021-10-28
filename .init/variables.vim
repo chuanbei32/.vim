@@ -186,7 +186,7 @@
 
     " vim-airline-themes {{
 
-        let g:airline_theme='gruvbox'
+        let g:airline_theme='gruvbox_material'
 
     " }}
 
@@ -283,11 +283,31 @@
 
     " }}
 
-    " gruvbox {{
 
-        let g:gruvbox_termcolors=16
-        
+    " gruvbox-material {{
+
+        let g:gruvbox_material_enable_italic = 1
+
+        let g:gruvbox_material_disable_italic_comment = 1
+
+        let g:gruvbox_material_enable_bold = 1
+
+        let g:gruvbox_material_visual = 'grey background'
+        let g:gruvbox_material_sign_column_background = 'default'
+        let g:gruvbox_material_transparent_background = 1
+        let g:gruvbox_material_ui_contrast = 'high'
+        let g:gruvbox_material_diagnostic_text_highlight = 1
+        let g:gruvbox_material_diagnostic_line_highlight = 1
+
+        let g:gruvbox_material_current_word = 'grey background'
+
+        let g:gruvbox_material_statusline_style = 'mix'
+
+        let g:gruvbox_material_palette = 'mix'
+        let g:gruvbox_material_background = 'hard'
+
     " }}
+
 
     " vim-easy-align {{
 
