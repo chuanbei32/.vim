@@ -71,8 +71,6 @@
 
     " vimspector {{
 
-        " let g:vimspector_enable_mappings = 'HUMAN'
-
         sign define vimspectorBP text=o             texthl=WarningMsg
         sign define vimspectorBPCond text=o?        texthl=WarningMsg
         sign define vimspectorBPDisabled text=o!    texthl=LineNr
@@ -286,7 +284,7 @@
 
     " gruvbox-material {{
 
-        let g:gruvbox_material_enable_italic = 1
+        " let g:gruvbox_material_enable_italic = 1
 
         let g:gruvbox_material_disable_italic_comment = 1
 
@@ -296,8 +294,8 @@
         let g:gruvbox_material_sign_column_background = 'default'
         let g:gruvbox_material_transparent_background = 1
         let g:gruvbox_material_ui_contrast = 'high'
-        let g:gruvbox_material_diagnostic_text_highlight = 1
-        let g:gruvbox_material_diagnostic_line_highlight = 1
+        " let g:gruvbox_material_diagnostic_text_highlight = 1
+        " let g:gruvbox_material_diagnostic_line_highlight = 1
 
         let g:gruvbox_material_current_word = 'grey background'
 
@@ -311,9 +309,6 @@
 
     " vim-easy-align {{
 
-        xmap ga <plug>(easyalign)
-        nmap ga <Plug>(EasyAlign)
-
     " }}
 
     " clever-f {{{
@@ -324,4 +319,9 @@
 
     " }}}
 
+    " vim-polyglot {{
+
+        let g:polyglot_disabled = ['autoindent']
+
+    " }}
 " }

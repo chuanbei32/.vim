@@ -192,13 +192,13 @@
 			map ; <Plug>(clever-f-repeat-forward)
 			map , <Plug>(clever-f-repeat-back)
 
-			nnoremap <leader>fr <Plug>(clever-f-repeat-forward)
+			nnoremap <leader>ffe <Plug>(clever-f-repeat-forward)
 
 		" }}}
 
 		" AsyncRun {{{
 
-	    	nnoremap <leader>ar :AsyncRun -raw<space>
+	    	nnoremap <leader>arr :AsyncRun -raw<space>
 
 		" }}}
 
@@ -228,15 +228,15 @@
 
 		" DoxygenToolkit {{{
 
-	        nnoremap <leader>dta <cmd>DoxAuthor<cr>
-	  	  	nnoremap <leader>dtd <cmd>Dox<cr>
-	    	nnoremap <leader>dtc <cmd>DoxLic<cr>
+	        nnoremap <leader>dxa <cmd>DoxAuthor<cr>
+	  	  	nnoremap <leader>dxx <cmd>Dox<cr>
+	    	nnoremap <leader>dxl <cmd>DoxLic<cr>
 
 		" }}}
 
 		" dirvish {{{
 
-		    nnoremap <leader>dd <cmd>Dirvish<cr>
+		    nnoremap <leader>ddd <cmd>Dirvish<cr>
 
 		" }}}
 
@@ -273,7 +273,7 @@
 
 		" rainbow_levels {{{
 
-	        nnoremap <leader>rlt :RainbowLevelsToggle<cr>
+	        nnoremap <leader>rlt <cmd>RainbowLevelsToggle<cr>
 
 		" }}}
 
@@ -298,6 +298,13 @@
 
 		" easymotion {{{
 
+
+		" }}}
+
+		" vim-easy-align {{{
+
+    	    xmap ga <plug>(easyalign)
+	        nmap ga <Plug>(EasyAlign)
 
 		" }}}
 

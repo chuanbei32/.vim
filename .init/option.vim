@@ -2,10 +2,6 @@
 
     set nocompatible
 
-	filetype plugin on
-
-	syntax enable on
-
 	set
 		\ encoding=utf-8 fileencoding=utf-8 termencoding=utf-8 makeencoding=utf-8 printencoding=utf-8
 		\
@@ -13,19 +9,14 @@
 		\ 
 		\ " 编码
 
-	scriptencoding utf-8
-
 	" 备份
 	set backup backupext=.bak backupdir=~/.vim/_backupfiles 
-	silent! call mkdir(expand('~/.vim/_backupfiles'), "p", 0755)
 
 	" 交换
 	set swapfile directory=~/.vim/_swapfiles updatetime=300
-	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
 
 	" 撤销
 	set undofile undodir=~/.vim/_undofiles
-	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
 
 	set
 		\ runtimepath+=~/.vim/__ultisnips
