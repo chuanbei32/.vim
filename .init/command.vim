@@ -1,4 +1,11 @@
 " {
+	
+	" Command {{
+
+		" 保留当前buffer, 删除其他 buffer
+		command! BufferOnly silent! execute "%bd|e#|bd#"
+
+	" }}
 
 	" Event {{
 
@@ -42,9 +49,6 @@
 			" 插入模式下关闭折行
 			autocmd InsertEnter * :set nowrap
 
-			" 插入模式下开启粘贴模式
-			" autocmd InsertEnter * :set paste
-
 		" }}}
 
 	" }}
@@ -75,8 +79,6 @@
 	    augroup Commentary
 	        autocmd!
     		autocmd FileType php setlocal commentstring=//\ %s
-    		autocmd FileType js setlocal commentstring=//\ %s
-    		autocmd FileType ts setlocal commentstring=//\ %s
 	    augroup END
 
 	" }}

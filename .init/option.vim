@@ -1,31 +1,10 @@
 " {
+
     set nocompatible
 
 	filetype plugin on
 
-	syntax on
-
-	packadd! gruvbox-material
-
-	colorscheme gruvbox-material
-
-	set backup backupext=.bak backupdir=~/.vim/_backupfiles updatetime=300
-	silent! call mkdir(expand('~/.vim/_backupfiles'), "p", 0755)
-
-	set swapfile directory=~/.vim/_swapfiles
-	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
-
-	set undofile undodir=~/.vim/_undofiles
-	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
-	
-	set
-		\ runtimepath+=~/.vim/__ultisnips
-		\
-		\ viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
-		\
-		\ tags=./.tags;,.tags,tags
-		\
-		\ " 路径
+	syntax enable on
 
 	set
 		\ encoding=utf-8 fileencoding=utf-8 termencoding=utf-8 makeencoding=utf-8 printencoding=utf-8
@@ -36,10 +15,31 @@
 
 	scriptencoding utf-8
 
+	" 备份
+	set backup backupext=.bak backupdir=~/.vim/_backupfiles 
+	silent! call mkdir(expand('~/.vim/_backupfiles'), "p", 0755)
+
+	" 交换
+	set swapfile directory=~/.vim/_swapfiles updatetime=300
+	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
+
+	" 撤销
+	set undofile undodir=~/.vim/_undofiles
+	silent! call mkdir(expand('~/.vim/_swapfiles'), "p", 0755)
+
+	set
+		\ runtimepath+=~/.vim/__ultisnips
+		\
+		\ viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
+		\
+		\ tags=./.tags;,.tags,tags
+		\
+		\ " 路径
+
 	set
 		\ visualbell novisualbell errorbells noerrorbells belloff=all
 		\ 
-		\ " 警告声音
+		\ " 声音
 
 	set
 		\ autoindent smartindent cindent copyindent shiftwidth=4 breakindent breakindentopt=
@@ -52,11 +52,6 @@
 		\ " 折叠
 
 	set
-		\ wildmenu wildmode=list:longest,full wildignorecase showcmd history=10000
-		\ 
-		\ " 命令行
-
-	set
 		\ complete-=t.i completeopt-=preview
 		\ 
 		\ " 补全
@@ -67,9 +62,9 @@
 		\ " 匹配
 
 	set
-		\ ignorecase smartcase hlsearch incsearch nowrapscan path+=** suffixes=.backup magic
+		\ ignorecase smartcase hlsearch incsearch nowrapscan path+=** suffixes=.backup magic gdefault
 		\ 
-		\ " 搜索
+		\ " 查找/替换
 
 	set
 		\ number wrap virtualedit=block,onemore cursorline sidescrolloff=7 sidescroll=1 linebreak
@@ -88,33 +83,42 @@
 		\ " 超时
 
 	set
+		\ wildmenu wildmode=list:longest,full wildignorecase showcmd history=10000
+		\ 
+		\ " 命令行
+
+	set
 		\ modeline modelines=5
 		\ 
 		\ " 模式行
 
 	set
 		\ t_Co=256 t_RB= t_SH= t_RS= t_ut=
+		\
+		\ termwinkey=<c-_>
 		\ 
 		\ " 终端
 
 	set
-		\ background=dark ruler display+=lastline noshowmode
+		\ ruler display+=lastline noshowmode laststatus=2 showtabline=2 
+		\
+		\ background=dark 
+		\
+		\ iskeyword+=_,$,@,%,#,-
 		\
 		\ list listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 		\
-		\ showtabline=2 laststatus=2 splitbelow splitright winminheight=0 winminwidth=0
+		\ splitbelow splitright winminheight=0 winminwidth=0
 		\ 
-		\ autoread confirm shell=zsh ttyfast termwinkey=<c-_>
+		\ autoread confirm 
 		\
+		\ shell=zsh ttyfast 
+		\ 
 		\ hidden switchbuf+=usetab,newtab,useopen
 		\
-		\ formatoptions+=m,B fileformats=unix,dos,mac report=0 lazyredraw
+		\ formatoptions+=m,B fileformats=unix,dos,mac report=0 lazyredraw backspace=indent,eol,start
 		\
-		\ backspace=indent,eol,start
-		\
-		\ selection=inclusive selectmode+=mouse,key shortmess+=S clipboard+=unnamed diffopt+=vertical gdefault
-		\
-		\ iskeyword+=_,$,@,%,#,-
+		\ selection=inclusive selectmode+=mouse,key shortmess+=S clipboard+=unnamed diffopt+=vertical 
 		\
 		\ expandtab tabstop=4 softtabstop=4 smarttab viewoptions-=options nolangremap langnoremap shiftround
 		\

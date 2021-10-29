@@ -182,117 +182,122 @@
 			
 		" }}}
 
+		" clever-f {{{
+
+			map f <Plug>(clever-f-f)
+			map F <Plug>(clever-f-F)
+			map t <Plug>(clever-f-t)
+			map T <Plug>(clever-f-T)
+
+			map ; <Plug>(clever-f-repeat-forward)
+			map , <Plug>(clever-f-repeat-back)
+
+			nnoremap <leader>fr <Plug>(clever-f-repeat-forward)
+
+		" }}}
+
 		" AsyncRun {{{
 
-	    	nnoremap <leader>\ar :AsyncRun -raw<space>
+	    	nnoremap <leader>ar :AsyncRun -raw<space>
 
 		" }}}
 
 		" vimspector {{{
 
-			nnoremap <silent><nowait><leader>\dsn <Plug>VimspectorStepOver
-		    nnoremap <silent><nowait><leader>\dsb <Plug>VimspectorToggleBreakpoint
-		    nnoremap <silent><nowait><leader>\dss <Plug>VimspectorContinue
-		    nnoremap <silent><nowait><leader>\dsr <Plug>VimspectorRestart
-		    nnoremap <silent><nowait><leader>\dsp <Plug>VimspectorPause
-		    nnoremap <silent><nowait><leader>\dst <Plug>VimspectorStop
-		    nnoremap <silent><nowait><leader>\dsf <Plug>VimspectorAddFunctionBreakpoint
-		    nnoremap <silent><nowait><leader>\dsc <Plug>VimspectorToggleConditionalBreakpoint
-		    nnoremap <silent><nowait><leader>\dso <Plug>VimspectorStepOut
-		    nnoremap <silent><nowait><leader>\dsi <Plug>VimspectorStepInto
-		    nnoremap <silent><nowait><leader>\dsq :<C-u>VimspectorReset<CR>
-		    nnoremap <silent><nowait><leader>\dslc <Plug>VimspectorShowOutput Console<CR>
-		    nnoremap <silent><nowait><leader>\dsld <Plug>VimspectorShowOutput stderr<CR>
-		    nnoremap <silent><nowait><leader>\dslo <Plug>VimspectorShowOutput Vimspector-out<CR>
-		    nnoremap <silent><nowait><leader>\dsle <Plug>VimspectorShowOutput Vimspector-err<CR>
-		    nnoremap <silent><nowait><leader>\dsls <Plug>VimspectorShowOutput server<CR>
-		    nnoremap <silent><nowait><leader>\dslt <Plug>VimspectorShowOutput Telemetry<CR>
-		    nnoremap <silent><nowait><leader>\dse :<C-u>VimspectorEval<leader>
-		    nnoremap <silent><nowait><leader>\dsw :<C-u>VimspectorWatch<leader>
+			nnoremap <silent><nowait><leader>dsn <Plug>VimspectorStepOver
+		    nnoremap <silent><nowait><leader>dsb <Plug>VimspectorToggleBreakpoint
+		    nnoremap <silent><nowait><leader>dss <Plug>VimspectorContinue
+		    nnoremap <silent><nowait><leader>dsr <Plug>VimspectorRestart
+		    nnoremap <silent><nowait><leader>dsp <Plug>VimspectorPause
+		    nnoremap <silent><nowait><leader>dst <Plug>VimspectorStop
+		    nnoremap <silent><nowait><leader>dsf <Plug>VimspectorAddFunctionBreakpoint
+		    nnoremap <silent><nowait><leader>dsc <Plug>VimspectorToggleConditionalBreakpoint
+		    nnoremap <silent><nowait><leader>dso <Plug>VimspectorStepOut
+		    nnoremap <silent><nowait><leader>dsi <Plug>VimspectorStepInto
+		    nnoremap <silent><nowait><leader>dsq :<C-u>VimspectorReset<CR>
+		    nnoremap <silent><nowait><leader>dslc <Plug>VimspectorShowOutput Console<CR>
+		    nnoremap <silent><nowait><leader>dsld <Plug>VimspectorShowOutput stderr<CR>
+		    nnoremap <silent><nowait><leader>dslo <Plug>VimspectorShowOutput Vimspector-out<CR>
+		    nnoremap <silent><nowait><leader>dsle <Plug>VimspectorShowOutput Vimspector-err<CR>
+		    nnoremap <silent><nowait><leader>dsls <Plug>VimspectorShowOutput server<CR>
+		    nnoremap <silent><nowait><leader>dslt <Plug>VimspectorShowOutput Telemetry<CR>
+		    nnoremap <silent><nowait><leader>dse :<C-u>VimspectorEval<leader>
+		    nnoremap <silent><nowait><leader>dsw :<C-u>VimspectorWatch<leader>
 
 		" }}}
 
 		" DoxygenToolkit {{{
 
-	        nnoremap <leader>\dta <cmd>DoxAuthor<cr>
-	  	  	nnoremap <leader>\dtd <cmd>Dox<cr>
-	    	nnoremap <leader>\dtc <cmd>DoxLic<cr>
+	        nnoremap <leader>dta <cmd>DoxAuthor<cr>
+	  	  	nnoremap <leader>dtd <cmd>Dox<cr>
+	    	nnoremap <leader>dtc <cmd>DoxLic<cr>
 
 		" }}}
 
 		" dirvish {{{
 
-		    nnoremap <leader>\ddd <Plug>(dirvish_up)
+		    nnoremap <leader>dd <cmd>Dirvish<cr>
 
 		" }}}
 
 		" leaderF {{{
 
-		    nnoremap <leader>\lfe <cmd>Leaderf file<cr>
-		    nnoremap <leader>\lfn <cmd>Leaderf function<cr>
+		    nnoremap <leader>lfe <cmd>Leaderf file<cr>
+		    nnoremap <leader>lfn <cmd>Leaderf function<cr>
 
-		    nnoremap <leader>\lfb <cmd>Leaderf buffer<cr>
-		    nnoremap <leader>\lfg :Leaderf rg -e<space>
-		    nnoremap <leader>\lfm <cmd>Leaderf mru<cr>
-		    nnoremap <leader>\lft <cmd>Leaderf tag<cr>
+		    nnoremap <leader>lfb <cmd>Leaderf buffer<cr>
+		    nnoremap <leader>lfg :Leaderf rg -e<space>
+		    nnoremap <leader>lfm <cmd>Leaderf mru<cr>
+		    nnoremap <leader>lft <cmd>Leaderf tag<cr>
 
 	    " }}}
 
 		" git-blame {{{
 
-			nnoremap <leader>\gbb <cmd>GitBlame<cr>
+			nnoremap <leader>gbb <cmd>GitBlame<cr>
 
 		" }}}
 
 		" git-messenger {{{
 
-			nnoremap <leader>\gmm <cmd>GitMessenger<cr>
+			nnoremap <leader>gmm <cmd>GitMessenger<cr>
 
 		" }}}
 
 		" neoformat {{{
 
-	    	nnoremap <leader>\nfr <cmd>Neoformat<cr>
-			nnoremap <leader>\nfv :Neoformat!<space>
+	    	nnoremap <leader>nfr <cmd>Neoformat<cr>
+			nnoremap <leader>nfv :Neoformat!<space>
 
 		" }}}
 
 		" rainbow_levels {{{
 
-	        nnoremap <leader>\rlt :RainbowLevelsToggle<cr>
+	        nnoremap <leader>rlt :RainbowLevelsToggle<cr>
 
 		" }}}
 
 		" CtrlSF {{{
 
-		    nnoremap <Leader>\sfg :CtrlSF<space>
-		    nnoremap <Leader>\sfr :CtrlSF -R -I<space>
+		    nnoremap <leader>sfg :CtrlSF<space>
+		    nnoremap <leader>sfr :CtrlSF -R -I<space>
 
 		" }}}
 
 		" tagbar {{{
 
-		    nnoremap <leader>\tbt <cmd>TagbarToggle<cr>
+		    nnoremap <leader>tbt <cmd>TagbarToggle<cr>
 
 		" }}}
 
 		" mundo {{{
 
-			nnoremap <leader>\mut <cmd>MundoToggle<cr>
+			nnoremap <leader>mut <cmd>MundoToggle<cr>
 
 		" }}}
 
 		" easymotion {{{
 
-	        " noremap ; <Plug>(easymotion-prefix)
-
-		" }}}
-
-		" clever-f {{{
-
-			noremap <leader>\cfe <Plug>(clever-f-repeat-forward)
-			noremap ; <Plug>(clever-f-repeat-forward)
-			noremap , <Plug>(clever-f-repeat-back)
 
 		" }}}
 
