@@ -27,6 +27,13 @@
 		\
 		\ " 路径
 
+	set 
+		\ sessionoptions-=options,curdir,options,localoptions
+		\ 
+		\ sessionoptions+=globals,skiprtp,resize,winpos
+		\
+		\ " 会话
+
 	set
 		\ visualbell novisualbell errorbells noerrorbells belloff=all
 		\ 
@@ -113,7 +120,7 @@
 		\
 		\ expandtab tabstop=4 softtabstop=4 smarttab viewoptions-=options nolangremap langnoremap shiftround
 		\
-		\ synmaxcol=0 nrformats-=octal sessionoptions-=options sessionoptions-=curdir sessionoptions+=globals
+		\ synmaxcol=0 nrformats-=octal 
 		\ 
 		\ " 其他
 

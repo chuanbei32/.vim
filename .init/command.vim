@@ -23,7 +23,7 @@
 			" autocmd VimEnter * highlight Normal guibg=NONE ctermbg=NONE 
 
 			" 自动开启 tagbar 插件
-    		autocmd VimEnter * :TagbarToggle
+    		" autocmd VimEnter * :TagbarToggle
 
 		" }}}
 

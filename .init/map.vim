@@ -51,7 +51,7 @@
 	" buffer {{
 
 		" nnoremap <leader>ba :badd<space>
-		nnoremap <leader>bs <c-^>
+		nnoremap <leader>bx <c-^>
 		nnoremap <leader>bl <cmd>buffers<cr>
 		nnoremap <leader>bb :buffer<space>
 		nnoremap <leader>bn <cmd>bnext<cr>
@@ -154,6 +154,12 @@
 
 	" }}
 
+	" viminfo {{
+
+		nnoremap <leader>vs <cmd>wviminfo!<cr>
+
+	" }}
+
 	" terminal {{
 
 		nnoremap <leader>tm <cmd>terminal<cr>
@@ -204,25 +210,25 @@
 
 		" vimspector {{{
 
-			nnoremap <leader>dsn <Plug>VimspectorStepOver
-		    nnoremap <leader>dsb <Plug>VimspectorToggleBreakpoint
-		    nnoremap <leader>dss <Plug>VimspectorContinue
-		    nnoremap <leader>dsr <Plug>VimspectorRestart
-		    nnoremap <leader>dsp <Plug>VimspectorPause
-		    nnoremap <leader>dst <Plug>VimspectorStop
-		    nnoremap <leader>dsf <Plug>VimspectorAddFunctionBreakpoint
-		    nnoremap <leader>dsc <Plug>VimspectorToggleConditionalBreakpoint
-		    nnoremap <leader>dso <Plug>VimspectorStepOut
-		    nnoremap <leader>dsi <Plug>VimspectorStepInto
-		    nnoremap <leader>dsq <cmd><C-u>VimspectorReset<CR>
-		    nnoremap <leader>dslc <Plug>VimspectorShowOutput Console<CR>
-		    nnoremap <leader>dsld <Plug>VimspectorShowOutput stderr<CR>
-		    nnoremap <leader>dslo <Plug>VimspectorShowOutput Vimspector-out<CR>
-		    nnoremap <leader>dsle <Plug>VimspectorShowOutput Vimspector-err<CR>
-		    nnoremap <leader>dsls <Plug>VimspectorShowOutput server<CR>
-		    nnoremap <leader>dslt <Plug>VimspectorShowOutput Telemetry<CR>
-		    nnoremap <leader>dse :<C-u>VimspectorEval<leader>
-		    nnoremap <leader>dsw :<C-u>VimspectorWatch<leader>
+			nmap <leader>dsn <Plug>VimspectorStepOver
+		    nmap <leader>dsb <Plug>VimspectorToggleBreakpoint
+		    nmap <leader>dss <Plug>VimspectorContinue
+		    nmap <leader>dsr <Plug>VimspectorRestart
+		    nmap <leader>dsp <Plug>VimspectorPause
+		    nmap <leader>dst <Plug>VimspectorStop
+		    nmap <leader>dsf <Plug>VimspectorAddFunctionBreakpoint
+		    nmap <leader>dsc <Plug>VimspectorToggleConditionalBreakpoint
+		    nmap <leader>dso <Plug>VimspectorStepOut
+		    nmap <leader>dsi <Plug>VimspectorStepInto
+		    nmap <leader>dsq <cmd><C-u>VimspectorReset<CR>
+		    nmap <leader>dslc <Plug>VimspectorShowOutput Console<CR>
+		    nmap <leader>dsld <Plug>VimspectorShowOutput stderr<CR>
+		    nmap <leader>dslo <Plug>VimspectorShowOutput Vimspector-out<CR>
+		    nmap <leader>dsle <Plug>VimspectorShowOutput Vimspector-err<CR>
+		    nmap <leader>dsls <Plug>VimspectorShowOutput server<CR>
+		    nmap <leader>dslt <Plug>VimspectorShowOutput Telemetry<CR>
+		    nmap <leader>dse :<C-u>VimspectorEval<leader>
+		    nmap <leader>dsw :<C-u>VimspectorWatch<leader>
 
 		" }}}
 

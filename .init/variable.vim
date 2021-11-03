@@ -71,6 +71,8 @@
 
     " vimspector {{
 
+        let g:vimspector_enable_mappings = 'HUMAN'
+
         sign define vimspectorBP text=o             texthl=WarningMsg
         sign define vimspectorBPCond text=o?        texthl=WarningMsg
         sign define vimspectorBPDisabled text=o!    texthl=LineNr
@@ -145,7 +147,7 @@
 
     " leaderF {{
 
-        " let g:Lf_WorkingDirectoryMode = 'Ac'
+        " let g:Lf_WorkingDirectoryMode = 'A'
         " let g:Lf_WorkingDirectory = finddir('.root')
 
         let g:Lf_PreviewInPopup = 1
