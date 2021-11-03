@@ -51,7 +51,7 @@
 	" buffer {{
 
 		" nnoremap <leader>ba :badd<space>
-		nnoremap <leader>bx <c-^>
+		nnoremap <leader>bs <c-^>
 		nnoremap <leader>bl <cmd>buffers<cr>
 		nnoremap <leader>bb :buffer<space>
 		nnoremap <leader>bn <cmd>bnext<cr>
@@ -204,25 +204,25 @@
 
 		" vimspector {{{
 
-			nnoremap <silent><nowait><leader>dsn <Plug>VimspectorStepOver
-		    nnoremap <silent><nowait><leader>dsb <Plug>VimspectorToggleBreakpoint
-		    nnoremap <silent><nowait><leader>dss <Plug>VimspectorContinue
-		    nnoremap <silent><nowait><leader>dsr <Plug>VimspectorRestart
-		    nnoremap <silent><nowait><leader>dsp <Plug>VimspectorPause
-		    nnoremap <silent><nowait><leader>dst <Plug>VimspectorStop
-		    nnoremap <silent><nowait><leader>dsf <Plug>VimspectorAddFunctionBreakpoint
-		    nnoremap <silent><nowait><leader>dsc <Plug>VimspectorToggleConditionalBreakpoint
-		    nnoremap <silent><nowait><leader>dso <Plug>VimspectorStepOut
-		    nnoremap <silent><nowait><leader>dsi <Plug>VimspectorStepInto
-		    nnoremap <silent><nowait><leader>dsq :<C-u>VimspectorReset<CR>
-		    nnoremap <silent><nowait><leader>dslc <Plug>VimspectorShowOutput Console<CR>
-		    nnoremap <silent><nowait><leader>dsld <Plug>VimspectorShowOutput stderr<CR>
-		    nnoremap <silent><nowait><leader>dslo <Plug>VimspectorShowOutput Vimspector-out<CR>
-		    nnoremap <silent><nowait><leader>dsle <Plug>VimspectorShowOutput Vimspector-err<CR>
-		    nnoremap <silent><nowait><leader>dsls <Plug>VimspectorShowOutput server<CR>
-		    nnoremap <silent><nowait><leader>dslt <Plug>VimspectorShowOutput Telemetry<CR>
-		    nnoremap <silent><nowait><leader>dse :<C-u>VimspectorEval<leader>
-		    nnoremap <silent><nowait><leader>dsw :<C-u>VimspectorWatch<leader>
+			nnoremap <leader>dsn <Plug>VimspectorStepOver
+		    nnoremap <leader>dsb <Plug>VimspectorToggleBreakpoint
+		    nnoremap <leader>dss <Plug>VimspectorContinue
+		    nnoremap <leader>dsr <Plug>VimspectorRestart
+		    nnoremap <leader>dsp <Plug>VimspectorPause
+		    nnoremap <leader>dst <Plug>VimspectorStop
+		    nnoremap <leader>dsf <Plug>VimspectorAddFunctionBreakpoint
+		    nnoremap <leader>dsc <Plug>VimspectorToggleConditionalBreakpoint
+		    nnoremap <leader>dso <Plug>VimspectorStepOut
+		    nnoremap <leader>dsi <Plug>VimspectorStepInto
+		    nnoremap <leader>dsq <cmd><C-u>VimspectorReset<CR>
+		    nnoremap <leader>dslc <Plug>VimspectorShowOutput Console<CR>
+		    nnoremap <leader>dsld <Plug>VimspectorShowOutput stderr<CR>
+		    nnoremap <leader>dslo <Plug>VimspectorShowOutput Vimspector-out<CR>
+		    nnoremap <leader>dsle <Plug>VimspectorShowOutput Vimspector-err<CR>
+		    nnoremap <leader>dsls <Plug>VimspectorShowOutput server<CR>
+		    nnoremap <leader>dslt <Plug>VimspectorShowOutput Telemetry<CR>
+		    nnoremap <leader>dse :<C-u>VimspectorEval<leader>
+		    nnoremap <leader>dsw :<C-u>VimspectorWatch<leader>
 
 		" }}}
 

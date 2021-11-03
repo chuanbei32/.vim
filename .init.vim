@@ -1,7 +1,7 @@
 " { 
     
-    " packloadall!
-    
+    filetype plugin on
+
     let g:config_file_list = [
         \ 'option.vim',
         \ 'variable.vim',
@@ -16,12 +16,12 @@
         execute printf('source %s/%s/.init/%s', g:vim_config_root, '.vim', s:fname)
     endfor
 
-    filetype plugin on
-
-    syntax enable on
-
     scriptencoding utf-8
 
+    packloadall!
+
+    syntax enable on
+    
     packadd! gruvbox-material
 
     colorscheme gruvbox-material

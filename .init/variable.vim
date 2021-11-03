@@ -324,4 +324,11 @@
         let g:polyglot_disabled = ['autoindent']
 
     " }}
+
+    " vim-rooter {{
+
+        let g:rooter_patterns = ['.git', '.svn', 'Makefile', '.root']
+
+    " }}
+
 " }
