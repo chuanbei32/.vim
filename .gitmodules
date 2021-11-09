@@ -137,9 +137,6 @@
 [submodule "pack/vendor/start/targets"]
 	path = pack/vendor/start/targets
 	url = https://github.com/wellle/targets.vim.git
-[submodule "pack/vendor/start/vim-trailing-whitespace"]
-	path = pack/vendor/start/vim-trailing-whitespace
-	url = https://github.com/bronson/vim-trailing-whitespace.git
 [submodule "pack/vendor/start/asynctasks"]
 	path = pack/vendor/start/asynctasks
 	url = https://github.com/skywind3000/asynctasks.vim.git

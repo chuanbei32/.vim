@@ -37,27 +37,30 @@
 	nnoremap gk k
 	nnoremap gj j
 	
-	nnoremap <leader>nh <cmd>nohlsearch<cr>
-	inoremap <leader>sp <cmd>set paste<cr>
+	nnoremap <leader>nhs <cmd>nohlsearch<cr>
+	nnoremap <leader>fws <cmd>%s/\\\@<!\s\+$//<cr>
 
-	" ctrl {{
-
-	" }}
-
-	" alt {{
-
-	" }}
+	inoremap <leader>isp <cmd>set paste<cr>
 
 	" buffer {{
 
 		" nnoremap <leader>ba :badd<space>
-		nnoremap <leader>bx <c-^>
+
 		nnoremap <leader>bl <cmd>buffers<cr>
-		nnoremap <leader>bb :buffer<space>
+
 		nnoremap <leader>bn <cmd>bnext<cr>
 		nnoremap <leader>bp <cmd>bprevious<cr>
+
 		nnoremap <leader>bd :bdelete<space>
 		nnoremap <leader>bo <cmd>BufferOnly<cr>
+		nnoremap <leader>bc <cmd>BufferCurrent<cr>
+
+		nnoremap <leader>bb :buffer<space>
+		nnoremap <leader>bx <c-^>
+
+		nnoremap <leader>br <cmd>bufdo e<cr>
+		nnoremap <leader>be <cmd>e<cr>
+
 
 		" 水平分割
 		nnoremap <leader>bsl :sbuffer<space>
@@ -115,7 +118,7 @@
 		nnoremap <leader>tff :tabfind<space>
 		nnoremap <leader>tfn :tabnew<space>
 
-		nnoremap <leader>ts <cmd>tabs<cr>
+		nnoremap <leader>tl <cmd>tabs<cr>
 
 		nnoremap <leader>tn <cmd>tabnext<cr>
 		nnoremap <leader>tp <cmd>tabprev<cr>
@@ -150,7 +153,8 @@
 
 	" session {{
 
-		nnoremap <leader>ss <cmd>mksession!<cr>
+		nnoremap <leader>ss :mksession! ~/.vim/__session/.vim<left><left><left><left>
+		nnoremap <leader>sr :source ~/.vim/__session/
 
 	" }}
 

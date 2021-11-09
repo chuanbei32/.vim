@@ -5,6 +5,9 @@
 		" 保留当前buffer, 删除其他 buffer
 		command! BufferOnly silent! execute "%bd|e#|bd#"
 
+		" 删除当前buffer
+		command! BufferCurrent silent! execute "bd%"
+
 	" }}
 
 	" Event {{
@@ -76,9 +79,19 @@
 	        autocmd User VimspectorUICreated call g:CustomiseUI()
 	    augroup END
 
+	    " 设置注释所用字符串
 	    augroup Commentary
 	        autocmd!
     		autocmd FileType php setlocal commentstring=//\ %s
+	    augroup END
+
+	    " 设置空白显示方式
+	    augroup Whitespace
+	    	autocmd!
+    		autocmd ColorScheme * highlight default ExtraWhitespace ctermbg=darkred guibg=darkred
+			autocmd BufRead,BufNew * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+$/
+			autocmd InsertLeave * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+$/ 
+			autocmd InsertEnter * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+\%#\@<!$/ 
 	    augroup END
 
 	" }}

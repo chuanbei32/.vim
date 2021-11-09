@@ -11,12 +11,15 @@
 
 	" 备份
 	set backup backupext=.bak backupdir=~/.vim/_backupfiles 
+    silent! call mkdir(expand('~/.vim/_backupfiles'), 'p', 0755)
 
 	" 交换
 	set swapfile directory=~/.vim/_swapfiles updatetime=300
+    silent! call mkdir(expand('~/.vim/_swapfiles'), 'p', 0755)
 
 	" 撤销
 	set undofile undodir=~/.vim/_undofiles
+    silent! call mkdir(expand('~/.vim/_undofiles'), 'p', 0755)
 
 	set
 		\ runtimepath+=~/.vim/__ultisnips
@@ -28,9 +31,9 @@
 		\ " 路径
 
 	set 
-		\ sessionoptions-=options,curdir,options,localoptions
+		\ sessionoptions-=curdir,options
 		\ 
-		\ sessionoptions+=globals,skiprtp,resize,winpos
+		\ sessionoptions+=globals,skiprtp,resize,winpos,unix
 		\
 		\ " 会话
 
@@ -40,7 +43,7 @@
 		\ " 声音
 
 	set
-		\ autoindent smartindent cindent copyindent shiftwidth=4 breakindent breakindentopt=
+		\ autoindent smartindent cindent copyindent shiftwidth=4 breakindent
 		\ 
 		\ " 缩进
 
@@ -60,25 +63,27 @@
 		\ " 匹配
 
 	set
-		\ ignorecase smartcase hlsearch incsearch nowrapscan path+=** suffixes=.backup magic gdefault
+		\ ttimeout ttimeoutlen=10 timeoutlen=500 notimeout
 		\ 
-		\ " 查找/替换
+		\ " 超时
 
 	set
-		\ number wrap virtualedit=block,onemore cursorline sidescrolloff=7 sidescroll=1 linebreak
+		\ t_Co=256 t_RB= t_SH= t_RS= t_ut=
+		\
+		\ termwinkey=<c-_>
+		\ 
+		\ " 终端
+
+	set
+		\ number wrap virtualedit=block,onemore cursorline sidescrolloff=10 sidescroll=1 linebreak
 		\ 
 		\ " 行
 
 	set
 		\ 
-		\ relativenumber colorcolumn=80,120,180 scrolloff=1 scrolljump=1 signcolumn=yes
+		\ relativenumber colorcolumn=80,120,180 scrolloff=2 scrolljump=1 signcolumn=yes
 		\ 
 		\ " 列
-
-	set
-		\ ttimeout ttimeoutlen=10 timeoutlen=500 notimeout
-		\ 
-		\ " 超时
 
 	set
 		\ wildmenu wildmode=list:longest,full wildignorecase showcmd history=10000
@@ -91,11 +96,9 @@
 		\ " 模式行
 
 	set
-		\ t_Co=256 t_RB= t_SH= t_RS= t_ut=
-		\
-		\ termwinkey=<c-_>
+		\ ignorecase smartcase hlsearch incsearch nowrapscan path+=** suffixes=.backup magic gdefault
 		\ 
-		\ " 终端
+		\ " 查找/替换
 
 	set
 		\ ruler display+=lastline noshowmode laststatus=2 showtabline=2 
@@ -118,7 +121,7 @@
 		\
 		\ selection=inclusive selectmode+=mouse,key shortmess+=S clipboard+=unnamed diffopt+=vertical 
 		\
-		\ expandtab tabstop=4 softtabstop=4 smarttab viewoptions-=options nolangremap langnoremap shiftround
+		\ expandtab tabstop=4 softtabstop=4 smarttab viewoptions-=options nolangremap nolangnoremap shiftround
 		\
 		\ synmaxcol=0 nrformats-=octal 
 		\ 
