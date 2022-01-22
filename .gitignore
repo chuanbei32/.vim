@@ -1,4 +1,7 @@
-tags
+# 目录
 _swapfiles/*
 _undofiles/*
 _backupfiles/*
+
+# 文件
+tags
