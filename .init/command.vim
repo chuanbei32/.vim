@@ -1,5 +1,5 @@
 " {
-	
+
 	" Command {{
 
 		" 保留当前buffer, 删除其他 buffer
@@ -10,58 +10,35 @@
 
 	" }}
 
-	" Event {{
-
-		" BufWritePost 把整个缓冲区写回到文件后 {{{
-
-			" 重载配置文件「目前无效」
-			" autocmd! BufWritePost .vimrc source ~/.vimrc
-
-		" }}}
-
-
-		" VimEnter 完成所有的初始化步骤后 {{{
-
-			" 修改背景色为透明
-			" autocmd VimEnter * highlight Normal guibg=NONE ctermbg=NONE 
-
-			" 自动开启 tagbar 插件
-    		" autocmd VimEnter * :TagbarToggle
-
-		" }}}
-
-
-		" InsertLeave 离开插入模式时 {{{
-
-			" 普通模式下用相对行号
-			autocmd InsertLeave * :set relativenumber
-
-			" 普通模式下开启折行
-			autocmd InsertLeave * :set wrap
-
-			" 普通模式下关闭粘贴模式
-			autocmd InsertLeave * :set nopaste
-
-		" }}}
-
-		" InsertEnter 刚开始插入模式之前, 也适用于替换模式和虚拟替换模式 {{{
-		
-			" 插入模式下用绝对行号
-			autocmd InsertEnter * :set norelativenumber number
-
-			" 插入模式下关闭折行
-			autocmd InsertEnter * :set nowrap
-
-		" }}}
-
-	" }}
-
-	" Custom Event {{
-
-
-	" }}
-
 	" Autocmd {{
+
+		" 重载配置文件「目前无效」
+		" autocmd! BufWritePost .vimrc source ~/.vimrc
+
+		" 修改背景色为透明
+		" autocmd VimEnter * highlight Normal guibg=NONE ctermbg=NONE 
+
+		" 自动开启 tagbar 插件
+		" autocmd VimEnter * :TagbarToggle
+
+		" 普通模式下用相对行号
+		autocmd InsertLeave * :set relativenumber
+
+		" 普通模式下开启折行
+		autocmd InsertLeave * :set wrap
+
+		" 普通模式下关闭粘贴模式
+		autocmd InsertLeave * :set nopaste
+		
+		" 插入模式下用绝对行号
+		autocmd InsertEnter * :set norelativenumber number
+
+		" 插入模式下关闭折行
+		autocmd InsertEnter * :set nowrap
+
+		autocmd FocusGained * checktime
+		autocmd FocusGained,BufEnter * checktime
+		autocmd CursorHold,CursorHoldI * checktime
 
 	" }}
 
@@ -83,6 +60,7 @@
 	    augroup Commentary
 	        autocmd!
     		autocmd FileType php setlocal commentstring=//\ %s
+    		autocmd FileType c setlocal commentstring=//\ %s
 	    augroup END
 
 	    " 设置空白显示方式

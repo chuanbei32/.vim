@@ -59,7 +59,7 @@
 		nnoremap <leader>bx <c-^>
 
 		nnoremap <leader>br <cmd>bufdo e<cr>
-		nnoremap <leader>be <cmd>e<cr>
+		nnoremap <leader>be <cmd>e
 
 
 		" 水平分割
@@ -224,7 +224,7 @@
 		    nmap <leader>dsc <Plug>VimspectorToggleConditionalBreakpoint
 		    nmap <leader>dso <Plug>VimspectorStepOut
 		    nmap <leader>dsi <Plug>VimspectorStepInto
-		    nmap <leader>dsq <cmd><C-u>VimspectorReset<CR>
+		    nmap <leader>dsq <cmd>VimspectorReset<CR>
 		    nmap <leader>dslc <Plug>VimspectorShowOutput Console<CR>
 		    nmap <leader>dsld <Plug>VimspectorShowOutput stderr<CR>
 		    nmap <leader>dslo <Plug>VimspectorShowOutput Vimspector-out<CR>

@@ -191,3 +191,6 @@
 [submodule "pack/vendor/start/vim-startify"]
 	path = pack/vendor/start/vim-startify
 	url = https://github.com/mhinz/vim-startify.git
+[submodule "pack/vendor/start/vim-dirvish-git"]
+	path = pack/vendor/start/vim-dirvish-git
+	url = https://github.com/kristijanhusak/vim-dirvish-git.git

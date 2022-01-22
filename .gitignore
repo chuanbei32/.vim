@@ -1,5 +1,8 @@
 tags
 _backupfiles/*
-_session/*
 _swapfiles/*
 _undofiles/*
+__session/*
+__undofiles/*
+__formats/*
+__ultisnips

@@ -1447,10 +1447,17 @@ run 'cut -c3- ~/.tmux.conf | sh -s _apply_configuration'
 # "$@"
 
 # set -g mouse on
-# set -g default-terminal screen-256color
-# set-option -ga terminal-overrides ",*256col*:Tc"
+set -g default-terminal screen-256color
+set-option -ga terminal-overrides ",*256col*:Tc"
 setw -g mode-keys vi
 
 run-shell /iwork/project/.tmux/plugins/plugins/tmux-resurrect/resurrect.tmux
 run-shell /iwork/project/.tmux/plugins/plugins/tmux-continuum/continuum.tmux
 
+# 每分钟保存一次（这获取比较频繁）
+set -g @continuum-save-interval '1'
+
+# 当启动 tmux 进程时，自动恢复之前的布局
+set -g @continuum-restore 'on'''''
+
+unbind C-b

@@ -17,7 +17,6 @@
             \ 'coc-highlight', 
             \ 'coc-cssmodules', 
             \ 'coc-emmet', 
-            \ 'coc-graphql', 
             \ 'coc-html-css-support',
             \ '@yaegassy/coc-nginx', 
             \ 'coc-perl',
@@ -71,7 +70,7 @@
 
     " vimspector {{
 
-        let g:vimspector_enable_mappings = 'HUMAN'
+        " let g:vimspector_enable_mappings = 'HUMAN'
 
         sign define vimspectorBP text=o             texthl=WarningMsg
         sign define vimspectorBPCond text=o?        texthl=WarningMsg
@@ -274,6 +273,26 @@
 
     " dirvish {{
         
+    " }}
+
+    " vim-dirvish-git {{
+
+        let g:dirvish_git_show_ignored = 1
+        let g:dirvish_git_show_icons = 0
+
+        let g:modified = 'guifg=#EBCB8B ctermfg=3'
+        let g:added = 'guifg=#A3BE8C ctermfg=2'
+        let g:unmerged = 'guifg=#BF616A ctermfg=1'
+
+        silent exe 'hi default DirvishGitModified '.g:modified
+        silent exe 'hi default DirvishGitStaged '.g:added
+        silent exe 'hi default DirvishGitRenamed '.g:modified
+        silent exe 'hi default DirvishGitUnmerged '.g:unmerged
+        silent exe 'hi default DirvishGitIgnored guifg=NONE guibg=NONE gui=NONE cterm=NONE ctermfg=NONE ctermbg=NONE'
+        silent exe 'hi default DirvishGitUntracked guifg=NONE guibg=NONE gui=NONE cterm=NONE ctermfg=NONE ctermbg=NONE'
+        " Untracked dir linked to Dirvish default dir color
+        silent exe 'hi default link DirvishGitUntrackedDir DirvishPathTail'
+
     " }}
 
     " git-messenger {{
