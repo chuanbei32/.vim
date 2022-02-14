@@ -1,24 +1,24 @@
 " {
 
     " coc {{
-        
-        let g:coc_global_extensions = [ 
-            \ 'coc-json', 
-            \ 'coc-xml', 
-            \ 'coc-yaml', 
-            \ 'coc-vetur', 
-            \ 'coc-toml', 
-            \ 'coc-html', 
-            \ 'coc-css', 
-            \ 'coc-tsserver', 
-            \ 'coc-svg', 
-            \ 'coc-sql', 
-            \ 'coc-sh', 
-            \ 'coc-highlight', 
-            \ 'coc-cssmodules', 
-            \ 'coc-emmet', 
+
+        let g:coc_global_extensions = [
+            \ 'coc-json',
+            \ 'coc-xml',
+            \ 'coc-yaml',
+            \ 'coc-vetur',
+            \ 'coc-toml',
+            \ 'coc-html',
+            \ 'coc-css',
+            \ 'coc-tsserver',
+            \ 'coc-svg',
+            \ 'coc-sql',
+            \ 'coc-sh',
+            \ 'coc-highlight',
+            \ 'coc-cssmodules',
+            \ 'coc-emmet',
             \ 'coc-html-css-support',
-            \ '@yaegassy/coc-nginx', 
+            \ '@yaegassy/coc-nginx',
             \ 'coc-perl',
             \ 'coc-lua',
             \ ]
@@ -83,7 +83,7 @@
     " }}
 
     " asyncrun {{
-        
+
         let g:asyncrun_open = 10
 
         let $PYTHONNUNBUFFERED=1
@@ -91,15 +91,15 @@
     " }}
 
     " test {{
-        
+
     " }}
 
     " asynctasks {{
-        
+
     " }}
 
     " ultisnips {{
-        
+
         let g:UltiSnipsExpandTrigger="<leader>us"
 
         let g:UltiSnipsSnippetDirectories=[
@@ -109,7 +109,7 @@
     " }}
 
     " DoxygenToolkit {{
-        
+
         let g:DoxygenToolkit_briefTag_funcName = "yes"
         let g:DoxygenToolkit_briefTag_pre = "@brief "
         let g:DoxygenToolkit_briefTag_post = ""
@@ -159,7 +159,7 @@
 
         let g:Lf_WildIgnore = {
             \ 'dir': [
-                \ '.git', 
+                \ '.git',
                 \ 'node_modules'
                 \ ],
             \ }
@@ -183,19 +183,48 @@
 
     " }}
 
-    " vim-airline-themes {{
+    " gruvbox-material {{
 
-        let g:airline_theme='gruvbox_material'
+        if exists('+termguicolors')
+            let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+            let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+            set termguicolors
+        endif
+
+        let g:gruvbox_material_enable_bold = 0
+
+        let g:gruvbox_material_enable_italic = 0
+
+        let g:gruvbox_material_disable_italic_comment = 1
+
+        let g:gruvbox_material_visual = 'grey background'
+        let g:gruvbox_material_sign_column_background = 'none'
+        let g:gruvbox_material_transparent_background = 1
+        let g:gruvbox_material_ui_contrast = 'low'
+        " let g:gruvbox_material_diagnostic_text_highlight = 1
+        " let g:gruvbox_material_diagnostic_line_highlight = 1
+
+        let g:gruvbox_material_current_word = 'grey background'
+
+        let g:gruvbox_material_statusline_style = 'mix'
+
+        let g:gruvbox_material_palette = 'mix'
+        let g:gruvbox_material_background = 'hard'
 
     " }}
 
     " vim-airline {{
 
-        let g:airline_powerline_fonts = 1
+        let g:airline_theme='gruvbox_material'
 
         if !exists('g:airline_symbols')
             let g:airline_symbols = {}
         endif
+
+        " let g:airline_left_sep=''
+        " let g:airline_right_sep=''
+
+        let g:airline_powerline_fonts = 1
 
         let g:airline#extensions#tabline#enabled = 1
         " let g:airline#extensions#tabline#left_sep = ' '
@@ -205,7 +234,7 @@
         let g:airline#extensions#whitespace#enabled=0
 
         " let g:airline_statusline_ontop = 1
-       
+
     " }}
 
     " indentLine {{
@@ -229,7 +258,7 @@
     " sneak {{
 
         " let g:sneak#label = 1
-        
+
     " }}
 
     " easymotion {{
@@ -244,7 +273,7 @@
     " }}
 
     " CtrlSF {{
-        
+
         let g:ctrlsf_auto_focus = {
             \ "at": "start"
             \ }
@@ -256,7 +285,7 @@
     " }}
 
     " vim-choosewin {{
-        
+
     " }}
 
     " rainbow_levels {{
@@ -264,7 +293,7 @@
     " }}
 
     " tcomment {{
-        
+
     " }}
 
     " vim-which-key {{
@@ -272,26 +301,6 @@
     " }}
 
     " dirvish {{
-        
-    " }}
-
-    " vim-dirvish-git {{
-
-        let g:dirvish_git_show_ignored = 1
-        let g:dirvish_git_show_icons = 0
-
-        let g:modified = 'guifg=#EBCB8B ctermfg=3'
-        let g:added = 'guifg=#A3BE8C ctermfg=2'
-        let g:unmerged = 'guifg=#BF616A ctermfg=1'
-
-        silent exe 'hi default DirvishGitModified '.g:modified
-        silent exe 'hi default DirvishGitStaged '.g:added
-        silent exe 'hi default DirvishGitRenamed '.g:modified
-        silent exe 'hi default DirvishGitUnmerged '.g:unmerged
-        silent exe 'hi default DirvishGitIgnored guifg=NONE guibg=NONE gui=NONE cterm=NONE ctermfg=NONE ctermbg=NONE'
-        silent exe 'hi default DirvishGitUntracked guifg=NONE guibg=NONE gui=NONE cterm=NONE ctermfg=NONE ctermbg=NONE'
-        " Untracked dir linked to Dirvish default dir color
-        silent exe 'hi default link DirvishGitUntrackedDir DirvishPathTail'
 
     " }}
 
@@ -302,43 +311,9 @@
 
     " }}
 
-
-    " gruvbox-material {{
-
-        " let g:gruvbox_material_enable_italic = 1
-
-        let g:gruvbox_material_disable_italic_comment = 1
-
-        let g:gruvbox_material_enable_bold = 1
-
-        let g:gruvbox_material_visual = 'grey background'
-        let g:gruvbox_material_sign_column_background = 'default'
-        let g:gruvbox_material_transparent_background = 1
-        let g:gruvbox_material_ui_contrast = 'high'
-        " let g:gruvbox_material_diagnostic_text_highlight = 1
-        " let g:gruvbox_material_diagnostic_line_highlight = 1
-
-        let g:gruvbox_material_current_word = 'grey background'
-
-        let g:gruvbox_material_statusline_style = 'mix'
-
-        let g:gruvbox_material_palette = 'mix'
-        let g:gruvbox_material_background = 'hard'
-
-    " }}
-
-
     " vim-easy-align {{
 
     " }}
-
-    " clever-f {{{
-    
-        let g:clever_f_across_no_line = 1
-        let g:clever_f_ignore_case  = 1
-        let g:clever_f_mark_direct = 1
-
-    " }}}
 
     " vim-polyglot {{
 
@@ -352,9 +327,4 @@
 
     " }}
 
-    " vim-startify {{
-
-        let g:startify_session_dir = '~/.vim/__session'
-
-    " }}
 " }

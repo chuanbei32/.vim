@@ -36,7 +36,7 @@
 	nnoremap gL g_
 	nnoremap gk k
 	nnoremap gj j
-	
+
 	nnoremap <leader>nhs <cmd>nohlsearch<cr>
 	nnoremap <leader>fws <cmd>%s/\\\@<!\s\+$//<cr>
 
@@ -93,8 +93,8 @@
 		nnoremap <leader>wr <c-w>r " 互换窗口
 
 		" 关闭窗口
-		nnoremap <leader>wc <c-w>c 
-		nnoremap <leader>wq <c-w>q 
+		nnoremap <leader>wc <c-w>c
+		nnoremap <leader>wq <c-w>q
 
 		" 移动窗口
 		nnoremap <leader>wt <c-w>t
@@ -138,7 +138,7 @@
 		nnoremap <leader>0 10gt<cr>
 
 	" }}
-	
+
 	" quickfix {{
 
 		nnoremap <leader>qo <cmd>copen 10<cr>
@@ -171,7 +171,7 @@
 	" }}
 
 	" shell {{
-	
+
 		nnoremap <leader>sh <cmd>shell<cr>
 
 	" }}
@@ -189,20 +189,6 @@
 			map #  <Plug>(incsearch-nohl-#)
 			map g* <Plug>(incsearch-nohl-g*)
 			map g# <Plug>(incsearch-nohl-g#)
-			
-		" }}}
-
-		" clever-f {{{
-
-			map f <Plug>(clever-f-f)
-			map F <Plug>(clever-f-F)
-			map t <Plug>(clever-f-t)
-			map T <Plug>(clever-f-T)
-
-			map ; <Plug>(clever-f-repeat-forward)
-			map , <Plug>(clever-f-repeat-back)
-
-			nnoremap <leader>ffe <Plug>(clever-f-repeat-forward)
 
 		" }}}
 
@@ -261,12 +247,6 @@
 		    nnoremap <leader>lft <cmd>Leaderf tag<cr>
 
 	    " }}}
-
-		" git-blame {{{
-
-			nnoremap <leader>gbb <cmd>GitBlame<cr>
-
-		" }}}
 
 		" git-messenger {{{
 

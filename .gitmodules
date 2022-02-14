@@ -1,15 +1,9 @@
 [submodule "pack/vendor/start/vim-airline"]
 	path = pack/vendor/start/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
-[submodule "pack/vendor/start/vim-airline-themes"]
-	path = pack/vendor/start/vim-airline-themes
-	url = https://github.com/vim-airline/vim-airline-themes.git
 [submodule "pack/vendor/start/ale"]
 	path = pack/vendor/start/ale
 	url = https://github.com/dense-analysis/ale.git
-[submodule "pack/vendor/start/fugitive"]
-	path = pack/vendor/start/fugitive
-	url = https://github.com/tpope/vim-fugitive.git
 [submodule "pack/vendor/start/css-color"]
 	path = pack/vendor/start/css-color
 	url = https://github.com/ap/vim-css-color.git
@@ -86,9 +80,6 @@
 [submodule "pack/vendor/start/tagalong"]
 	path = pack/vendor/start/tagalong
 	url = https://github.com/AndrewRadev/tagalong.vim.git
-[submodule "pack/vendor/start/gv"]
-	path = pack/vendor/start/gv
-	url = https://github.com/junegunn/gv.vim.git
 [submodule "pack/vendor/start/vim-unimpaired"]
 	path = pack/vendor/start/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
@@ -116,15 +107,9 @@
 [submodule "pack/vendor/start/nvim-ts-rainbow"]
 	path = pack/vendor/start/nvim-ts-rainbow
 	url = https://github.com/p00f/nvim-ts-rainbow.git
-[submodule "pack/vendor/start/rainbow_levels"]
-	path = pack/vendor/start/rainbow_levels
-	url = https://github.com/thiagoalessio/rainbow_levels.vim.git
 [submodule "pack/vendor/start/asyncrun"]
 	path = pack/vendor/start/asyncrun
 	url = https://github.com/skywind3000/asyncrun.vim.git
-[submodule "pack/vendor/start/vim-conflicted"]
-	path = pack/vendor/start/vim-conflicted
-	url = https://github.com/christoomey/vim-conflicted.git
 [submodule "pack/vendor/start/vim-illuminate"]
 	path = pack/vendor/start/vim-illuminate
 	url = https://github.com/RRethy/vim-illuminate.git
@@ -149,9 +134,6 @@
 [submodule "__lsp/phpactor"]
 	path = __lsp/phpactor
 	url = https://github.com/phpactor/phpactor.git
-[submodule "pack/vendor/start/vim-signify"]
-	path = pack/vendor/start/vim-signify
-	url = https://github.com/mhinz/vim-signify.git
 [submodule "pack/vendor/start/vim-dirvish"]
 	path = pack/vendor/start/vim-dirvish
 	url = https://github.com/justinmk/vim-dirvish.git
@@ -161,15 +143,9 @@
 [submodule "pack/vendor/start/vim-which-key"]
 	path = pack/vendor/start/vim-which-key
 	url = https://github.com/liuchengxu/vim-which-key.git
-[submodule "pack/vendor/start/git-blame"]
-	path = pack/vendor/start/git-blame
-	url = https://github.com/zivyangll/git-blame.vim.git
 [submodule "pack/vendor/start/vim-repeat"]
 	path = pack/vendor/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "pack/vendor/start/auto-pairs"]
-	path = pack/vendor/start/auto-pairs
-	url = https://github.com/jiangmiao/auto-pairs.git
 [submodule "pack/vendor/start/vim-devicons"]
 	path = pack/vendor/start/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
@@ -182,15 +158,9 @@
 [submodule "pack/vendor/start/tagbar"]
 	path = pack/vendor/start/tagbar
 	url = https://github.com/preservim/tagbar.git
-[submodule "pack/vendor/start/clever-f"]
-	path = pack/vendor/start/clever-f
-	url = https://github.com/rhysd/clever-f.vim.git
 [submodule "pack/vendor/opt/gruvbox-material"]
 	path = pack/vendor/opt/gruvbox-material
 	url = https://github.com/sainnhe/gruvbox-material.git
-[submodule "pack/vendor/start/vim-startify"]
-	path = pack/vendor/start/vim-startify
-	url = https://github.com/mhinz/vim-startify.git
-[submodule "pack/vendor/start/vim-dirvish-git"]
-	path = pack/vendor/start/vim-dirvish-git
-	url = https://github.com/kristijanhusak/vim-dirvish-git.git
+[submodule "pack/vendor/start/auto-pairs"]
+	path = pack/vendor/start/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git

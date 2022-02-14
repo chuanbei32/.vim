@@ -14,9 +14,10 @@
 
 		" 重载配置文件「目前无效」
 		" autocmd! BufWritePost .vimrc source ~/.vimrc
+		autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 		" 修改背景色为透明
-		" autocmd VimEnter * highlight Normal guibg=NONE ctermbg=NONE 
+		" autocmd VimEnter * highlight Normal guibg=NONE ctermbg=NONE
 
 		" 自动开启 tagbar 插件
 		" autocmd VimEnter * :TagbarToggle
@@ -29,7 +30,7 @@
 
 		" 普通模式下关闭粘贴模式
 		autocmd InsertLeave * :set nopaste
-		
+
 		" 插入模式下用绝对行号
 		autocmd InsertEnter * :set norelativenumber number
 
@@ -49,7 +50,7 @@
 			autocmd!
 			autocmd BufWritePre * :call g:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 		augroup END
-		
+
 		" 重置 Vimspector UI
 	    augroup MyVimspectorUICustomistaion
 	        autocmd!
@@ -68,8 +69,8 @@
 	    	autocmd!
     		autocmd ColorScheme * highlight default ExtraWhitespace ctermbg=darkred guibg=darkred
 			autocmd BufRead,BufNew * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+$/
-			autocmd InsertLeave * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+$/ 
-			autocmd InsertEnter * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+\%#\@<!$/ 
+			autocmd InsertLeave * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+$/
+			autocmd InsertEnter * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+\%#\@<!$/
 	    augroup END
 
 	" }}

@@ -1,6 +1,6 @@
-" { 
-    
-    source ~/.vim/.init/variable.vim 
+" {
+
+    source ~/.vim/.init/variable.vim
 
     source ~/.vim/.init/function.vim
 
