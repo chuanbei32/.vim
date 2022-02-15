@@ -70,7 +70,7 @@
 	set
 		\ t_Co=256 t_RB= t_SH= t_RS= t_ut=
 		\
-		\ termwinkey=<c-_>
+		\ termwinkey=<c-s>
 		\
 		\ " 终端
 

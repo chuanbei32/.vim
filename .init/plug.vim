@@ -185,12 +185,6 @@
 
     " gruvbox-material {{
 
-        if exists('+termguicolors')
-            let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-            let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-            set termguicolors
-        endif
-
         let g:gruvbox_material_enable_bold = 0
 
         let g:gruvbox_material_enable_italic = 0
@@ -199,7 +193,7 @@
 
         let g:gruvbox_material_visual = 'grey background'
         let g:gruvbox_material_sign_column_background = 'none'
-        let g:gruvbox_material_transparent_background = 1
+        let g:gruvbox_material_transparent_background = 0
         let g:gruvbox_material_ui_contrast = 'low'
         " let g:gruvbox_material_diagnostic_text_highlight = 1
         " let g:gruvbox_material_diagnostic_line_highlight = 1
@@ -209,7 +203,7 @@
         let g:gruvbox_material_statusline_style = 'mix'
 
         let g:gruvbox_material_palette = 'mix'
-        let g:gruvbox_material_background = 'hard'
+        let g:gruvbox_material_background = 'mix'
 
     " }}
 
@@ -221,8 +215,8 @@
             let g:airline_symbols = {}
         endif
 
-        " let g:airline_left_sep=''
-        " let g:airline_right_sep=''
+        " let g:airline_left_sep='\ue0b8'
+        " let g:airline_right_sep='\ue0be'
 
         let g:airline_powerline_fonts = 1
 
