@@ -42,6 +42,47 @@
 
 	inoremap <leader>isp <cmd>set paste<cr>
 
+	" jump {{
+
+	" }}
+
+	" change {{
+
+	" }}
+
+	" register/macro {{
+
+	" }}
+
+	" mark {{
+
+	" }}
+
+	" session {{
+
+		nnoremap <leader>ss :mksession! ~/.vim/__session/.vim<left><left><left><left>
+		nnoremap <leader>sr :source ~/.vim/__session/
+
+	" }}
+
+	" viminfo {{
+
+		nnoremap <leader>vs <cmd>wviminfo!<cr>
+
+	" }}
+
+	" terminal {{
+
+		nnoremap <leader>tm <cmd>terminal<cr>
+
+	" }}
+
+	" shell {{
+
+		nnoremap <leader>sh <cmd>shell<cr>
+
+	" }}
+
 	" buffer {{
 
 		" nnoremap <leader>ba :badd<space>
@@ -151,54 +192,9 @@
 
 	" }}
 
-	" session {{
-
-		nnoremap <leader>ss :mksession! ~/.vim/__session/.vim<left><left><left><left>
-		nnoremap <leader>sr :source ~/.vim/__session/
-
-	" }}
-
-	" viminfo {{
-
-		nnoremap <leader>vs <cmd>wviminfo!<cr>
-
-	" }}
-
-	" terminal {{
-
-		nnoremap <leader>tm <cmd>terminal<cr>
-
-	" }}
-
-	" shell {{
-
-		nnoremap <leader>sh <cmd>shell<cr>
-
-	" }}
-
 	"" plugs {{
 
-		" incsearch {{{
-
-			map /  <Plug>(incsearch-forward)
-			map ?  <Plug>(incsearch-backward)
-			map g/ <Plug>(incsearch-stay)
-			map n  <Plug>(incsearch-nohl-n)
-			map N  <Plug>(incsearch-nohl-N)
-			map *  <Plug>(incsearch-nohl-*)
-			map #  <Plug>(incsearch-nohl-#)
-			map g* <Plug>(incsearch-nohl-g*)
-			map g# <Plug>(incsearch-nohl-g#)
-
-		" }}}
-
-		" AsyncRun {{{
-
-	    	nnoremap <leader>arr :AsyncRun -raw<space>
-
-		" }}}
-
-		" vimspector {{{
+		" 调试「vimspector」 {{{
 
 			nmap <leader>dsn <Plug>VimspectorStepOver
 		    nmap <leader>dsb <Plug>VimspectorToggleBreakpoint
@@ -222,17 +218,24 @@
 
 		" }}}
 
-		" DoxygenToolkit {{{
+		" 测试「vim-test」 {{{
+
+	    	nnoremap <leader>arr :AsyncRun -raw<space>
+
+		" }}}
+
+		" 格式化「neoformat」 {{{
+
+	    	nnoremap <leader>nfr <cmd>Neoformat<cr>
+			nnoremap <leader>nfv :Neoformat!<space>
+
+		" }}}
+
+		" 注释「DoxygenToolkit」 {{{
 
 	        nnoremap <leader>dxa <cmd>DoxAuthor<cr>
 	  	  	nnoremap <leader>dxx <cmd>Dox<cr>
 	    	nnoremap <leader>dxl <cmd>DoxLic<cr>
-
-		" }}}
-
-		" dirvish {{{
-
-		    nnoremap <leader>ddd <cmd>Dirvish<cr>
 
 		" }}}
 
@@ -248,22 +251,36 @@
 
 	    " }}}
 
+		" incsearch {{{
+
+			map /  <Plug>(incsearch-forward)
+			map ?  <Plug>(incsearch-backward)
+			map g/ <Plug>(incsearch-stay)
+			map n  <Plug>(incsearch-nohl-n)
+			map N  <Plug>(incsearch-nohl-N)
+			map *  <Plug>(incsearch-nohl-*)
+			map #  <Plug>(incsearch-nohl-#)
+			map g* <Plug>(incsearch-nohl-g*)
+			map g# <Plug>(incsearch-nohl-g#)
+
+		" }}}
+
+		" AsyncRun {{{
+
+	    	nnoremap <leader>arr :AsyncRun -raw<space>
+
+		" }}}
+
 		" git-messenger {{{
 
 			nnoremap <leader>gmm <cmd>GitMessenger<cr>
 
 		" }}}
 
-		" neoformat {{{
+		" vim-which-key {{{
 
-	    	nnoremap <leader>nfr <cmd>Neoformat<cr>
-			nnoremap <leader>nfv :Neoformat!<space>
-
-		" }}}
-
-		" rainbow_levels {{{
-
-	        nnoremap <leader>rlt <cmd>RainbowLevelsToggle<cr>
+			nnoremap <silent> <leader> :WhichKey '\'<CR>
+			nnoremap <silent> <localleader> :WhichKey '\'<CR>
 
 		" }}}
 
@@ -283,11 +300,6 @@
 		" mundo {{{
 
 			nnoremap <leader>mut <cmd>MundoToggle<cr>
-
-		" }}}
-
-		" easymotion {{{
-
 
 		" }}}
 

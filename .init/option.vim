@@ -1,6 +1,30 @@
 " {
 
+	" 非兼容模式「VI」
     set nocompatible
+
+	set
+		\ visualbell novisualbell errorbells noerrorbells belloff=all
+		\
+		\ " 声音
+
+	set runtimepath+=~/.vim/__ultisnips
+
+	set tags=./.tags;,.tags,tags
+
+	" 备份「文件夹不存在则创建」
+	set backup backupext=.bak backupdir=~/.vim/_backupfiles
+    silent! call mkdir(expand('~/.vim/_backupfiles'), 'p', 0755)
+
+	" 交换「文件夹不存在则创建」
+	set swapfile directory=~/.vim/_swapfiles updatetime=300
+    silent! call mkdir(expand('~/.vim/_swapfiles'), 'p', 0755)
+
+	" 撤销「文件夹不存在则创建」
+	set undofile undodir=~/.vim/_undofiles
+    silent! call mkdir(expand('~/.vim/_undofiles'), 'p', 0755)
+
+	set viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
 
 	set
 		\ encoding=utf-8 fileencoding=utf-8 termencoding=utf-8 makeencoding=utf-8 printencoding=utf-8
@@ -9,38 +33,12 @@
 		\
 		\ " 编码
 
-	" 备份
-	set backup backupext=.bak backupdir=~/.vim/_backupfiles
-    silent! call mkdir(expand('~/.vim/_backupfiles'), 'p', 0755)
-
-	" 交换
-	set swapfile directory=~/.vim/_swapfiles updatetime=300
-    silent! call mkdir(expand('~/.vim/_swapfiles'), 'p', 0755)
-
-	" 撤销
-	set undofile undodir=~/.vim/_undofiles
-    silent! call mkdir(expand('~/.vim/_undofiles'), 'p', 0755)
-
-	set
-		\ runtimepath+=~/.vim/__ultisnips
-		\
-		\ viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
-		\
-		\ tags=./.tags;,.tags,tags
-		\
-		\ " 路径
-
 	set
 		\ sessionoptions-=curdir,options
 		\
 		\ sessionoptions+=globals,skiprtp,resize,winpos,unix
 		\
 		\ " 会话
-
-	set
-		\ visualbell novisualbell errorbells noerrorbells belloff=all
-		\
-		\ " 声音
 
 	set
 		\ autoindent smartindent cindent copyindent shiftwidth=4 breakindent
@@ -63,7 +61,10 @@
 		\ " 匹配
 
 	set
-		\ ttimeout ttimeoutlen=10 timeoutlen=500 notimeout
+		\
+		\ timeout ttimeout
+		\
+		\ timeoutlen=600 ttimeoutlen=600
 		\
 		\ " 超时
 

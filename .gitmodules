@@ -134,9 +134,6 @@
 [submodule "__lsp/phpactor"]
 	path = __lsp/phpactor
 	url = https://github.com/phpactor/phpactor.git
-[submodule "pack/vendor/start/vim-dirvish"]
-	path = pack/vendor/start/vim-dirvish
-	url = https://github.com/justinmk/vim-dirvish.git
 [submodule "pack/vendor/start/vim-projectionist"]
 	path = pack/vendor/start/vim-projectionist
 	url = https://github.com/tpope/vim-projectionist.git
@@ -164,3 +161,9 @@
 [submodule "pack/vendor/start/auto-pairs"]
 	path = pack/vendor/start/auto-pairs
 	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "pack/vendor/start/vim-dirvish-git"]
+	path = pack/vendor/start/vim-dirvish-git
+	url = https://github.com/kristijanhusak/vim-dirvish-git.git
+[submodule "pack/vendor/start/vim-dirvish"]
+	path = pack/vendor/start/vim-dirvish
+	url = https://github.com/justinmk/vim-dirvish.git
