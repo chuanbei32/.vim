@@ -52,9 +52,8 @@
 			map g# <Plug>(incsearch-nohl-g#)
 		" }}
 
-		" clever-f {{
-			map ; <Plug>(clever-f-repeat-forward)
-			map , <Plug>(clever-f-repeat-back)
+		" vim-easymotion {{
+
 		" }}
 
 		nnoremap gsj *
@@ -325,13 +324,6 @@
 			" git-messenger {{{
 
 				nnoremap <leader>gmm <cmd>GitMessenger<cr>
-
-			" }}}
-
-			" vim-which-key {{{
-
-				nnoremap <silent> <leader> :WhichKey '\'<CR>
-				nnoremap <silent> <localleader> :WhichKey '\'<CR>
 
 			" }}}
 

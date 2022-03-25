@@ -56,9 +56,6 @@
 [submodule "pack/vendor/start/neoformat"]
 	path = pack/vendor/start/neoformat
 	url = https://github.com/sbdchd/neoformat.git
-[submodule "pack/vendor/start/vim-bookmarks"]
-	path = pack/vendor/start/vim-bookmarks
-	url = https://github.com/MattesGroeger/vim-bookmarks.git
 [submodule "pack/vendor/start/vim-expand-region"]
 	path = pack/vendor/start/vim-expand-region
 	url = https://github.com/terryma/vim-expand-region.git
@@ -131,12 +128,6 @@
 [submodule "__lsp/phpactor"]
 	path = __lsp/phpactor
 	url = https://github.com/phpactor/phpactor.git
-[submodule "pack/vendor/start/vim-projectionist"]
-	path = pack/vendor/start/vim-projectionist
-	url = https://github.com/tpope/vim-projectionist.git
-[submodule "pack/vendor/start/vim-which-key"]
-	path = pack/vendor/start/vim-which-key
-	url = https://github.com/liuchengxu/vim-which-key.git
 [submodule "pack/vendor/start/vim-repeat"]
 	path = pack/vendor/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
@@ -155,15 +146,9 @@
 [submodule "pack/vendor/opt/gruvbox-material"]
 	path = pack/vendor/opt/gruvbox-material
 	url = https://github.com/sainnhe/gruvbox-material.git
-[submodule "pack/vendor/start/auto-pairs"]
-	path = pack/vendor/start/auto-pairs
-	url = https://github.com/jiangmiao/auto-pairs.git
-[submodule "pack/vendor/start/vim-dirvish-git"]
-	path = pack/vendor/start/vim-dirvish-git
-	url = https://github.com/kristijanhusak/vim-dirvish-git.git
 [submodule "pack/vendor/start/vim-dirvish"]
 	path = pack/vendor/start/vim-dirvish
 	url = https://github.com/justinmk/vim-dirvish.git
-[submodule "pack/vendor/start/clever-f"]
-	path = pack/vendor/start/clever-f
-	url = https://github.com/rhysd/clever-f.vim.git
+[submodule "pack/vendor/start/vim-easymotion"]
+	path = pack/vendor/start/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion.git
