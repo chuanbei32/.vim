@@ -40,22 +40,6 @@
 	" 查找「上下左右」
     " ====================================================================================
 
-		" incsearch {{
-			map /  <Plug>(incsearch-forward)
-			map ?  <Plug>(incsearch-backward)
-			map g/ <Plug>(incsearch-stay)
-			map n  <Plug>(incsearch-nohl-n)
-			map N  <Plug>(incsearch-nohl-N)
-			map *  <Plug>(incsearch-nohl-*)
-			map #  <Plug>(incsearch-nohl-#)
-			map g* <Plug>(incsearch-nohl-g*)
-			map g# <Plug>(incsearch-nohl-g#)
-		" }}
-
-		" vim-easymotion {{
-
-		" }}
-
 		nnoremap gsj *
 		nnoremap gsk #
 
@@ -71,10 +55,6 @@
     " ====================================================================================
 	" 执行命令
     " ====================================================================================
-
-		" AsyncRun {{
-			nnoremap <leader>arr :AsyncRun -raw<space>
-		" }}
 
     " ====================================================================================
 	" 快捷键
@@ -261,103 +241,4 @@
 
 		" }}
 
-		"" plugs {{
-
-			" 调试「vimspector」 {{{
-
-				nmap <leader>dsn <Plug>VimspectorStepOver
-				nmap <leader>dsb <Plug>VimspectorToggleBreakpoint
-				nmap <leader>dss <Plug>VimspectorContinue
-				nmap <leader>dsr <Plug>VimspectorRestart
-				nmap <leader>dsp <Plug>VimspectorPause
-				nmap <leader>dst <Plug>VimspectorStop
-				nmap <leader>dsf <Plug>VimspectorAddFunctionBreakpoint
-				nmap <leader>dsc <Plug>VimspectorToggleConditionalBreakpoint
-				nmap <leader>dso <Plug>VimspectorStepOut
-				nmap <leader>dsi <Plug>VimspectorStepInto
-				nmap <leader>dsq <cmd>VimspectorReset<CR>
-				nmap <leader>dslc <Plug>VimspectorShowOutput Console<CR>
-				nmap <leader>dsld <Plug>VimspectorShowOutput stderr<CR>
-				nmap <leader>dslo <Plug>VimspectorShowOutput Vimspector-out<CR>
-				nmap <leader>dsle <Plug>VimspectorShowOutput Vimspector-err<CR>
-				nmap <leader>dsls <Plug>VimspectorShowOutput server<CR>
-				nmap <leader>dslt <Plug>VimspectorShowOutput Telemetry<CR>
-				nmap <leader>dse :<C-u>VimspectorEval<leader>
-				nmap <leader>dsw :<C-u>VimspectorWatch<leader>
-
-			" }}}
-
-			" 测试「vim-test」 {{{
-
-				nnoremap <leader>arr :AsyncRun -raw<space>
-
-			" }}}
-
-			" 格式化「neoformat」 {{{
-
-				nnoremap <leader>nfr <cmd>Neoformat<cr>
-				nnoremap <leader>nfv :Neoformat!<space>
-
-			" }}}
-
-			" 注释「DoxygenToolkit」 {{{
-
-				nnoremap <leader>dxa <cmd>DoxAuthor<cr>
-				nnoremap <leader>dxx <cmd>Dox<cr>
-				nnoremap <leader>dxl <cmd>DoxLic<cr>
-
-			" }}}
-
-			" 搜索「leaderF」 {{{
-				noremap <leader>f <nop>
-				noremap <leader>b <nop>
-
-				nnoremap <leader>lfe <cmd>Leaderf file<cr>
-				nnoremap <leader>lfn <cmd>Leaderf function<cr>
-
-				nnoremap <leader>lfb <cmd>Leaderf buffer<cr>
-				nnoremap <leader>lfg :Leaderf rg -e<space>
-				nnoremap <leader>lfm <cmd>Leaderf mru<cr>
-				nnoremap <leader>lft <cmd>Leaderf tag<cr>
-			" }}}
-
-			" git-messenger {{{
-
-				nnoremap <leader>gmm <cmd>GitMessenger<cr>
-
-			" }}}
-
-			" CtrlSF {{{
-
-				nnoremap <leader>sfg :CtrlSF<space>
-				nnoremap <leader>sfr :CtrlSF -R -I<space>
-
-			" }}}
-
-			" tagbar {{{
-
-				nnoremap <leader>tbt <cmd>TagbarToggle<cr>
-
-			" }}}
-
-			" mundo {{{
-
-				nnoremap <leader>mut <cmd>MundoToggle<cr>
-
-			" }}}
-
-			" vim-easy-align {{{
-
-				xmap ga <plug>(easyalign)
-				nmap ga <Plug>(EasyAlign)
-
-			" }}}
-
-			" vim-argwrap {{{
-
-				nnoremap <leader>awr <cmd>ArgWrap<cr>
-
-			" }}}
-
-		" }}
 " }

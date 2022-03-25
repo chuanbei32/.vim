@@ -18,9 +18,9 @@
 
     source ~/.vim/.init/plug.vim
 
-    source ~/.vim/.init/command.vim
-
     source ~/.vim/.init/map.vim
+
+    source ~/.vim/.init/command.vim
 
     syntax enable on
 

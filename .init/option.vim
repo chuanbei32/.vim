@@ -1,6 +1,6 @@
 " {
 
-	" 非兼容模式「VI」
+	" 禁用兼容模式「VI 模式」
     set nocompatible
 
 	set
@@ -66,7 +66,7 @@
 		\
 		\ timeout ttimeout
 		\
-		\ timeoutlen=600 ttimeoutlen=600
+		\ timeoutlen=800 ttimeoutlen=800
 		\
 		\ " 超时
 
