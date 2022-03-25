@@ -4,7 +4,7 @@
     set nocompatible
 
 	set
-		\ visualbell novisualbell errorbells noerrorbells belloff=all
+		\ visualbell novisualbell errorbells noerrorbells belloff=all t_vb=
 		\
 		\ " 声音
 
@@ -41,12 +41,14 @@
 		\ " 会话
 
 	set
-		\ autoindent smartindent cindent copyindent shiftwidth=4 breakindent
+		\ autoindent expandtab smartindent cindent copyindent breakindent
+		\
+		\ tabstop=4 softtabstop=4 smarttab shiftwidth=4
 		\
 		\ " 缩进
 
 	set
-		\ foldenable foldmethod=indent foldlevelstart=1 foldnestmax=2 foldminlines=5
+		\ foldenable foldmethod=manual foldlevelstart=1 foldnestmax=20 foldminlines=1
 		\
 		\ " 折叠
 
@@ -122,7 +124,7 @@
 		\
 		\ selection=inclusive selectmode+=mouse,key shortmess+=S clipboard+=unnamed diffopt+=vertical
 		\
-		\ expandtab tabstop=4 softtabstop=4 smarttab viewoptions-=options nolangremap nolangnoremap shiftround
+		\ viewoptions-=options nolangremap nolangnoremap shiftround
 		\
 		\ synmaxcol=0 nrformats-=octal
 		\

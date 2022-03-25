@@ -10,9 +10,6 @@
 [submodule "pack/vendor/start/ctags"]
 	path = pack/vendor/start/ctags
 	url = https://github.com/vim-scripts/ctags.vim.git
-[submodule "pack/vendor/start/vim-easymotion"]
-	path = pack/vendor/start/vim-easymotion
-	url = https://github.com/easymotion/vim-easymotion.git
 [submodule "pack/vendor/start/incsearch"]
 	path = pack/vendor/start/incsearch
 	url = https://github.com/haya14busa/incsearch.vim.git
@@ -167,3 +164,6 @@
 [submodule "pack/vendor/start/vim-dirvish"]
 	path = pack/vendor/start/vim-dirvish
 	url = https://github.com/justinmk/vim-dirvish.git
+[submodule "pack/vendor/start/clever-f"]
+	path = pack/vendor/start/clever-f
+	url = https://github.com/rhysd/clever-f.vim.git

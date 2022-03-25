@@ -28,7 +28,7 @@
 		" 普通模式下开启折行
 		autocmd InsertLeave * :set wrap
 
-		" 普通模式下关闭粘贴模式
+		" 若插入模式下开启粘贴模式则返回普通模式下关闭粘贴模式
 		autocmd InsertLeave * :set nopaste
 
 		" 插入模式下用绝对行号
@@ -62,6 +62,8 @@
 	        autocmd!
     		autocmd FileType php setlocal commentstring=//\ %s
     		autocmd FileType c setlocal commentstring=//\ %s
+    		autocmd FileType lua setlocal commentstring=--\ %s
+    		autocmd FileType py setlocal commentstring=#\ %s
 	    augroup END
 
 	    " 设置空白显示方式
@@ -72,6 +74,13 @@
 			autocmd InsertLeave * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+$/
 			autocmd InsertEnter * match ExtraWhitespace /\\\@<![\u3000[:space:]]\+\%#\@<!$/
 	    augroup END
+
+		" 折叠
+		augroup fold
+			autocmd FileType php setlocal foldmethod=indent
+			autocmd FileType py setlocal foldmethod=indent
+	    augroup END
+
 
 	" }}
 
