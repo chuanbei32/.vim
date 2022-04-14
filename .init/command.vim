@@ -61,9 +61,13 @@
 	    augroup Commentary
 	        autocmd!
     		autocmd FileType php setlocal commentstring=//\ %s
+
     		autocmd FileType c setlocal commentstring=//\ %s
+    		autocmd FileType h setlocal commentstring=//\ %s
+
     		autocmd FileType lua setlocal commentstring=--\ %s
     		autocmd FileType py setlocal commentstring=#\ %s
+    		autocmd FileType sh setlocal commentstring=#\ %s
 	    augroup END
 
 	    " 设置空白显示方式
@@ -79,6 +83,7 @@
 		augroup fold
 			autocmd FileType php setlocal foldmethod=indent
 			autocmd FileType py setlocal foldmethod=indent
+			autocmd FileType c setlocal foldmethod=indent
 	    augroup END
 
 

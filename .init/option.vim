@@ -17,7 +17,7 @@
     silent! call mkdir(expand('~/.vim/_backupfiles'), 'p', 0755)
 
 	" 交换「文件夹不存在则创建」
-	set swapfile directory=~/.vim/_swapfiles updatetime=300
+	set swapfile directory=~/.vim/_swapfiles
     silent! call mkdir(expand('~/.vim/_swapfiles'), 'p', 0755)
 
 	" 撤销「文件夹不存在则创建」
@@ -66,12 +66,14 @@
 		\
 		\ timeout ttimeout
 		\
-		\ timeoutlen=800 ttimeoutlen=800
+		\ timeoutlen=3000 ttimeoutlen=3000
 		\
 		\ " 超时
 
 	set
 		\ t_Co=256 t_RB= t_SH= t_RS= t_ut=
+		\
+		\ shell=zsh ttyfast
 		\
 		\ termwinkey=<c-s>
 		\
@@ -106,8 +108,6 @@
 	set
 		\ ruler display+=lastline noshowmode laststatus=2 showtabline=2
 		\
-		\ background=dark
-		\
 		\ iskeyword+=_,$,@,%,#,-
 		\
 		\ list listchars=tab:\|\ ,trail:.,extends:>,precedes:<
@@ -115,8 +115,6 @@
 		\ splitbelow splitright winminheight=0 winminwidth=0
 		\
 		\ autoread confirm
-		\
-		\ shell=zsh ttyfast
 		\
 		\ hidden switchbuf+=usetab,newtab,useopen
 		\

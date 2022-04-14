@@ -14,11 +14,11 @@
 
     source ~/.vim/.init/option.vim
 
+    source ~/.vim/.init/map.vim
+
     scriptencoding utf-8
 
     source ~/.vim/.init/plug.vim
-
-    source ~/.vim/.init/map.vim
 
     source ~/.vim/.init/command.vim
 
@@ -29,5 +29,7 @@
     packadd! gruvbox-material
 
     colorscheme gruvbox-material
+
+    set background=dark
 
 " }

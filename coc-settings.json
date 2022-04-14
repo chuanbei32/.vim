@@ -1,5 +1,5 @@
-{    
-    "languageserver": {    
+{
+    "languageserver": {
         "php": {
             "command": "intelephense",
             "args": ["--stdio"],
@@ -20,13 +20,9 @@
             "filetypes": ["python"]
         },
         "go": {
-            "command": "/root/go/bin/go-langserver",
-            "filetypes": ["go"],
-            "initializationOptions": {
-              "gocodeCompletionEnabled": true,
-              "diagnosticsEnabled": true,
-              "lintTool": "golint"
-            }
+            "command": "/root/go/bin/gopls",
+            "rootPatterns": ["go.mod"],
+            "filetypes": ["go"]
         },
         "ccplusplus": {
             "command": "clangd",
