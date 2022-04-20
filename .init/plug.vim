@@ -299,6 +299,10 @@
 				\ 'black'
 				\ ]
 
+			let g:neoformat_enabled_lua = [
+				\ 'luaformat'
+				\ ]
+
 			let g:shfmt_opt="-ci"
 			let g:neoformat_enabled_sh = [
 				\ 'shfmt'

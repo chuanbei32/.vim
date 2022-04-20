@@ -3,14 +3,23 @@
 	" 禁用兼容模式「VI 模式」
     set nocompatible
 
+	set runtimepath+=~/.vim/__ultisnips
+
+	set tags=./.tags;,.tags,tags
+
+	set viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
+
+	set
+		\ sessionoptions-=curdir,options
+		\
+		\ sessionoptions+=globals,skiprtp,resize,winpos,unix
+		\
+		\ " 会话
+
 	set
 		\ visualbell novisualbell errorbells noerrorbells belloff=all t_vb=
 		\
 		\ " 声音
-
-	set runtimepath+=~/.vim/__ultisnips
-
-	set tags=./.tags;,.tags,tags
 
 	" 备份「文件夹不存在则创建」
 	set backup backupext=.bak backupdir=~/.vim/_backupfiles
@@ -24,21 +33,12 @@
 	set undofile undodir=~/.vim/_undofiles
     silent! call mkdir(expand('~/.vim/_undofiles'), 'p', 0755)
 
-	set viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
-
 	set
 		\ encoding=utf-8 fileencoding=utf-8 termencoding=utf-8 makeencoding=utf-8 printencoding=utf-8
 		\
 		\ fileencodings=utf-8,gbk,gb18030,ucs-bom,big5,euc-jp,latin1
 		\
 		\ " 编码
-
-	set
-		\ sessionoptions-=curdir,options
-		\
-		\ sessionoptions+=globals,skiprtp,resize,winpos,unix
-		\
-		\ " 会话
 
 	set
 		\ autoindent expandtab smartindent cindent copyindent breakindent
