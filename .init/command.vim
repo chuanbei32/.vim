@@ -68,6 +68,9 @@
     		autocmd FileType lua setlocal commentstring=--\ %s
     		autocmd FileType py setlocal commentstring=#\ %s
     		autocmd FileType sh setlocal commentstring=#\ %s
+
+    		autocmd FileType html setlocal commentstring=<!--\ %s
+
 	    augroup END
 
 	    " 设置空白显示方式

@@ -36,12 +36,19 @@
 		nnoremap gsk #
 
     " ====================================================================================
+		" 快速保存
+		" nnoremap ;w <cmd>w<cr>
+		" 快速全部保存
+		" nnoremap ;W <cmd>wa<cr>
+
+		" 搜索光标下单词
+		cnoremap \sw <c-r><c-w>
 
 		" 搜索替换光标下单词「单行」
-		nnoremap grl :s/<c-r><c-w>//<left>
+		nnoremap <leader>grl :s/<c-r><c-w>//<left>
 
 		" 搜索替换光标下单词「全局」
-		nnoremap grg :%s/<c-r><c-w>//g<left>
+		nnoremap <leader>grg :%s/<c-r><c-w>//g<left>
 
 		" 取消高亮
 		nnoremap <leader>nhs <cmd>nohlsearch<cr>
@@ -118,7 +125,7 @@
 			nnoremap <leader>bx <c-^>
 
 			nnoremap <leader>br <cmd>bufdo e<cr>
-			nnoremap <leader>be <cmd>e
+			nnoremap <leader>be <cmd>e<cr>
 
 
 			" 水平分割

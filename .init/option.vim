@@ -64,9 +64,9 @@
 
 	set
 		\
-		\ timeout ttimeout
+		\ notimeout nottimeout
 		\
-		\ timeoutlen=3000 ttimeoutlen=3000
+		\ timeoutlen=300 ttimeoutlen=300
 		\
 		\ " 超时
 
