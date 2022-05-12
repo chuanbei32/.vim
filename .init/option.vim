@@ -21,17 +21,17 @@
 		\
 		\ " 声音
 
-	" 备份「文件夹不存在则创建」
-	set backup backupext=.bak backupdir=~/.vim/_backupfiles
-    silent! call mkdir(expand('~/.vim/_backupfiles'), 'p', 0755)
-
-	" 交换「文件夹不存在则创建」
-	set swapfile directory=~/.vim/_swapfiles
-    silent! call mkdir(expand('~/.vim/_swapfiles'), 'p', 0755)
-
-	" 撤销「文件夹不存在则创建」
-	set undofile undodir=~/.vim/_undofiles
-    silent! call mkdir(expand('~/.vim/_undofiles'), 'p', 0755)
+	"	" 备份「文件夹不存在则创建」
+	"	set backup backupext=.bak backupdir=~/.vim/_backupfiles
+	"    silent! call mkdir(expand('~/.vim/_backupfiles'), 'p', 0755)
+	"
+	"	" 交换「文件夹不存在则创建」
+	"	set swapfile directory=~/.vim/_swapfiles
+	"    silent! call mkdir(expand('~/.vim/_swapfiles'), 'p', 0755)
+	"
+	"	" 撤销「文件夹不存在则创建」
+	"	set undofile undodir=~/.vim/_undofiles
+	"    silent! call mkdir(expand('~/.vim/_undofiles'), 'p', 0755)
 
 	set
 		\ encoding=utf-8 fileencoding=utf-8 termencoding=utf-8 makeencoding=utf-8 printencoding=utf-8
