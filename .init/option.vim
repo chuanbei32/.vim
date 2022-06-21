@@ -9,12 +9,12 @@
 
 	set viminfo='1000,f1,<500,:1000,@1000,/1000,h,r/private/tmp,s10,n~/.viminfo
 
-	set
-		\ sessionoptions-=curdir,options
-		\
-		\ sessionoptions+=globals,skiprtp,resize,winpos,unix
-		\
-		\ " 会话
+	"	set
+	"		\ sessionoptions-=curdir,options
+	"		\
+	"		\ sessionoptions+=globals,skiprtp,resize,winpos,unix
+	"		\
+	"		\ " 会话
 
 	set
 		\ visualbell novisualbell errorbells noerrorbells belloff=all t_vb=
